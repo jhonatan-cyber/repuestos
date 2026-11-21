@@ -1,0 +1,1442 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Manual de Usuario — Renault Reluz ERP</title>
+  <style>
+    :root {
+      --brand: #EAB308;
+      --brand-soft: #FEF3C7;
+      --ink: #1f2937;
+      --ink-soft: #4b5563;
+      --muted: #6b7280;
+      --bg: #ffffff;
+      --bg-soft: #f8fafc;
+      --line: #e5e7eb;
+      --code-bg: #1f2937;
+      --code-fg: #e5e7eb;
+      --link: #b45309;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 56px 64px 96px;
+    }
+    /* Cover */
+    .cover {
+      text-align: center;
+      padding: 80px 24px 96px;
+      /* Evitamos gradients en el PDF porque algunos viewers viejos de PDF.js
+         los materializan como patterns y pueden fallar al renderizar. */
+      background: #FEF3C7;
+      border-bottom: 4px solid var(--brand);
+      margin-bottom: 48px;
+    }
+    .cover h1 { font-size: 42px; margin: 16px 0 8px; color: #111827; }
+    .cover .sub { color: var(--ink-soft); font-size: 18px; margin-bottom: 32px; }
+    .cover .meta { color: var(--muted); font-size: 13px; }
+    .cover .badge {
+      display: inline-block;
+      background: var(--brand);
+      color: #111;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+    /* TOC */
+    .toc {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 24px 32px;
+      margin-bottom: 48px;
+    }
+    .toc h2 { margin-top: 0; }
+    .toc ol { columns: 2; column-gap: 32px; padding-left: 24px; }
+    .toc li { margin: 4px 0; break-inside: avoid; }
+    .toc a { color: var(--link); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+    @media (max-width: 600px) { .toc ol { columns: 1; } }
+    /* Headings */
+    h1 { font-size: 32px; margin: 56px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--brand); }
+    h2 { font-size: 26px; margin: 40px 0 12px; color: #111827; }
+    h3 { font-size: 20px; margin: 32px 0 8px; color: #1f2937; }
+    h4 { font-size: 17px; margin: 24px 0 6px; color: var(--ink-soft); }
+    /* Paragraphs */
+    p { margin: 10px 0; }
+    strong { color: #111827; }
+    em { color: var(--ink-soft); }
+    a { color: var(--link); }
+    code { background: #F3F4F6; padding: 1px 6px; border-radius: 4px; font-size: 13px; color: #b45309; }
+    pre { background: var(--code-bg); color: var(--code-fg); padding: 16px; border-radius: 8px; overflow-x: auto; }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    blockquote {
+      background: var(--brand-soft);
+      border-left: 4px solid var(--brand);
+      margin: 16px 0;
+      padding: 12px 18px;
+      border-radius: 0 8px 8px 0;
+      color: #92400e;
+    }
+    blockquote p { margin: 4px 0; }
+    /* Images */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 24px auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      /* Sombra removida para maximizar compatibilidad con visores PDF viejos. */
+      box-shadow: none;
+    }
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--bg-soft);
+      font-weight: 600;
+      color: #111827;
+    }
+    tbody tr:nth-child(even) { background: #fafbfc; }
+    /* Lists */
+    ul, ol { padding-left: 24px; }
+    li { margin: 4px 0; }
+    /* HR */
+    hr { border: none; border-top: 1px solid var(--line); margin: 40px 0; }
+    /* Print */
+    @media print {
+      body { font-size: 11pt; }
+      .page { max-width: 100%; padding: 0; }
+      h1, h2 { page-break-after: avoid; }
+      img { page-break-inside: avoid; }
+      table, blockquote, pre { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="cover">
+      <div class="badge">Renault Reluz ERP</div>
+      <h1>Manual de Usuario</h1>
+      <div class="sub">Sistema de Gestión para Casa de Repuestos Renault</div>
+      <div class="meta">Versión 1.0 · Junio 2026 · Español (rioplatense)</div>
+    </div>
+    <h1 id="manual-de-usuario-renault-reluz-erp">Manual de Usuario — Renault Reluz ERP</h1>
+<blockquote>
+<p><strong>Versión 1.0</strong> · Sistema de Gestión para Casa de Repuestos Renault</p>
+<p></p>
+<p>Software: <strong>Renault Reluz ERP</strong></p>
+<p>Audiencia: Dueños, gerentes y personal administrativo</p>
+<p>Idioma: Español (rioplatense, voseo)</p>
+</blockquote>
+<p><hr/></p>
+<h2 id="indice">Índice</h2>
+<ol>
+<li><a href="#1-bienvenida">Bienvenida</a></li>
+<li><a href="#2-cómo-empezar">Cómo empezar — Instalación y primer ingreso</a></li>
+<li><a href="#3-iniciar-sesión">Iniciar sesión</a></li>
+<li><a href="#4-configuración-inicial">Configuración inicial (solo la primera vez)</a></li>
+<li><a href="#5-el-panel-principal">El panel principal (Dashboard)</a></li>
+<li><a href="#6-productos">Productos — Tu catálogo de repuestos</a></li>
+<li><a href="#7-inventario">Inventario — Movimientos de stock</a></li>
+<li><a href="#8-categorías">Categorías — Cómo organizás tu mercadería</a></li>
+<li><a href="#9-clientes">Clientes — Tu cartera de compradores</a></li>
+<li><a href="#10-proveedores">Proveedores — De quién comprás</a></li>
+<li><a href="#11-ventas">Ventas — El corazón del negocio</a></li>
+<li><a href="#12-cotizaciones">Cotizaciones — Presupuestos sin compromiso</a></li>
+<li><a href="#13-compras">Compras — Ingreso de mercadería</a></li>
+<li><a href="#14-caja-diaria">Caja diaria — Abrir, mover y cerrar</a></li>
+<li><a href="#15-gastos">Gastos — Control de salidas de dinero</a></li>
+<li><a href="#16-créditos-a-clientes">Créditos a clientes — Ventas a cuenta</a></li>
+<li><a href="#17-créditos-a-proveedores">Créditos a proveedores — Deudas con proveedores</a></li>
+<li><a href="#18-reportes">Reportes — La radiografía de tu negocio</a></li>
+<li><a href="#19-sincronización">Sincronización — Datos locales y en la nube</a></li>
+<li><a href="#20-usuarios">Usuarios — Quién entra y quién hace qué</a></li>
+<li><a href="#21-roles">Roles — Agrupar permisos</a></li>
+<li><a href="#22-permisos">Permisos — El detalle fino</a></li>
+<li><a href="#23-mi-perfil">Mi perfil y cerrar sesión</a></li>
+<li><a href="#24-backups-y-actualizaciones">Backups y actualizaciones</a></li>
+<li><a href="#25-preguntas-frecuentes">Preguntas frecuentes (FAQ)</a></li>
+<li><a href="#26-glosario">Glosario de términos</a></li>
+</ol>
+<p><hr/></p>
+<h2 id="1-bienvenida">1. Bienvenida</h2>
+<p><img alt="Logo Renault Reluz" src="images/01-login.png" loading="lazy" /></p>
+<p>¡Bienvenido a <strong>Renault Reluz ERP</strong>! Este sistema te permite llevar el control total de tu casa de repuestos sin necesidad de ser experto en computación. Está pensado para que vos y tu equipo lo usen todos los días, sin complicaciones.</p>
+<h3 id="que-podes-hacer-con-esta-herramienta">¿Qué podés hacer con esta herramienta?</h3>
+<ul>
+<li>📦 <strong>Vender repuestos</strong> con factura, varios métodos de pago y descuentos.</li>
+<li>🛒 <strong>Comprar mercadería</strong> a tus proveedores y controlar qué se recibió.</li>
+<li>📋 <strong>Armar presupuestos</strong> (cotizaciones) para tus clientes.</li>
+<li>💰 <strong>Cobrar a cuenta</strong> (créditos) y registrar cada pago.</li>
+<li>💵 <strong>Llevar la caja</strong> del día: abrir, registrar ventas y gastos, cerrar.</li>
+<li>🚗 <strong>Administrar productos, clientes y proveedores</strong>.</li>
+<li>📊 <strong>Ver reportes</strong> de ventas, gastos y stock.</li>
+<li>👥 <strong>Asignar permisos</strong> a tu equipo según el rol de cada uno.</li>
+</ul>
+<h3 id="dos-formas-de-usarlo">Dos formas de usarlo</h3>
+<p><strong>En la nube (web)</strong>: Abrís la app desde el navegador, en cualquier computadora, y los datos quedan guardados en un servidor. Ideal si tenés varias sucursales o si querés entrar desde tu casa.</p>
+<p><strong>En tu computadora (escritorio)</strong>: Instalás la app como un programa más de Windows. Los datos se guardan en tu propia máquina y, cuando hay internet, se sincronizan con la nube. Ideal si la conexión a internet es inestable o si querés trabajar sin depender de la red.</p>
+<p>Ambas versiones se ven igual y funcionan igual. Los datos se mantienen sincronizados automáticamente.</p>
+<h3 id="a-quien-esta-dirigido-este-manual">A quién está dirigido este manual</h3>
+<p>Este manual está escrito pensando en <strong>dueños, gerentes y encargados administrativos</strong> de la casa de repuestos. No es un manual técnico. Está escrito en lenguaje claro, paso a paso, con imágenes de la aplicación real.</p>
+<blockquote>
+<p>💡 <strong>Si sos cajero o vendedor</strong>, consultá la sección específica de "Ventas" y "Caja". El resto del manual te puede servir de referencia.</p>
+</blockquote>
+<p><hr/></p>
+<h2 id="2-como-empezar">2. Cómo empezar</h2>
+<h3 id="si-vas-a-usar-la-version-web">Si vas a usar la versión web</h3>
+<ol>
+<li>Asegurate de tener una conexión estable a internet.</li>
+<li>Abrí el navegador (recomendamos <strong>Google Chrome</strong> o <strong>Microsoft Edge</strong> actualizados).</li>
+<li>Escribí en la barra de direcciones la URL que te dio tu administrador (por ejemplo, <code>http://localhost:5000</code> si la app está instalada en la misma máquina, o la dirección del servidor).</li>
+<li>¡Listo! Vas a ver la pantalla de inicio de sesión.</li>
+</ol>
+<h3 id="si-vas-a-usar-la-version-de-escritorio-windows">Si vas a usar la versión de escritorio (Windows)</h3>
+<ol>
+<li>Tu equipo de soporte te va a pasar el instalador (<code>Renault ERP Setup.exe</code>).</li>
+<li>Hacé doble clic sobre el instalador.</li>
+<li>Si Windows te pregunta "¿Permitir que esta app haga cambios?", decí <strong>Sí</strong>.</li>
+<li>Seguí los pasos: aceptá los términos, elegí la carpeta donde se instala (por defecto está bien), esperá a que termine.</li>
+<li>Cuando termine, vas a ver el ícono de <strong>Renault ERP</strong> en tu escritorio. Hacé doble clic para abrir.</li>
+<li>La primera vez, la app se va a configurar sola y te va a llevar al inicio de sesión.</li>
+</ol>
+<h3 id="requisitos-minimos">Requisitos mínimos</h3>
+<table><thead><tr><th>Componente</th><th>Requisito</th></tr></thead><tbody>
+<tr><td>Sistema operativo</td><td>Windows 10 o superior (64 bits)</td></tr>
+<tr><td>Memoria RAM</td><td>4 GB mínimo</td></tr>
+<tr><td>Disco</td><td>500 MB libres</td></tr>
+<tr><td>Internet</td><td>Necesario para sincronizar (la app también funciona sin internet en versión escritorio)</td></tr>
+<tr><td>Pantalla</td><td>Se ve bien desde 1280×720 en adelante</td></tr>
+</tbody></table>
+<p><hr/></p>
+<h2 id="3-iniciar-sesion">3. Iniciar sesión</h2>
+<p><img alt="Pantalla de login" src="images/01-login.png" loading="lazy" /></p>
+<p>Cada vez que abras la app, te va a pedir que inicies sesión con tu usuario y contraseña.</p>
+<h3 id="pasos-para-entrar">Pasos para entrar</h3>
+<ol>
+<li>En la pantalla inicial, escribí tu <strong>correo electrónico</strong> (el que usaste cuando te dieron de alta).</li>
+<li>Escribí tu <strong>contraseña</strong> (esos caracteres se ocultan con puntitos por seguridad).</li>
+<li>Si querés que la app <strong>recuerde tu sesión</strong> la próxima vez, tildá la casilla <strong>"Recuérdame"</strong>.</li>
+<li>Hacé clic en el botón <strong>"Ingresar al sistema"</strong>.</li>
+</ol>
+<h3 id="que-pasa-despues">¿Qué pasa después?</h3>
+<ul>
+<li>Si los datos están bien, vas a entrar al <strong>panel principal</strong> (Dashboard).</li>
+<li>Si algo está mal, vas a ver un mensaje de error en rojo. Verificá el correo y la contraseña.</li>
+</ul>
+<h3 id="te-olvidaste-la-contrasena">¿Te olvidaste la contraseña?</h3>
+<ol>
+<li>En la pantalla de inicio, hacé clic en <strong>"¿Olvidaste la clave?"</strong> (el link amarillo arriba de la contraseña).</li>
+<li>Escribí tu correo electrónico.</li>
+<li>La app te va a enviar un correo con instrucciones para crear una contraseña nueva.</li>
+<li>Revisá tu bandeja de entrada (y la carpeta de spam, por las dudas).</li>
+<li>Cuando tengas la nueva contraseña, volvé a la pantalla de inicio y entrá normalmente.</li>
+</ol>
+<blockquote>
+<p>🔒 <strong>Consejo de seguridad</strong>: nunca le pases tu contraseña a nadie, ni siquiera a tu jefe. Cada persona tiene que tener su propio usuario.</p>
+</blockquote>
+<h3 id="cambiar-entre-tema-claro-y-oscuro">Cambiar entre tema claro y oscuro</h3>
+<p>Arriba a la derecha de la pantalla de login, vas a ver un botón con forma de <strong>sol</strong> 🌞 o <strong>luna</strong> 🌙. Hacé clic para alternar entre el tema claro (fondo blanco) y el tema oscuro (fondo negro). Tu elección se guarda automáticamente.</p>
+<p><hr/></p>
+<h2 id="4-configuracion-inicial">4. Configuración inicial</h2>
+<blockquote>
+<p>⚠️ Esta sección aplica <strong>solo la primera vez</strong> que se instala la app. Una vez que el sistema está en uso, este paso ya no aparece.</p>
+</blockquote>
+<p>Cuando se instala Renault Reluz ERP por primera vez (por ejemplo, en una máquina nueva o después de un formateo), aparece una pantalla llamada <strong>"Setup"</strong> que te guía para crear el primer usuario administrador.</p>
+<h3 id="por-que-es-importante">¿Por qué es importante?</h3>
+<p>Este primer usuario tiene <strong>permisos totales</strong> sobre la app: puede crear otros usuarios, ver todos los reportes, modificar configuraciones. Por eso, te recomendamos que esta cuenta la use el <strong>dueño o gerente general</strong> de la casa de repuestos.</p>
+<h3 id="datos-que-te-va-a-pedir">Datos que te va a pedir</h3>
+<ul>
+<li><strong>Cédula / DNI</strong>: tu documento de identidad (es único, no se puede repetir entre usuarios).</li>
+<li><strong>Nombre</strong>: tu nombre de pila.</li>
+<li><strong>Apellido</strong>: tu apellido.</li>
+<li><strong>Email</strong>: dirección de correo electrónico (es la que vas a usar para iniciar sesión).</li>
+<li><strong>Contraseña</strong>: una contraseña segura (recomendamos al menos 8 caracteres, combinando letras, números y un símbolo).</li>
+<li><strong>Teléfono</strong>: tu número de contacto.</li>
+<li><strong>Dirección</strong>: tu dirección.</li>
+</ul>
+<h3 id="pasos">Pasos</h3>
+<ol>
+<li>Completá todos los campos.</li>
+<li>Volvé a escribir la contraseña en el campo "Confirmar contraseña" para asegurarte de que la escribiste bien.</li>
+<li>Hacé clic en <strong>"Crear administrador"</strong>.</li>
+<li>Si todo está bien, la app te va a llevar automáticamente a la pantalla de inicio de sesión.</li>
+<li>Iniciá sesión con el email y contraseña que acabás de crear.</li>
+</ol>
+<blockquote>
+<p>💡 <strong>Si volvés a ver esta pantalla</strong>, significa que el sistema se reinstaló o que se borró la base de datos. Contactá a tu equipo de soporte antes de continuar, para no perder información.</p>
+</blockquote>
+<p><hr/></p>
+<h2 id="5-el-panel-principal">5. El panel principal</h2>
+<p><img alt="Dashboard" src="images/03-dashboard.png" loading="lazy" /></p>
+<p>Cuando iniciás sesión, lo primero que ves es el <strong>Dashboard</strong> (panel principal). Es como la "ventanilla" del sistema: te muestra de un vistazo cómo está tu negocio <strong>hoy</strong> y en los últimos días.</p>
+<h3 id="que-informacion-encontras">¿Qué información encontrás?</h3>
+<p>En la parte superior, tenés tres <strong>tarjetas con los números más importantes</strong>:</p>
+<ul>
+<li>💰 <strong>Ventas (últimos 7 días)</strong>: cuánto dinero entró por ventas en la última semana. La flecha verde o roja te dice si subiste o bajaste respecto al período anterior.</li>
+<li>📦 <strong>Productos en inventario</strong>: cuántos repuestos diferentes tenés cargados en el sistema.</li>
+<li>⚠️ <strong>Stock bajo</strong>: cuántos productos están por debajo del stock mínimo (estos son los que necesitás reponer urgente).</li>
+</ul>
+<p>Debajo, tenés un <strong>filtro de período</strong> (botones: Semana, Mes, 7 días, 30 días, 90 días, Año, Rango). Hacé clic en el que quieras para cambiar el rango de fechas que se analiza.</p>
+<p>Más abajo, vas a ver:</p>
+<ul>
+<li>📈 <strong>Tendencia de Ventas</strong>: un gráfico de líneas que muestra cómo variaron las ventas día a día en el período elegido. Si ves picos, esos fueron tus mejores días. Si ves valles, esos fueron los más flojos.</li>
+<li>🚨 <strong>Alertas de stock bajo</strong>: una lista de los productos que están por debajo del stock mínimo. Conviene revisarla seguido para no perder ventas por falta de mercadería.</li>
+<li>⚡ <strong>Accesos rápidos</strong>: botones grandes que te llevan directo a las funciones más usadas: Ventas, Gastos, Reportes.</li>
+</ul>
+<h3 id="la-barra-de-navegacion-sidebar">La barra de navegación (sidebar)</h3>
+<p>A la <strong>izquierda</strong> de la pantalla tenés el menú principal, organizado en secciones. Los ítems que veas dependen de tu rol (los permisos de cada rol se explican más adelante).</p>
+<table><thead><tr><th>Sección</th><th>Qué contiene</th></tr></thead><tbody>
+<tr><td><strong>PRINCIPAL</strong></td><td>Dashboard</td></tr>
+<tr><td><strong>VENTAS</strong></td><td>Clientes, Cotizaciones, Ventas</td></tr>
+<tr><td><strong>INVENTARIO</strong></td><td>Productos, Proveedores, Compras, Stock, Categorías</td></tr>
+<tr><td><strong>FINANZAS</strong></td><td>Gastos, Caja Diaria, Cuentas por Cobrar, Cuentas por Pagar</td></tr>
+<tr><td><strong>ADMINISTRACIÓN</strong></td><td>Usuarios, Roles, Permisos, Sincronización</td></tr>
+<tr><td>(abajo)</td><td>Mi Perfil, Cerrar sesión</td></tr>
+</tbody></table>
+<p>Hacé clic en cualquier ítem para ir a esa pantalla.</p>
+<h3 id="la-barra-superior">La barra superior</h3>
+<p>Arriba de todo, tenés:</p>
+<ul>
+<li>🔍 <strong>Buscar</strong>: escribí el nombre de cualquier producto, cliente, venta, etc. y la app lo busca por vos.</li>
+<li>🔔 <strong>Notificaciones</strong>: la campana te avisa de eventos importantes (por ejemplo, productos con stock crítico).</li>
+<li>🌞🌙 <strong>Tema</strong>: cambia entre claro y oscuro.</li>
+<li>👤 <strong>Tu nombre y rol</strong>: haciendo clic ahí podés ir a tu perfil o cerrar sesión.</li>
+</ul>
+<h3 id="como-se-actualizan-los-datos">¿Cómo se actualizan los datos?</h3>
+<p>El panel se actualiza solo en <strong>tiempo real</strong> cada vez que hacés una venta, una compra o un cambio de stock. La fecha y hora de la última actualización aparecen abajo del título "Dashboard".</p>
+<blockquote>
+<p>💡 <strong>Tip</strong>: si querés ver datos de otro período sin cambiar los filtros, usá los botones de Semana/Mes/7 días/30 días/etc. que están debajo de las tarjetas principales.</p>
+</blockquote>
+<p><hr/></p>
+<h2 id="6-productos">6. Productos</h2>
+<blockquote>
+<p>📦 <strong>El corazón del sistema</strong>: acá es donde cargás todos los repuestos que vendés.</p>
+</blockquote>
+<p><img alt="Listado de productos" src="images/04a-products-list.png" loading="lazy" /></p>
+<p>En esta pantalla ves <strong>todos los productos</strong> cargados en el sistema. La información está organizada en una tabla con varias columnas.</p>
+<h3 id="que-informacion-muestra-cada-producto">¿Qué información muestra cada producto?</h3>
+<table><thead><tr><th>Columna</th><th>Qué significa</th></tr></thead><tbody>
+<tr><td><strong>Imagen</strong></td><td>Foto del repuesto (si le cargaste una).</td></tr>
+<tr><td><strong>Código</strong></td><td>Código único del producto. Lo usás para buscarlo rápido.</td></tr>
+<tr><td><strong>Nombre</strong></td><td>Nombre descriptivo (ej.: "Filtro de aceite").</td></tr>
+<tr><td><strong>Marca / Modelo</strong></td><td>Marca y modelo del vehículo al que aplica (ej.: "Renault / Logan").</td></tr>
+<tr><td><strong>Categoría</strong></td><td>A qué categoría pertenece (Motor, Frenos, etc.). Aparece con un color de fondo.</td></tr>
+<tr><td><strong>Stock</strong></td><td>Cuántas unidades tenés disponibles. Si está en rojo, es porque está por debajo del mínimo.</td></tr>
+<tr><td><strong>P. Compra</strong></td><td>Precio al que vos lo comprás.</td></tr>
+<tr><td><strong>P. Venta</strong></td><td>Precio al que lo vendés al público.</td></tr>
+<tr><td><strong>Proveedor</strong></td><td>Empresa o persona que te lo vende.</td></tr>
+</tbody></table>
+<h3 id="filtros-y-busqueda">Filtros y búsqueda</h3>
+<p>Arriba de la tabla tenés un <strong>buscador</strong>: escribí el nombre, el código o parte del nombre y la lista se filtra al toque.</p>
+<p>También podés filtrar por <strong>categoría</strong> y por <strong>proveedor</strong> usando los desplegables. Combiná varios filtros para encontrar justo lo que necesitás.</p>
+<h3 id="como-dar-de-alta-un-producto-nuevo">Cómo dar de alta un producto nuevo</h3>
+<p><img alt="Formulario de producto" src="images/04b-products-form.png" loading="lazy" /></p>
+<ol>
+<li>Hacé clic en el botón <strong>"+ Nuevo producto"</strong> (esquina superior derecha).</li>
+<li>Se abre un formulario. Completá los datos:</li>
+</ol>
+<p>   - <strong>Código</strong>: un código único (ej.: "FILT-001", "FR-LOG-22"). No se puede repetir.    - <strong>Nombre</strong>: nombre descriptivo del producto.    - <strong>Marca</strong>: marca del vehículo o del repuesto (ej.: "Renault", "Bosch").    - <strong>Modelo</strong>: modelo al que aplica (ej.: "Logan", "Kangoo", "Sandero"). Podés poner "Universal" si aplica a todos.    - <strong>Categoría</strong>: elegí de la lista. Si no existe la categoría, primero tenés que crearla (ver <a href="#8-categorías">sección 8</a>).    - <strong>Proveedor</strong>: elegí de la lista. Si no existe, primero crealo (ver <a href="#10-proveedores">sección 10</a>).    - <strong>Precio de compra</strong>: a cuánto te lo venden a vos.    - <strong>Precio de venta</strong>: a cuánto lo vendés al público. Por defecto la app sugiere un 30% más que el de compra, pero podés cambiarlo.    - <strong>Stock actual</strong>: cuántas unidades tenés hoy.    - <strong>Stock mínimo</strong>: cuántas unidades como mínimo querés tener. Cuando el stock baje de este número, vas a ver una alerta en el dashboard.    - <strong>Unidad</strong>: "unidad", "litro", "kilogramo", "metro", etc.    - <strong>Imagen</strong> <em>(opcional)</em>: una foto del producto.</p>
+<ol>
+<li>Hacé clic en <strong>"Guardar"</strong>.</li>
+<li>El producto aparece en la lista. Ya podés venderlo o asignarlo a una compra.</li>
+</ol>
+<h3 id="como-editar-un-producto">Cómo editar un producto</h3>
+<ol>
+<li>En la lista, buscá el producto que querés modificar.</li>
+<li>Hacé clic en el <strong>menú de tres puntos</strong> (⋮) a la derecha de la fila, o en el ícono de <strong>lápiz</strong> ✏️.</li>
+<li>Se abre el mismo formulario con los datos cargados.</li>
+<li>Modificá lo que necesites.</li>
+<li>Hacé clic en <strong>"Guardar"</strong>.</li>
+</ol>
+<h3 id="como-ver-los-detalles-de-un-producto">Cómo ver los detalles de un producto</h3>
+<ol>
+<li>Hacé clic en el <strong>ícono de ojo</strong> 👁️ (o en el nombre del producto, según la versión).</li>
+<li>Se abre una ventana con toda la información: descripción, historial de precios, movimientos de stock, ventas en las que participó, etc.</li>
+</ol>
+<h3 id="como-eliminar-un-producto">Cómo eliminar un producto</h3>
+<blockquote>
+<p>⚠️ <strong>Cuidado</strong>: eliminar un producto lo borra del sistema. Si tiene ventas o compras asociadas, no se va a poder eliminar (la app te avisa). En ese caso, podés <strong>desactivarlo</strong> para que no aparezca en las ventas nuevas, pero quede en el historial.</p>
+</blockquote>
+<ol>
+<li>Hacé clic en el <strong>menú de tres puntos</strong> (⋮) → <strong>"Eliminar"</strong> (ícono de tacho de basura 🗑️).</li>
+<li>La app te pide confirmación. Hacé clic en <strong>"Sí, eliminar"</strong>.</li>
+</ol>
+<h3 id="buenas-practicas">Buenas prácticas</h3>
+<ul>
+<li>📌 <strong>Ponele un código claro a cada producto</strong>. Si tenés muchos repuestos, el código te ayuda a encontrarlos al toque.</li>
+<li>🔍 <strong>Mantené los precios actualizados</strong>. Si subís el precio de compra, actualizá también el de venta.</li>
+<li>📷 <strong>Subí imágenes</strong>. Le da profesionalismo y ayuda a que el vendedor o cajero identifique el repuesto rápido.</li>
+<li>🚨 <strong>Configurá bien el stock mínimo</strong>. Es tu seguro contra quedarte sin mercadería sin darte cuenta.</li>
+</ul>
+<p><hr/></p>
+<h2 id="7-inventario">7. Inventario</h2>
+<blockquote>
+<p>📋 <strong>El libro de movimientos</strong>: acá se registra cada vez que entra o sale mercadería del depósito.</p>
+</blockquote>
+<p><img alt="Pantalla de inventario" src="images/05-inventory.png" loading="lazy" /></p>
+<p>Mientras que en <strong>Productos</strong> ves el stock actual de cada artículo, en <strong>Inventario</strong> ves el <strong>historial de movimientos</strong>: cada vez que algo entró (por una compra), salió (por una venta) o se ajustó manualmente (porque contaste y había diferencia).</p>
+<h3 id="que-informacion-muestra">¿Qué información muestra?</h3>
+<table><thead><tr><th>Columna</th><th>Qué significa</th></tr></thead><tbody>
+<tr><td><strong>Fecha</strong></td><td>Cuándo se hizo el movimiento.</td></tr>
+<tr><td><strong>Producto</strong></td><td>Qué repuesto se movió.</td></tr>
+<tr><td><strong>Tipo</strong></td><td>Si fue <strong>entrada</strong> (⬆️, entró mercadería), <strong>salida</strong> (⬇️, se vendió) o <strong>ajuste</strong> (🔧, se corrigió el stock manualmente).</td></tr>
+<tr><td><strong>Cantidad</strong></td><td>Cuántas unidades se movieron.</td></tr>
+<tr><td><strong>Stock resultante</strong></td><td>Cuánto quedó en el depósito después de ese movimiento.</td></tr>
+<tr><td><strong>Origen</strong></td><td>De dónde viene el movimiento: una compra, una venta o un ajuste manual.</td></tr>
+<tr><td><strong>Responsable</strong></td><td>Qué usuario lo hizo.</td></tr>
+</tbody></table>
+<h3 id="cuando-se-registran-movimientos-automaticamente">¿Cuándo se registran movimientos automáticamente?</h3>
+<ul>
+<li>✅ Cuando hacés una <strong>compra</strong> y la marcás como "Recibida", se registra una <strong>entrada</strong> de stock.</li>
+<li>✅ Cuando hacés una <strong>venta</strong> confirmada, se registra una <strong>salida</strong> de stock.</li>
+<li>❌ Las <strong>cotizaciones</strong> NO mueven stock (solo cuando se convierten en venta).</li>
+</ul>
+<h3 id="como-hacer-un-ajuste-manual-de-stock">Cómo hacer un ajuste manual de stock</h3>
+<p>A veces contás la mercadería y el sistema no coincide con la realidad. Por ejemplo: perdiste una pieza, se rompió, o te la robaron. En esos casos, hacés un <strong>ajuste manual</strong>:</p>
+<ol>
+<li>Hacé clic en <strong>"+ Nuevo movimiento"</strong> o <strong>"+ Ajuste"</strong> (esquina superior derecha).</li>
+<li>Elegí el <strong>producto</strong>.</li>
+<li>Elegí el <strong>tipo de movimiento</strong>:</li>
+</ol>
+<p>   - <strong>Entrada</strong>: para sumar stock (ej.: encontraste mercadería que no estaba registrada).    - <strong>Salida</strong>: para restar stock (ej.: se rompió una pieza).    - <strong>Ajuste</strong>: para definir el stock exacto (ej.: contaste y hay 12 unidades, no 15 como dice el sistema).</p>
+<ol>
+<li>Indicá la <strong>cantidad</strong> o el <strong>stock final</strong> (según el tipo).</li>
+<li>Escribí un <strong>motivo</strong> (ej.: "Rotura", "Conteo físico", "Devolución de cliente"). Esto queda en el historial y te sirve para auditoría.</li>
+<li>Hacé clic en <strong>"Guardar"</strong>.</li>
+</ol>
+<h3 id="filtros">Filtros</h3>
+<p>Arriba de la tabla podés filtrar por:</p>
+<ul>
+<li><strong>Producto</strong> específico.</li>
+<li><strong>Tipo</strong> de movimiento (entrada / salida / ajuste).</li>
+<li><strong>Rango de fechas</strong>.</li>
+</ul>
+<h3 id="por-que-es-importante-revisar-el-inventario-seguido">¿Por qué es importante revisar el inventario seguido?</h3>
+<ul>
+<li>🕵️ <strong>Detectar robos o pérdidas</strong>: si algo se "pierde solo", vas a ver salidas raras.</li>
+<li>📦 <strong>Planificar compras</strong>: viendo el historial, sabés qué productos se venden más y cuáles menos.</li>
+<li>📊 <strong>Auditoría</strong>: en caso de dudas, podés reconstruir qué pasó con cualquier producto.</li>
+</ul>
+<p><hr/></p>
+<h2 id="8-categorias">8. Categorías</h2>
+<blockquote>
+<p>🗂️ <strong>Cómo agrupás tu mercadería</strong>: las categorías te permiten organizar tus productos y gastos en grupos lógicos.</p>
+</blockquote>
+<p><img alt="Pantalla de categorías" src="images/11-categories.png" loading="lazy" /></p>
+<p>Las categorías te sirven para tres cosas:</p>
+<ol>
+<li><strong>Filtrar rápido</strong> el catálogo de productos (ej.: "mostrame solo los Frenos").</li>
+<li><strong>Organizar visualmente</strong> la app, porque cada categoría tiene un color distinto.</li>
+<li><strong>Clasificar gastos</strong> (alquiler, servicios, sueldos, etc.) y así poder analizar a qué se va la plata.</li>
+</ol>
+<h3 id="tipos-de-categorias">Tipos de categorías</h3>
+<ul>
+<li><strong>De productos</strong>: agrupan repuestos. Ejemplos: Motor, Frenos, Suspensión, Transmisión, Eléctrico, Filtros, Lubricantes, Iluminación, Carrocería, Neumáticos, Escape, Refrigeración.</li>
+<li><strong>De gastos</strong>: agrupan gastos del negocio. Ejemplos: Servicios, Alquiler, Salarios, Marketing, Transporte, Mantenimiento.</li>
+</ul>
+<h3 id="como-crear-una-categoria">Cómo crear una categoría</h3>
+<ol>
+<li>Hacé clic en <strong>"+ Nueva categoría"</strong>.</li>
+<li>Completá:</li>
+</ol>
+<p>   - <strong>Nombre</strong>: el nombre de la categoría (ej.: "Embrague").    - <strong>Tipo</strong>: elegí si es para <strong>productos</strong> o para <strong>gastos</strong>.    - <strong>Color</strong>: elegí un color de la paleta. Se usa para identificar visualmente la categoría en la app.    - <strong>Descripción</strong> <em>(opcional)</em>: una nota interna.</p>
+<ol>
+<li>Hacé clic en <strong>"Guardar"</strong>.</li>
+</ol>
+<h3 id="como-editar-o-desactivar-una-categoria">Cómo editar o desactivar una categoría</h3>
+<ul>
+<li><strong>Editar</strong>: clic en el menú de tres puntos (⋮) → <strong>"Editar"</strong>. Cambiá lo que necesites.</li>
+<li><strong>Desactivar</strong>: clic en <strong>"Activar/Desactivar"</strong>. La categoría queda oculta en los formularios pero sigue contando en los reportes históricos.</li>
+<li><strong>Eliminar</strong>: solo se puede eliminar si la categoría <strong>no tiene productos ni gastos asociados</strong>. Si ya tiene, primero mové los productos/gastos a otra categoría.</li>
+</ul>
+<blockquote>
+<p>💡 <strong>Tip</strong>: no crees categorías "por las dudas". Empezá con las básicas y agregá más a medida que las necesites. Es más fácil mantener 10 categorías bien definidas que 50 con una sola cosa adentro.</p>
+</blockquote>
+<p><hr/></p>
+<h2 id="9-clientes">9. Clientes</h2>
+<blockquote>
+<p>👥 <strong>Las personas y empresas que te compran</strong>: acá llevás la base de datos de tus clientes.</p>
+</blockquote>
+<p><img alt="Listado de clientes" src="images/09a-clients-list.png" loading="lazy" /></p>
+<p>Cada cliente tiene una "ficha" en el sistema. Esa ficha guarda sus datos de contacto, el historial de compras, las deudas que tiene con vos y más.</p>
+<h3 id="que-informacion-tiene-cada-cliente">¿Qué información tiene cada cliente?</h3>
+<ul>
+<li><strong>Nombre</strong>: nombre del cliente o razón social.</li>
+<li><strong>Teléfono</strong>: para contactarlo.</li>
+<li><strong>Email</strong> <em>(opcional)</em>: correo electrónico.</li>
+<li><strong>NIT / CUIT / DNI</strong> <em>(opcional)</em>: número de identificación tributaria.</li>
+<li><strong>Dirección</strong> <em>(opcional)</em>: dirección del cliente.</li>
+<li><strong>Total comprado</strong>: la suma de todo lo que te compró a lo largo del tiempo.</li>
+<li><strong>Estado</strong>: si está <strong>activo</strong> (puede comprar) o <strong>inactivo</strong> (no aparece en ventas nuevas, pero queda en el historial).</li>
+</ul>
+<h3 id="como-agregar-un-cliente-nuevo">Cómo agregar un cliente nuevo</h3>
+<ol>
+<li>Hacé clic en <strong>"+ Nuevo cliente"</strong>.</li>
+<li>Completá el formulario. Lo único obligatorio es el <strong>nombre</strong> y el <strong>teléfono</strong>.</li>
+<li>Hacé clic en <strong>"Guardar"</strong>.</li>
+</ol>
+<blockquote>
+<p>💡 <strong>Tip</strong>: aunque el email, NIT y dirección sean opcionales, te recomendamos cargarlos. Sirven para hacer facturas, enviarle novedades y llevar un control más profesional.</p>
+</blockquote>
+<h3 id="como-ver-el-historial-de-un-cliente">Cómo ver el historial de un cliente</h3>
+<ol>
+<li>En la lista, hacé clic en el nombre del cliente o en el ícono de "Ver" (👁️).</li>
+<li>Se abre una ficha con:</li>
+</ol>
+<p>   - Datos del cliente.    - <strong>Historial de ventas</strong>: cada venta que le hiciste, con fecha, monto y estado.    - <strong>Cotizaciones</strong>: presupuestos que le entregaste.    - <strong>Créditos</strong>: si le vendiste a cuenta, ves la deuda pendiente, los pagos y el historial.</p>
+<ol>
+<li>Desde ahí podés también <strong>editar al cliente</strong> o <strong>crear una venta nueva</strong> para él.</li>
+</ol>
+<h3 id="como-desactivar-un-cliente">Cómo desactivar un cliente</h3>
+<p>Si un cliente deja de comprarte (se fue del barrio, cerró el taller, etc.), no hace falta eliminarlo. Solo desactivá:</p>
+<ol>
+<li>Hacé clic en el menú de tres puntos (⋮) → <strong>"Desactivar"</strong>.</li>
+<li>El cliente deja de aparecer en las listas de ventas nuevas, pero todo su historial queda intacto.</li>
+</ol>
+<h3 id="busqueda-y-filtros">Búsqueda y filtros</h3>
+<ul>
+<li>🔍 <strong>Buscador</strong>: escribí el nombre, teléfono o NIT y la lista se filtra.</li>
+<li>🎛️ <strong>Filtros</strong>: podés ver solo clientes <strong>activos</strong> o <strong>inactivos</strong>.</li>
+</ul>
+<h3 id="buenas-practicas">Buenas prácticas</h3>
+<ul>
+<li>📝 <strong>Cargá todos los datos posibles</strong> desde el principio. Completar después es tedioso.</li>
+<li>🔄 <strong>Mantené actualizados</strong> los teléfonos y emails. Si le mandás un recordatorio de pago y el email está mal, no llega.</li>
+<li>💼 <strong>Para empresas</strong>: usá el campo NIT. La factura sale con los datos fiscales correctos.</li>
+</ul>
+<p><hr/></p>
+<h2 id="10-proveedores">10. Proveedores</h2>
+<blockquote>
+<p>🏢 <strong>De quién comprás mercadería</strong>: similar a Clientes, pero apuntando al otro lado de la cadena.</p>
+</blockquote>
+<p><img alt="Listado de proveedores" src="images/10a-suppliers-list.png" loading="lazy" /></p>
+<p>Cada proveedor es una empresa o persona a la que le comprás repuestos. Tener bien cargados los proveedores te permite:</p>
+<ul>
+<li>Registrar compras de forma rápida (ya tenés sus datos).</li>
+<li>Llevar el <strong>historial de compras</strong> que le hiciste a cada uno.</li>
+<li>Controlar las <strong>deudas</strong> (créditos con proveedores) y los pagos.</li>
+<li>Analizar <strong>a quién le comprás más</strong> y negociar mejores precios.</li>
+</ul>
+<h3 id="datos-de-un-proveedor">Datos de un proveedor</h3>
+<ul>
+<li><strong>Nombre</strong>: nombre del contacto o razón comercial.</li>
+<li><strong>Empresa</strong> <em>(opcional)</em>: nombre formal de la empresa.</li>
+<li><strong>Teléfono</strong>: para contactarlo.</li>
+<li><strong>Email</strong> <em>(opcional)</em>: correo electrónico.</li>
+<li><strong>Dirección</strong> <em>(opcional)</em>: dirección del local o depósito.</li>
+<li><strong>Total comprado</strong>: cuánto le compraste en total.</li>
+</ul>
+<h3 id="como-agregar-un-proveedor">Cómo agregar un proveedor</h3>
+<ol>
+<li>Hacé clic en <strong>"+ Nuevo proveedor"</strong>.</li>
+<li>Completá los datos. Lo mínimo: <strong>nombre</strong> y <strong>teléfono</strong>.</li>
+<li>Hacé clic en <strong>"Guardar"</strong>.</li>
+</ol>
+<h3 id="activar-desactivar-proveedor">Activar / desactivar proveedor</h3>
+<p>Si dejás de trabajar con un proveedor, podés <strong>desactivarlo</strong> (no aparece en compras nuevas pero queda en el historial). Para volver a activarlo, hacé clic en <strong>"Activar"</strong> desde la lista de inactivos.</p>
+<h3 id="eliminar-proveedor">Eliminar proveedor</h3>
+<p>Solo se puede eliminar si no tiene <strong>compras ni productos asociados</strong>. Si los tiene, primero tenés que reasignar las compras a otro proveedor y los productos también.</p>
+<h3 id="relacion-con-productos">Relación con Productos</h3>
+<p>Cuando das de alta un producto nuevo (ver <a href="#6-productos">sección 6</a>), tenés que asignarle un proveedor. Por eso es importante tener los proveedores cargados antes que los productos.</p>
+<p><hr/></p>
+<h2 id="11-ventas">11. Ventas</h2>
+<blockquote>
+<p>🛒 <strong>La operación más importante del día a día</strong>: registrar cada venta que hacés.</p>
+</blockquote>
+<p><img alt="Listado de ventas" src="images/06a-sales-list.png" loading="lazy" /></p>
+<p>Esta es probablemente la pantalla que más vas a usar. Acá se registran todas las ventas, podés ver el historial, exportar facturas y controlar los pagos.</p>
+<h3 id="que-informacion-muestra-el-listado">¿Qué información muestra el listado?</h3>
+<p>Arriba de la tabla tenés <strong>cuatro tarjetas con estadísticas</strong>:</p>
+<ul>
+<li>💵 <strong>Total Ventas</strong>: suma de todas las ventas del período.</li>
+<li>🛒 <strong>Cantidad</strong>: cuántas ventas se hicieron.</li>
+<li>✅ <strong>Completadas</strong>: cuántas están finalizadas y cobradas.</li>
+<li>⏰ <strong>Pendientes</strong>: cuántas están pendientes (por ejemplo, ventas a crédito sin cobrar).</li>
+</ul>
+<p>La <strong>tabla principal</strong> muestra cada venta con:</p>
+<table><thead><tr><th>Columna</th><th>Qué significa</th></tr></thead><tbody>
+<tr><td><strong>Fecha</strong></td><td>Cuándo se hizo la venta.</td></tr>
+<tr><td><strong>Cliente</strong></td><td>A quién le vendiste (hacé clic para ver su ficha).</td></tr>
+<tr><td><strong>Subtotal</strong></td><td>Suma de los productos sin impuestos ni descuentos.</td></tr>
+<tr><td><strong>Descuento</strong></td><td>Si se aplicó algún descuento, aparece en rojo.</td></tr>
+<tr><td><strong>Total</strong></td><td>Lo que paga el cliente (subtotal + impuestos - descuentos).</td></tr>
+<tr><td><strong>Tipo</strong></td><td>"Al contado" (se cobra en el momento) o "A crédito" (cuenta corriente).</td></tr>
+<tr><td><strong>Método</strong></td><td>Cómo pagó: efectivo, transferencia, QR, mixto.</td></tr>
+<tr><td><strong>Estado</strong></td><td><strong>Completada</strong> (verde), <strong>Pendiente</strong> (amarillo), <strong>Cancelada</strong> (rojo).</td></tr>
+<tr><td><strong>Acciones</strong></td><td>Ver, editar, cancelar, imprimir.</td></tr>
+</tbody></table>
+<h3 id="filtros-disponibles">Filtros disponibles</h3>
+<ul>
+<li>🔍 <strong>Buscar</strong>: por nombre de cliente, vendedor o método de pago.</li>
+<li>📅 <strong>Desde / Hasta</strong>: rango de fechas. También tenés atajos: <strong>Hoy</strong>, <strong>Esta semana</strong>, <strong>Este mes</strong>.</li>
+<li>🎛️ <strong>Estado</strong>: Todos, Completadas, Pendientes, Canceladas.</li>
+<li>📄 <strong>Mostrar</strong>: cuántas ventas ver por página (10, 25, 50, 100).</li>
+</ul>
+<h3 id="como-registrar-una-venta-nueva">Cómo registrar una venta nueva</h3>
+<p><img alt="Formulario de venta" src="images/06b-sale-form.png" loading="lazy" /></p>
+<ol>
+<li>Hacé clic en el botón <strong>"+ Nueva venta"</strong> (esquina superior derecha).</li>
+<li>Se abre un formulario. Pasos:</li>
+</ol>
+<p>   1. <strong>Elegí el cliente</strong>: empezá a escribir el nombre y la app te sugiere. Si el cliente no existe, podés crearlo en el momento con el botón <strong>"+ Nuevo cliente"</strong>.    2. <strong>Agregá los productos</strong>: en la sección de productos, empezá a escribir el nombre o el código. La app te muestra coincidencias. Seleccioná el producto e indicá la <strong>cantidad</strong>.       - El <strong>precio unitario</strong> se completa solo con el precio de venta del producto, pero podés cambiarlo (por ejemplo, para hacer una oferta).       - El <strong>subtotal</strong> se calcula automáticamente.       - Para agregar más productos, hacé clic en <strong>"+ Agregar producto"</strong>.    3. <strong>Aplicá descuento</strong> <em>(opcional)</em>: indicá un monto o porcentaje de descuento. Se aplica al subtotal.    4. <strong>Impuestos</strong> <em>(opcional)</em>: la app calcula el IVA u otros impuestos según tu configuración.    5. <strong>Elegí el método de pago</strong>:       - <strong>Efectivo</strong>: el cliente paga con plata.       - <strong>Transferencia</strong>: el cliente te transfiere.       - <strong>QR</strong>: pago con código QR (MercadoPago, etc.).       - <strong>Crédito</strong>: el cliente se lleva la mercadería y paga después (ver <a href="#16-créditos-a-clientes">sección 16</a>).       - <strong>Mixto</strong>: combinación de varios métodos. Por ejemplo, mitad efectivo y mitad transferencia. La app te deja indicar cuánto con cada uno.    6. <strong>Notas</strong> <em>(opcional)</em>: observaciones sobre la venta (ej.: "Cliente retira mañana", "Paga en dos cuotas").    7. <strong>Revisá el total</strong> abajo del formulario.</p>
+<ol>
+<li>Hacé clic en <strong>"Confirmar venta"</strong>.</li>
+<li>¡Listo! La venta queda registrada, el stock se descuenta automáticamente, y (si pagaste en efectivo) se suma a la caja del día.</li>
+</ol>
+<h3 id="antes-de-vender-la-caja-esta-abierta">⚠️ Antes de vender: ¿la caja está abierta?</h3>
+<p>Para registrar ventas en <strong>efectivo</strong>, <strong>transferencia</strong> o <strong>QR</strong>, la caja del día tiene que estar <strong>abierta</strong>. Si no lo está, la app te avisa y no te deja continuar. Ver <a href="#14-caja-diaria">sección 14</a> para más detalles.</p>
+<h3 id="acciones-sobre-una-venta-existente">Acciones sobre una venta existente</h3>
+<p>En la columna <strong>Acciones</strong> (los tres puntitos ⋮) de cada fila, tenés:</p>
+<ul>
+<li>👁️ <strong>Ver detalles</strong>: abre la venta con todos los productos, pagos y notas.</li>
+<li>✏️ <strong>Editar</strong>: modificar la venta (solo si está en estado Pendiente).</li>
+<li>❌ <strong>Cancelar</strong>: la venta queda marcada como cancelada, el stock se devuelve al inventario.</li>
+<li>🖨️ <strong>Imprimir / Exportar PDF</strong>: genera una factura o comprobante para imprimir o mandar por WhatsApp al cliente.</li>
+</ul>
+<h3 id="exportar-el-listado-de-ventas">Exportar el listado de ventas</h3>
+<p>Si necesitás el listado completo en PDF (por ejemplo, para presentar a la contadora):</p>
+<ol>
+<li>Hacé clic en <strong>"Exportar PDF"</strong> (esquina superior derecha).</li>
+<li>La app genera un PDF con todas las ventas según los filtros aplicados.</li>
+<li>Se descarga en tu computadora.</li>
+</ol>
+<h3 id="reportes-rapidos-desde-aqui">Reportes rápidos desde aquí</h3>
+<p>Las cuatro tarjetas de arriba (Total Ventas, Cantidad, Completadas, Pendientes) son un mini-reporte. Si necesitás un análisis más profundo, andá a la sección <a href="#18-reportes">Reportes</a>.</p>
+<h3 id="buenas-practicas">Buenas prácticas</h3>
+<ul>
+<li>⏰ <strong>Registrá las ventas en el momento</strong>. No las dejes para "más tarde", porque después no te acordás de los detalles.</li>
+<li>💵 <strong>Verificá el método de pago</strong>. Es el dato que más se equivoca y el que más problemas trae a fin de mes.</li>
+<li>📝 <strong>Usá el campo de notas</strong>. Anotá cosas que después vas a necesitar (ej.: "Pagó con billetes de baja denominación, verificar mañana").</li>
+<li>🧾 <strong>Imprimí o exportá la factura</strong> siempre que el cliente la pida. Queda como comprobante.</li>
+</ul>
+<p><hr/></p>
+<h2 id="12-cotizaciones">12. Cotizaciones</h2>
+<blockquote>
+<p>📝 <strong>Presupuestos sin compromiso</strong>: le das un precio al cliente, pero no le cobrás hasta que acepte.</p>
+</blockquote>
+<p><img alt="Listado de cotizaciones" src="images/08a-quotations-list.png" loading="lazy" /></p>
+<p>La cotización es como una "venta en pausa". Sirve para:</p>
+<ul>
+<li>📞 <strong>Cuando un cliente te llama y pregunta precios</strong> pero todavía no se decidió a comprar.</li>
+<li>🛠️ <strong>Cuando un mecánico te pide un presupuesto</strong> de varios repuestos para un arreglo.</li>
+<li>💼 <strong>Para empresas</strong> que necesitan una aprobación interna antes de comprar.</li>
+</ul>
+<p>La diferencia con una venta: la cotización <strong>no descuenta stock</strong> y <strong>no genera caja</strong>. Solo cuando el cliente dice "dale, lo compro" la convertís en venta.</p>
+<h3 id="estados-de-una-cotizacion">Estados de una cotización</h3>
+<ul>
+<li>🟢 <strong>Activa</strong>: la cotización es vigente (todavía no venció y no se convirtió en venta).</li>
+<li>🟡 <strong>Vencida</strong>: pasó la fecha de validez y nadie la convirtió.</li>
+<li>🔵 <strong>Convertida</strong>: ya se transformó en una venta. Queda en el historial para referencia.</li>
+</ul>
+<h3 id="como-crear-una-cotizacion">Cómo crear una cotización</h3>
+<p><img alt="Formulario de cotización" src="images/08b-quotation-form.png" loading="lazy" /></p>
+<ol>
+<li>Hacé clic en <strong>"+ Nueva cotización"</strong>.</li>
+<li>Completá:</li>
+</ol>
+<p>   - <strong>Cliente</strong> <em>(opcional)</em>: si ya lo tenés cargado, elegilo. Si es un cliente nuevo o anónimo, podés dejarlo en blanco o escribir el nombre en "Cliente externo".    - <strong>Vendedor</strong>: quién la armó (normalmente vos, pero podés cambiarla).    - <strong>Productos</strong>: agregá los productos y cantidades, igual que en una venta.    - <strong>Descuento</strong> e <strong>impuestos</strong> <em>(opcional)</em>.    - <strong>Válida hasta</strong>: indicá hasta qué fecha la cotización es válida. Por defecto son 15 días. Pasada esa fecha, aparece como "Vencida" automáticamente.    - <strong>Notas</strong> <em>(opcional)</em>: condiciones especiales, observaciones.</p>
+<ol>
+<li>Hacé clic en <strong>"Guardar cotización"</strong>.</li>
+</ol>
+<h3 id="que-pasa-cuando-el-cliente-acepta">Qué pasa cuando el cliente acepta</h3>
+<ol>
+<li>Abrí la cotización desde la lista (clic en 👁️ Ver).</li>
+<li>Hacé clic en <strong>"Convertir a venta"</strong>.</li>
+<li>La app abre la venta con los mismos productos y precios. Confirmá el método de pago y listo: la cotización queda como "Convertida" y la venta queda registrada.</li>
+</ol>
+<blockquote>
+<p>💡 <strong>Tip</strong>: si el cliente acepta después de la fecha de vencimiento, igualmente podés convertirla. La app te avisa que está vencida pero te deja continuar.</p>
+</blockquote>
+<h3 id="otras-acciones-sobre-cotizaciones">Otras acciones sobre cotizaciones</h3>
+<ul>
+<li>✏️ <strong>Editar</strong>: cambiar productos, cantidades o precios (solo si está Activa).</li>
+<li>📋 <strong>Duplicar</strong>: crear una nueva cotización idéntica (útil para clientes similares).</li>
+<li>🖨️ <strong>Imprimir / PDF</strong>: generar el presupuesto en PDF para mandar al cliente.</li>
+<li>🗑️ <strong>Eliminar</strong>: borrar la cotización (cuidado, no se puede deshacer).</li>
+</ul>
+<h3 id="filtros-de-la-lista">Filtros de la lista</h3>
+<ul>
+<li><strong>Estado</strong>: Activas, Vencidas, Convertidas, Todas.</li>
+<li><strong>Rango de fechas</strong>.</li>
+<li><strong>Cliente</strong> o <strong>vendedor</strong>.</li>
+</ul>
+<h3 id="buenas-practicas">Buenas prácticas</h3>
+<ul>
+<li>📅 <strong>Poné siempre fecha de vencimiento</strong>. Sin fecha, la cotización queda activa para siempre y nadie la cierra.</li>
+<li>🖨️ <strong>Mandá el PDF al cliente</strong> por WhatsApp o email. Es más profesional que pasarle el número de memoria.</li>
+<li>🔄 <strong>No acumules cotizaciones viejas</strong>. Las que ya no sirven, eliminalas o marcalas como tales.</li>
+</ul>
+<p><hr/></p>
+<h2 id="13-compras">13. Compras</h2>
+<blockquote>
+<p>📥 <strong>Cuando vos le comprás a tu proveedor</strong>: registrar el ingreso de mercadería a tu depósito.</p>
+</blockquote>
+<p><img alt="Listado de compras" src="images/07a-purchases-list.png" loading="lazy" /></p>
+<p>Cada vez que le comprás mercadería a un proveedor, tenés que registrar la compra en el sistema. Eso te permite:</p>
+<ul>
+<li>📦 <strong>Actualizar el stock</strong> automáticamente (cuando la marcás como "Recibida").</li>
+<li>💰 <strong>Llevar el control de lo que pagaste</strong> y a quién.</li>
+<li>📊 <strong>Saber a quién le comprás más</strong> y cuánto gastás en mercadería por mes.</li>
+<li>💳 <strong>Registrar las deudas</strong> con proveedores (compras a crédito).</li>
+</ul>
+<h3 id="estados-de-una-compra">Estados de una compra</h3>
+<ul>
+<li>🟡 <strong>Pendiente</strong>: la compra está registrada pero todavía no recibiste la mercadería.</li>
+<li>🟢 <strong>Recibida</strong>: ya tenés la mercadería en tu depósito. <strong>El stock ya se actualizó</strong>.</li>
+<li>🔴 <strong>Cancelada</strong>: la compra no se concretó (por ejemplo, el proveedor no tenía stock).</li>
+</ul>
+<h3 id="como-registrar-una-compra-nueva">Cómo registrar una compra nueva</h3>
+<p><img alt="Formulario de compra" src="images/07b-purchase-form.png" loading="lazy" /></p>
+<ol>
+<li>Hacé clic en <strong>"+ Nueva compra"</strong>.</li>
+<li>Completá:</li>
+</ol>
+<p>   - <strong>Proveedor</strong>: elegí de la lista. Si no existe, crealo en el momento.    - <strong>Fecha</strong>: día de la compra.    - <strong>Productos</strong>: agregá los productos que compraste, indicando cantidad y <strong>precio de compra unitario</strong>.    - <strong>Descuento</strong> e <strong>impuestos</strong> <em>(opcional)</em>.    - <strong>Método de pago</strong>:      - <strong>Efectivo</strong>: pagás con plata de la caja.      - <strong>Transferencia</strong>: le transferiste al proveedor.      - <strong>QR</strong>: pagaste con código QR.      - <strong>Crédito</strong>: te quedás debiendo. Queda registrado en "Créditos a proveedores" (ver <a href="#17-créditos-a-proveedores">sección 17</a>).    - <strong>Notas</strong> <em>(opcional)</em>: número de factura del proveedor, observaciones, fecha de entrega, etc.</p>
+<ol>
+<li>Elegí el estado inicial:</li>
+</ol>
+<p>   - <strong>Pendiente</strong>: la vas a recibir después. No descuenta el stock todavía.    - <strong>Recibida</strong>: la mercadería ya está en tu depósito. <strong>Suma el stock automáticamente</strong>.</p>
+<ol>
+<li>Hacé clic en <strong>"Guardar compra"</strong>.</li>
+</ol>
+<h3 id="cambiar-el-estado-de-una-compra">Cambiar el estado de una compra</h3>
+<p>Una compra Pendiente puede pasar a <strong>Recibida</strong> cuando efectivamente te entregan la mercadería:</p>
+<ol>
+<li>Abrí la compra (clic en 👁️ Ver).</li>
+<li>Hacé clic en <strong>"Marcar como recibida"</strong>.</li>
+<li>Confirmá. El stock se actualiza en el momento.</li>
+</ol>
+<p>Si por algún motivo la compra no se concreta, podés <strong>cancelarla</strong> (desde el menú de acciones).</p>
+<h3 id="acciones-sobre-una-compra">Acciones sobre una compra</h3>
+<ul>
+<li>👁️ <strong>Ver detalles</strong>: productos, totales, notas, quién la hizo.</li>
+<li>✏️ <strong>Editar</strong>: modificar la compra (solo Pendientes).</li>
+<li>📦 <strong>Marcar como recibida</strong>: si estaba Pendiente, pasarla a Recibida.</li>
+<li>🖨️ <strong>Imprimir / PDF</strong>: exportar el comprobante.</li>
+<li>🗑️ <strong>Cancelar</strong>: si no se concretó.</li>
+</ul>
+<h3 id="sobre-la-caja">⚠️ Sobre la caja</h3>
+<p>Si la compra la pagás en <strong>efectivo</strong>, la caja del día tiene que estar <strong>abierta</strong>. El monto se descuenta automáticamente de la caja al confirmar la compra.</p>
+<h3 id="filtros-de-la-lista">Filtros de la lista</h3>
+<ul>
+<li>🔍 <strong>Buscar</strong>: por proveedor, número de factura, notas.</li>
+<li><strong>Estado</strong>: Pendientes, Recibidas, Canceladas, Todas.</li>
+<li><strong>Rango de fechas</strong>.</li>
+</ul>
+<h3 id="buenas-practicas">Buenas prácticas</h3>
+<ul>
+<li>📋 <strong>Cargá el número de factura</strong> del proveedor en el campo de notas. Si después hay un reclamo, lo necesitás.</li>
+<li>🕐 <strong>Marcá como recibida apenas llegue la mercadería</strong>. No la dejes "pendiente" por semanas, porque el stock no se actualiza.</li>
+<li>💵 <strong>Revisá los pagos</strong> de las compras a crédito. Que no se te acumulen deudas sin darte cuenta.</li>
+</ul>
+<p><hr/></p>
+<h2 id="14-caja-diaria">14. Caja diaria</h2>
+<blockquote>
+<p>💵 <strong>El corazón financiero del día</strong>: la caja es donde se registra toda la plata que entra y sale en efectivo.</p>
+</blockquote>
+<p><img alt="Pantalla de caja" src="images/12-cash.png" loading="lazy" /></p>
+<p>La caja funciona como una "bolsa virtual" de efectivo. Cada día, cuando abrís el local, abrís la caja con un monto inicial. A lo largo del día, cada venta en efectivo se suma, cada gasto se resta. Al final del día, cerrás la caja y hacés el arqueo (el conteo físico de la plata).</p>
+<h3 id="estados-de-la-caja">Estados de la caja</h3>
+<ul>
+<li>🔴 <strong>Cerrada</strong>: el día no empezó. Tenés que abrirla.</li>
+<li>🟢 <strong>Abierta</strong>: el día está en curso. Podés registrar ventas y gastos.</li>
+<li>🟡 <strong>Cerrada (histórico)</strong>: días anteriores. Solo para consulta.</li>
+</ul>
+<h3 id="como-abrir-la-caja-al-comenzar-el-dia">Cómo abrir la caja al comenzar el día</h3>
+<ol>
+<li>Andá a <strong>Caja Diaria</strong> desde el menú lateral.</li>
+<li>Si la caja está cerrada, vas a ver el botón <strong>"Abrir caja"</strong>.</li>
+<li>Hacé clic. Se abre un formulario.</li>
+<li>Indicá el <strong>monto inicial</strong>: cuánta plata hay en la caja al empezar (puede ser cero).</li>
+<li>Opcionalmente, escribí una <strong>nota</strong> (ej.: "Apertura normal", "Incluye $5.000 de cambio").</li>
+<li>Hacé clic en <strong>"Confirmar apertura"</strong>.</li>
+<li>La caja queda abierta. Arriba vas a ver el saldo actual, los ingresos y los egresos del día.</li>
+</ol>
+<h3 id="que-pasa-durante-el-dia">¿Qué pasa durante el día?</h3>
+<p>Mientras la caja está abierta, la app registra automáticamente:</p>
+<ul>
+<li>➕ <strong>Ingresos</strong>: cada venta cobrada en efectivo.</li>
+<li>➖ <strong>Egresos</strong>: cada gasto pagado en efectivo, cada retiro de caja.</li>
+<li>📊 <strong>Saldo actual</strong>: el monto inicial + ingresos - egresos.</li>
+</ul>
+<blockquote>
+<p>💡 Las ventas con tarjeta, transferencia o QR <strong>no</strong> se contabilizan en la caja (van directo al banco).</p>
+</blockquote>
+<h3 id="como-hacer-un-retiro-de-caja">Cómo hacer un retiro de caja</h3>
+<p>A veces necesitás sacar plata de la caja para pagar algo en el momento (ej.: el flete, un arreglo chico). Eso se registra como <strong>retiro</strong>:</p>
+<ol>
+<li>Desde la pantalla de Caja Diaria, con la caja abierta, hacé clic en <strong>"Retiro de caja"</strong> o <strong>"+ Nuevo retiro"</strong>.</li>
+<li>Indicá el <strong>monto</strong> y un <strong>motivo</strong> (obligatorio, para auditoría).</li>
+<li>Hacé clic en <strong>"Registrar retiro"</strong>.</li>
+</ol>
+<blockquote>
+<p>💡 El motivo queda en el historial. Esto te sirve para entender después en qué se fue la plata si hay dudas.</p>
+</blockquote>
+<h3 id="como-cerrar-la-caja-al-final-del-dia">Cómo cerrar la caja al final del día</h3>
+<blockquote>
+<p>⚠️ <strong>Es el paso más importante del día</strong>. No te vayas del local sin cerrar la caja.</p>
+</blockquote>
+<ol>
+<li>Hacé clic en <strong>"Cerrar caja"</strong>.</li>
+<li>Se abre un formulario de cierre. Te pide:</li>
+</ol>
+<p>   - <strong>Monto declarado</strong>: cuánta plata contaste físicamente en la caja.    - <strong>Notas</strong> <em>(opcional)</em>: observaciones (ej.: "Faltante de $200, posible error de vuelto").</p>
+<ol>
+<li>La app calcula la <strong>diferencia</strong> entre lo que dice el sistema y lo que declaraste.</li>
+<li>Si todo está OK, hacé clic en <strong>"Confirmar cierre"</strong>.</li>
+<li>La caja queda cerrada. Aparece en el historial como un "registro cerrado".</li>
+</ol>
+<h3 id="que-pasa-si-la-diferencia-no-da-cero">⚠️ ¿Qué pasa si la diferencia no da cero?</h3>
+<p>Puede pasar que sobre o falte plata. La app te avisa:</p>
+<ul>
+<li><strong>Sobra plata</strong>: el sistema registró menos ingresos de los que realmente hubo (o un gasto de más). Revisá ventas y gastos del día.</li>
+<li><strong>Falta plata</strong>: al revés, el sistema registró más ingresos de los que hubo (o falta registrar un gasto).</li>
+</ul>
+<p>Lo importante es que la <strong>diferencia quede asentada en las notas</strong> para que después sepas qué pasó.</p>
+<h3 id="ver-el-historial-de-cajas">Ver el historial de cajas</h3>
+<p>Podés ver todos los días anteriores con su apertura, ingresos, egresos, cierre y notas. Filtrá por fecha o por usuario que la abrió.</p>
+<h3 id="importante">⚠️ Importante</h3>
+<p>Mientras la caja está <strong>cerrada</strong>, no podés:</p>
+<ul>
+<li>Registrar ventas en efectivo.</li>
+<li>Registrar gastos pagados en efectivo.</li>
+<li>Hacer retiros de caja.</li>
+</ul>
+<p>Sí podés registrar ventas con tarjeta, transferencia o QR.</p>
+<blockquote>
+<p>💡 <strong>Tip</strong>: si necesitás un adelanto o un gasto chico fuera del horario, abrí y cerrá la caja en el momento. Cada operación queda registrada con su horario.</p>
+</blockquote>
+<p><hr/></p>
+<h2 id="15-gastos">15. Gastos</h2>
+<blockquote>
+<p>💸 <strong>Adónde se va la plata que no es de mercadería</strong>: alquiler, servicios, sueldos, fletes, etc.</p>
+</blockquote>
+<p><img alt="Listado de gastos" src="images/13a-expenses-list.png" loading="lazy" /></p>
+<p>Los gastos son todas las salidas de dinero del negocio que <strong>no son compras de mercadería</strong> (las compras se registran aparte, en la sección Compras). Ejemplos típicos:</p>
+<ul>
+<li>🏠 Alquiler del local</li>
+<li>⚡ Servicios (luz, gas, agua, internet)</li>
+<li>💼 Sueldos</li>
+<li>📢 Marketing y publicidad</li>
+<li>🚚 Fletes y transporte</li>
+<li>🔧 Mantenimiento del local</li>
+<li>🧾 Impuestos</li>
+</ul>
+<h3 id="por-que-es-importante-cargarlos">¿Por qué es importante cargarlos?</h3>
+<p>Porque te permite ver con claridad <strong>a dónde se va la plata</strong>. Si solo registrás ventas, pensás que ganás mucho. Pero cuando sumás todos los gastos, te das cuenta de que la ganancia real es otra. Por eso, el reporte de gastos es uno de los más consultados.</p>
+<h3 id="como-registrar-un-gasto">Cómo registrar un gasto</h3>
+<p><img alt="Formulario de gasto" src="images/13b-expense-form.png" loading="lazy" /></p>
+<ol>
+<li>Hacé clic en <strong>"+ Nuevo gasto"</strong>.</li>
+<li>Completá:</li>
+</ol>
+<p>   - <strong>Fecha</strong>: cuándo se hizo el gasto.    - <strong>Descripción</strong>: qué pagaste (ej.: "Pago de luz del mes de noviembre", "Flete desde Córdoba").    - <strong>Monto</strong>: cuánto pagaste.    - <strong>Categoría</strong>: de la lista (Servicios, Alquiler, Salarios, Marketing, Transporte, Mantenimiento, u otra).    - <strong>Responsable</strong>: quién hizo o autorizó el gasto (por defecto, vos).    - <strong>Notas</strong> <em>(opcional)</em>: número de factura, número de operación, etc.</p>
+<ol>
+<li>Hacé clic en <strong>"Guardar"</strong>.</li>
+</ol>
+<h3 id="sobre-la-caja">⚠️ Sobre la caja</h3>
+<p>Si el gasto se paga en <strong>efectivo</strong>, la caja tiene que estar <strong>abierta</strong> y el monto se descuenta automáticamente. Si se paga con tarjeta o transferencia, no impacta en la caja.</p>
+<h3 id="filtros">Filtros</h3>
+<ul>
+<li><strong>Categoría</strong>: ver solo gastos de un tipo (ej.: todos los alquileres).</li>
+<li><strong>Rango de fechas</strong>.</li>
+<li><strong>Responsable</strong>.</li>
+</ul>
+<h3 id="buenas-practicas">Buenas prácticas</h3>
+<ul>
+<li>📅 <strong>Cargá los gastos el mismo día</strong> que los hacés. Después no te acordás.</li>
+<li>📋 <strong>Guardá la factura o comprobante</strong> (en papel o foto). Si te cuestionan un gasto, lo necesitás.</li>
+<li>🏷️ <strong>Usá bien las categorías</strong>. Si todas las pusiste en "Otros", el reporte no te sirve para nada.</li>
+</ul>
+<p><hr/></p>
+<h2 id="16-creditos-a-clientes">16. Créditos a clientes</h2>
+<blockquote>
+<p>💳 <strong>Las ventas a cuenta que te tienen que pagar</strong>: acá llevás el control de quién te debe y cuánto.</p>
+</blockquote>
+<p><img alt="Listado de créditos" src="images/14a-credits-list.png" loading="lazy" /></p>
+<p>Un crédito se genera cuando le vendés a un cliente y elegís "Crédito" como método de pago. La mercadería se la lleva en el momento, pero te paga después (en una fecha acordada, o en cuotas).</p>
+<h3 id="estados-de-un-credito">Estados de un crédito</h3>
+<ul>
+<li>🟡 <strong>Pendiente</strong>: el cliente todavía no pagó nada, o pagó solo una parte.</li>
+<li>🟢 <strong>Pagado</strong>: el cliente pagó todo. El crédito está cerrado.</li>
+<li>🔴 <strong>Vencido</strong>: pasó la fecha de vencimiento y todavía no se pagó. La app lo marca en rojo para que prestes atención.</li>
+</ul>
+<h3 id="informacion-que-muestra-la-pantalla">Información que muestra la pantalla</h3>
+<p>Arriba de la lista tenés <strong>tarjetas resumen</strong>:</p>
+<ul>
+<li>💰 <strong>Deuda total</strong>: cuánto te deben todos los clientes juntos.</li>
+<li>🔴 <strong>Vencidos</strong>: cuánto te deben los créditos que ya pasaron de fecha.</li>
+<li>🟡 <strong>Pendientes</strong>: cuánto te deben los que todavía están a tiempo.</li>
+<li>🟢 <strong>Cobrados este mes</strong>: cuánto cobraste en el mes en curso.</li>
+</ul>
+<h3 id="ver-el-detalle-de-un-credito">Ver el detalle de un crédito</h3>
+<p><img alt="Detalle de un crédito" src="images/14b-credit-detail.png" loading="lazy" /></p>
+<ol>
+<li>Hacé clic en el crédito que querés ver (o en el ícono 👁️).</li>
+<li>Se abre la ficha con:</li>
+</ol>
+<p>   - <strong>Datos del cliente</strong> y de la venta original.    - <strong>Monto total</strong>, <strong>saldo pendiente</strong>, <strong>fecha de vencimiento</strong>.    - <strong>Línea de tiempo de pagos</strong> (timeline): cada pago registrado, con fecha, monto y método.</p>
+<ol>
+<li>Desde ahí podés registrar un nuevo pago o imprimir un recibo.</li>
+</ol>
+<h3 id="como-registrar-un-pago-cobro">Cómo registrar un pago (cobro)</h3>
+<blockquote>
+<p>💡 Es el momento en que el cliente te paga una parte (o todo) de la deuda.</p>
+</blockquote>
+<ol>
+<li>Abrí el crédito (clic en 👁️ Ver).</li>
+<li>Hacé clic en <strong>"Registrar pago"</strong> o <strong>"+ Nuevo pago"</strong>.</li>
+<li>Se abre un formulario:</li>
+</ol>
+<p>   - <strong>Monto</strong>: cuánto te paga. Por defecto aparece el saldo pendiente; podés cambiarlo si paga solo una parte.    - <strong>Fecha</strong>: del pago.    - <strong>Método de pago</strong>: Efectivo, Transferencia o QR.    - <strong>Referencia</strong> <em>(opcional)</em>: número de transferencia, número de operación, etc.    - <strong>Notas</strong> <em>(opcional)</em>: observaciones.</p>
+<ol>
+<li>Hacé clic en <strong>"Confirmar pago"</strong>.</li>
+<li>El pago aparece en la línea de tiempo del crédito. El saldo pendiente se actualiza.</li>
+<li>Si el pago cubre toda la deuda, el crédito pasa a estado <strong>Pagado</strong> automáticamente.</li>
+</ol>
+<h3 id="sobre-la-caja">⚠️ Sobre la caja</h3>
+<p>Si el cliente paga en <strong>efectivo</strong>, la caja del día tiene que estar <strong>abierta</strong> y el monto se suma automáticamente a la caja.</p>
+<h3 id="imprimir-o-exportar-el-recibo-de-pago">Imprimir o exportar el recibo de pago</h3>
+<p>Después de registrar un pago (o en cualquier momento), podés generar un comprobante:</p>
+<ol>
+<li>Hacé clic en <strong>"Imprimir recibo"</strong> o <strong>"Exportar PDF"</strong>.</li>
+<li>Se genera un PDF con los datos del cliente, del crédito y del pago.</li>
+<li>Descargá el PDF, imprimilo o mandáselo al cliente por WhatsApp.</li>
+</ol>
+<h3 id="filtros-del-listado">Filtros del listado</h3>
+<ul>
+<li><strong>Estado</strong>: Pendientes, Pagados, Vencidos, Todos.</li>
+<li><strong>Cliente</strong>.</li>
+<li><strong>Rango de fechas</strong> (por fecha de creación o de vencimiento).</li>
+</ul>
+<h3 id="buenas-practicas">Buenas prácticas</h3>
+<ul>
+<li>📅 <strong>Definí siempre la fecha de vencimiento</strong> al crear el crédito. Sin fecha, la app no te avisa cuando se vence.</li>
+<li>📞 <strong>Llamá o mandale un WhatsApp</strong> al cliente unos días antes del vencimiento. Es más cordial y reduce la mora.</li>
+<li>🧾 <strong>Dales recibo por cada pago</strong>. Aunque sea un pago chico, dejá constancia.</li>
+<li>🚫 <strong>No acumules créditos viejos</strong>. Si un cliente te debe hace 6 meses, cortale el crédito y pedíle que regularice.</li>
+</ul>
+<p><hr/></p>
+<h2 id="17-creditos-a-proveedores">17. Créditos a proveedores</h2>
+<blockquote>
+<p>🏦 <strong>Lo que vos le debés a tus proveedores</strong>: el otro lado de los créditos.</p>
+</blockquote>
+<p><img alt="Listado de créditos a proveedores" src="images/15-purchase-credits.png" loading="lazy" /></p>
+<p>Funciona igual que los créditos a clientes, pero al revés: son las compras que hiciste y todavía no pagaste.</p>
+<h3 id="cuando-se-genera">¿Cuándo se genera?</h3>
+<p>Cuando en una <strong>compra</strong> elegís el método de pago <strong>"Crédito"</strong>, la app crea automáticamente un crédito a proveedor con la fecha de vencimiento que indiques.</p>
+<h3 id="que-podes-hacer-aca">¿Qué podés hacer acá?</h3>
+<ul>
+<li>📋 <strong>Ver todos los créditos pendientes</strong> con cada proveedor.</li>
+<li>💰 <strong>Registrar pagos</strong> cuando le pagás al proveedor.</li>
+<li>🧾 <strong>Imprimir recibos de pago</strong>.</li>
+<li>📊 <strong>Ver el total adeudado</strong> por proveedor.</li>
+</ul>
+<h3 id="registrar-un-pago-al-proveedor">Registrar un pago al proveedor</h3>
+<ol>
+<li>Abrí el crédito (clic en 👁️ Ver).</li>
+<li>Hacé clic en <strong>"Registrar pago"</strong>.</li>
+<li>Indicá el <strong>monto</strong> y el <strong>método de pago</strong> (Efectivo, Transferencia, QR).</li>
+<li>Hacé clic en <strong>"Confirmar"</strong>.</li>
+</ol>
+<blockquote>
+<p>⚠️ Si pagás en efectivo, la caja del día tiene que estar abierta y se descuenta automáticamente.</p>
+</blockquote>
+<h3 id="filtros">Filtros</h3>
+<p>Igual que en créditos a clientes: por estado, proveedor, fecha.</p>
+<h3 id="buenas-practicas">Buenas prácticas</h3>
+<ul>
+<li>💳 <strong>No abuses del crédito con proveedores</strong>. Si te atrasás mucho, te pueden cortar el suministro.</li>
+<li>📅 <strong>Pagá antes del vencimiento</strong>. Algunos proveedores cobran intereses o te penalizan.</li>
+<li>🧾 <strong>Guardá los comprobantes</strong> de cada transferencia o pago que hagas al proveedor.</li>
+</ul>
+<p><hr/></p>
+<h2 id="18-reportes">18. Reportes</h2>
+<blockquote>
+<p>📊 <strong>La radiografía completa de tu negocio</strong>: ventas, gastos, stock, productos más vendidos y más.</p>
+</blockquote>
+<p><img alt="Reportes - vista general" src="images/16a-reports-overview.png" loading="lazy" /></p>
+<p>La sección de Reportes es donde obtenés la <strong>visión panorámica</strong> del negocio. No es solo para el dueño: también le sirve al gerente para tomar decisiones (qué productos comprar, en qué horario hay más ventas, cuándo conviene hacer promos).</p>
+<h3 id="que-reportes-hay">¿Qué reportes hay?</h3>
+<p>En la parte superior de la pantalla tenés <strong>pestañas</strong> con los distintos tipos de reporte:</p>
+<ul>
+<li>📈 <strong>Ventas</strong>: por día, semana, mes, año. Comparación entre períodos.</li>
+<li>📉 <strong>Compras</strong>: cuánto compraste, a quién, en qué períodos.</li>
+<li>💸 <strong>Gastos</strong>: en qué se va la plata, agrupado por categoría.</li>
+<li>📦 <strong>Productos</strong>: los más vendidos, los menos vendidos, los que nunca se vendieron, los de mayor ganancia.</li>
+<li>👥 <strong>Clientes</strong>: los que más compran, los que más deben, los nuevos.</li>
+<li>💰 <strong>Caja</strong>: evolución diaria del efectivo.</li>
+</ul>
+<h3 id="filtros-comunes-a-todos-los-reportes">Filtros comunes a todos los reportes</h3>
+<ul>
+<li>📅 <strong>Rango de fechas</strong>: elegí desde-hasta, o usá los atajos (Hoy, Esta semana, Este mes, Este año).</li>
+<li>📊 <strong>Tipo de gráfico</strong>: a veces podés elegir entre líneas, barras, torta.</li>
+<li>📤 <strong>Exportar</strong>: bajá el reporte como <strong>PDF</strong> o <strong>Excel</strong> para mandárselo a la contadora o guardarlo.</li>
+</ul>
+<h3 id="reportes-mas-usados-y-para-que-sirven">Reportes más usados (y para qué sirven)</h3>
+<h4 id="ventas">Ventas</h4>
+<ul>
+<li><strong>Para qué sirve</strong>: ver la tendencia. Si suben, todo bien. Si bajan, hay que tomar acción.</li>
+<li><strong>Métricas clave</strong>: total vendido, cantidad de ventas, ticket promedio (cuánto gasta cada cliente en promedio), mejor día de la semana.</li>
+</ul>
+<h4 id="compras">Compras</h4>
+<ul>
+<li><strong>Para qué sirve</strong>: controlar el gasto en mercadería y ver a qué proveedores se les compra más.</li>
+<li><strong>Métricas clave</strong>: total comprado, cantidad de órdenes, principales proveedores, productos más comprados.</li>
+</ul>
+<h4 id="gastos">Gastos</h4>
+<ul>
+<li><strong>Para qué sirve</strong>: entender en qué se va la plata que NO es mercadería.</li>
+<li><strong>Métricas clave</strong>: gasto total, principales categorías, comparación mes a mes.</li>
+</ul>
+<h4 id="productos">Productos</h4>
+<ul>
+<li><strong>Para qué sirve</strong>: saber qué productos rotan bien y cuáles son "lengua muerta" (que ocupan lugar en el depósito y no se venden).</li>
+<li><strong>Métricas clave</strong>: top 10 más vendidos, top 10 menos vendidos, productos sin ventas en X meses, productos con stock crítico.</li>
+</ul>
+<h4 id="clientes">Clientes</h4>
+<ul>
+<li><strong>Para qué sirve</strong>: identificar a tus mejores clientes y a los que más te deben.</li>
+<li><strong>Métricas clave</strong>: top 10 clientes por monto, clientes con créditos vencidos, clientes nuevos del mes.</li>
+</ul>
+<h3 id="comparacion-entre-periodos">Comparación entre períodos</h3>
+<p><img alt="Reportes - detalle" src="images/16b-reports-detail.png" loading="lazy" /></p>
+<p>En la parte superior de cada reporte, a veces tenés la opción de <strong>comparar dos períodos</strong> (ej.: este mes vs. el mes pasado). Te muestra una flecha verde (subió) o roja (bajó) según la variación.</p>
+<h3 id="como-exportar-un-reporte">Cómo exportar un reporte</h3>
+<ol>
+<li>Aplicá los filtros que querés.</li>
+<li>Hacé clic en <strong>"Exportar"</strong> (esquina superior derecha).</li>
+<li>Elegí el formato: <strong>PDF</strong> (visual, para presentar) o <strong>Excel</strong> (analizable, para la contadora).</li>
+<li>Se descarga el archivo. Listo para mandar por email o imprimir.</li>
+</ol>
+<h3 id="buenas-practicas">Buenas prácticas</h3>
+<ul>
+<li>📅 <strong>Mirá los reportes al menos una vez por semana</strong>. Es mejor detectar un problema a tiempo.</li>
+<li>🗓️ <strong>Hacé un "cierre mensual"</strong>. Exportá los reportes del mes y guardalos en una carpeta. Después te sirve para la declaración de impuestos.</li>
+<li>📊 <strong>No te quedes solo con el reporte de ventas</strong>. Los gastos y el stock bajo también son señales de alerta.</li>
+<li>💡 <strong>Tomá decisiones con datos</strong>. Si un producto no se vende hace 6 meses, considerá hacer una promo o dejar de comprarlo.</li>
+</ul>
+<p><hr/></p>
+<h2 id="19-sincronizacion">19. Sincronización</h2>
+<blockquote>
+<p>☁️ <strong>Mantener la misma información en la nube y en tu computadora</strong>: este es el módulo de sincronización.</p>
+</blockquote>
+<p><img alt="Pantalla de sincronización" src="images/20-sync.png" loading="lazy" /></p>
+<p>Esta sección es <strong>técnica por naturaleza</strong>, pero acá te la explicamos en simple.</p>
+<h3 id="que-es-la-sincronizacion">¿Qué es la sincronización?</h3>
+<p>Renault Reluz ERP puede funcionar de <strong>dos maneras</strong>:</p>
+<ol>
+<li><strong>En la nube (web)</strong>: los datos viven en un servidor. Si tenés varias computadoras, todas se conectan al mismo servidor y ven la misma información.</li>
+<li><strong>En tu computadora (escritorio)</strong>: los datos viven en tu propia máquina. Funciona perfecto sin internet.</li>
+</ol>
+<p>La <strong>sincronización</strong> es el proceso por el cual los datos que cargaste <strong>sin internet</strong> (en la versión escritorio) se suben a la nube cuando volvés a tener conexión. Y al revés: si trabajaste en otra máquina, los cambios se bajan a la tuya.</p>
+<h3 id="cuando-se-sincroniza-automaticamente">¿Cuándo se sincroniza automáticamente?</h3>
+<ul>
+<li>🟢 <strong>Cada vez que se abre o cierra la app</strong> (si hay internet).</li>
+<li>🟢 <strong>Periódicamente durante el uso</strong> (cada X minutos, según la configuración).</li>
+<li>🟢 <strong>Manualmente</strong> cuando vos lo decidas, desde esta pantalla.</li>
+</ul>
+<h3 id="como-se-si-hay-datos-pendientes-de-sincronizar">¿Cómo sé si hay datos pendientes de sincronizar?</h3>
+<p>En la parte superior de la pantalla de Sync vas a ver:</p>
+<ul>
+<li>📊 <strong>Operaciones pendientes</strong>: cuántas cosas (ventas, productos, clientes, etc.) todavía no se subieron a la nube.</li>
+<li>🕐 <strong>Última sincronización</strong>: cuándo fue la última vez que se sincronizó.</li>
+<li>📡 <strong>Estado de conexión</strong>: si estás conectado a internet o no.</li>
+</ul>
+<h3 id="como-sincronizar-manualmente">Cómo sincronizar manualmente</h3>
+<ol>
+<li>Asegurate de tener <strong>conexión a internet</strong>.</li>
+<li>Hacé clic en el botón <strong>"Sincronizar ahora"</strong> (esquina superior derecha).</li>
+<li>La app empieza a subir/bajar datos. Una barra de progreso te muestra cómo va.</li>
+<li>Cuando termina, te dice cuántas operaciones se sincronizaron correctamente y si hubo algún error.</li>
+</ol>
+<h3 id="el-log-de-sincronizacion">El log de sincronización</h3>
+<p>Abajo de la pantalla tenés el <strong>log</strong> (historial de sincronizaciones). Cada vez que se sincroniza, queda registrada:</p>
+<ul>
+<li>📅 Fecha y hora.</li>
+<li>👤 Qué usuario la disparó (o si fue automática).</li>
+<li>📤 Operaciones subidas.</li>
+<li>📥 Operaciones bajadas.</li>
+<li>⚠️ Errores (si los hubo).</li>
+</ul>
+<p>Es como la "caja negra" de la sincronización. Si alguna vez algo no aparece como debería, mirá el log.</p>
+<h3 id="conflictos">⚠️ Conflictos</h3>
+<p>A veces pasa que dos personas modificaron lo mismo al mismo tiempo (ej.: el vendedor A cambió el stock de un producto, y el comprador B también, en dos máquinas distintas). Cuando se sincroniza, la app detecta el conflicto y aplica una regla para resolverlo (por ejemplo, "gana la última modificación"). Si querés ver si hubo conflictos, están marcados en el log.</p>
+<h3 id="necesito-sincronizar">¿Necesito sincronizar?</h3>
+<ul>
+<li>👤 <strong>Si usás solo la versión web</strong>: no, la app sincroniza sola con el servidor.</li>
+<li>🖥️ <strong>Si usás la versión escritorio con internet</strong>: dejá la sincronización automática activada y listo.</li>
+<li>🖥️ <strong>Si usás la versión escritorio sin internet</strong>: sincronizá manualmente cuando vuelvas a tener conexión.</li>
+</ul>
+<blockquote>
+<p>💡 <strong>Tip</strong>: sincronizá al final del día, antes de irte. Así te asegurás de que todos los datos del día quedaron en la nube.</p>
+</blockquote>
+<p><hr/></p>
+<h2 id="20-usuarios">20. Usuarios</h2>
+<blockquote>
+<p>👥 <strong>Quién puede entrar a la app</strong>: el módulo de administración de usuarios.</p>
+</blockquote>
+<p><img alt="Listado de usuarios" src="images/17a-users-list.png" loading="lazy" /></p>
+<blockquote>
+<p>⚠️ <strong>Solo el rol Administrador puede ver y modificar usuarios.</strong> Si no ves esta sección en el menú, es porque tu usuario no tiene permisos para entrar.</p>
+</blockquote>
+<h3 id="para-que-sirve">¿Para qué sirve?</h3>
+<ul>
+<li>Dar de alta nuevos usuarios (vendedores, cajeros, otros administradores).</li>
+<li>Asignarles un <strong>rol</strong> (que define qué pueden hacer).</li>
+<li>Desactivar usuarios que ya no trabajan con vos.</li>
+<li>Ver quién hizo cada movimiento (auditoría).</li>
+</ul>
+<h3 id="datos-de-un-usuario">Datos de un usuario</h3>
+<ul>
+<li><strong>CI / DNI</strong>: documento de identidad (único, no se repite entre usuarios).</li>
+<li><strong>Nombre y apellido</strong>.</li>
+<li><strong>Email</strong>: se usa para iniciar sesión.</li>
+<li><strong>Contraseña</strong>: la que usa para entrar. (No se muestra nunca, ni siquiera al administrador.)</li>
+<li><strong>Teléfono</strong> y <strong>dirección</strong>.</li>
+<li><strong>Rol</strong>: Administrador, Vendedor, Compras, Supervisor u otro rol personalizado.</li>
+<li><strong>Estado</strong>: Activo (puede entrar) o Inactivo (no puede entrar, pero su historial queda).</li>
+</ul>
+<h3 id="como-crear-un-usuario-nuevo">Cómo crear un usuario nuevo</h3>
+<p><img alt="Formulario de usuario" src="images/17b-user-form.png" loading="lazy" /></p>
+<ol>
+<li>Hacé clic en <strong>"+ Nuevo usuario"</strong>.</li>
+<li>Completá los datos personales.</li>
+<li>Elegí el <strong>rol</strong>. Cada rol tiene permisos distintos, explicados en <a href="#21-roles">sección 21</a>.</li>
+<li>Definí una <strong>contraseña inicial</strong>. El usuario va a tener que usarla la primera vez; después puede cambiarla desde su perfil.</li>
+<li>Hacé clic en <strong>"Guardar"</strong>.</li>
+</ol>
+<h3 id="como-editar-un-usuario">Cómo editar un usuario</h3>
+<ol>
+<li>Hacé clic en el menú de tres puntos (⋮) → <strong>"Editar"</strong>.</li>
+<li>Modificá lo que necesites. El email y la contraseña son delicados, tené cuidado al cambiarlos.</li>
+<li>Hacé clic en <strong>"Guardar"</strong>.</li>
+</ol>
+<blockquote>
+<p>💡 Si necesitás resetearle la contraseña a un usuario, desde la edición podés asignarle una nueva. Avisale al usuario para que la cambie en su primer ingreso.</p>
+</blockquote>
+<h3 id="desactivar-vs-eliminar">Desactivar vs. eliminar</h3>
+<ul>
+<li><strong>Desactivar</strong>: el usuario no puede entrar más, pero su nombre sigue apareciendo en ventas y operaciones que hizo en el pasado. <strong>Es la opción recomendada</strong> cuando alguien deja de trabajar.</li>
+<li><strong>Eliminar</strong>: se borra completamente. <strong>Solo se puede si el usuario no tiene ventas, compras ni operaciones asociadas.</strong> En la mayoría de los casos, mejor desactivá.</li>
+</ul>
+<h3 id="cambiar-el-rol-de-un-usuario">Cambiar el rol de un usuario</h3>
+<p>Si un vendedor ascendió a supervisor, o un comprador pasó a vendedor:</p>
+<ol>
+<li>Editá el usuario.</li>
+<li>Cambiá el campo <strong>Rol</strong> por el nuevo.</li>
+<li>Guardá.</li>
+</ol>
+<p>Los permisos del nuevo rol se aplican de inmediato en su próximo inicio de sesión.</p>
+<p><hr/></p>
+<h2 id="21-roles">21. Roles</h2>
+<blockquote>
+<p>🎭 <strong>Agrupar permisos para no configurarlos uno por uno</strong>: un rol es un conjunto de permisos con un nombre.</p>
+</blockquote>
+<p><img alt="Listado de roles" src="images/18a-roles-list.png" loading="lazy" /></p>
+<p>En lugar de configurar permiso por permiso a cada usuario, le asignás un <strong>rol</strong>. Los roles más comunes son:</p>
+<table><thead><tr><th>Rol</th><th>Para qué se usa</th></tr></thead><tbody>
+<tr><td><strong>Administrador</strong></td><td>Dueño o gerente general. Tiene todos los permisos.</td></tr>
+<tr><td><strong>Vendedor</strong></td><td>Persona que atiende clientes y registra ventas.</td></tr>
+<tr><td><strong>Compras</strong></td><td>Persona que registra compras a proveedores.</td></tr>
+<tr><td><strong>Supervisor</strong></td><td>Encargado de un sector. Ve más cosas que un vendedor pero menos que el admin.</td></tr>
+<tr><td><strong>Invitado</strong></td><td>Acceso muy limitado, solo para demostraciones o pasantes.</td></tr>
+</tbody></table>
+<h3 id="roles-del-sistema-vs-roles-personalizados">Roles del sistema vs. roles personalizados</h3>
+<p>La app viene con <strong>4 roles predefinidos</strong> (Administrador, Vendedor, Compras, Supervisor). Estos no se pueden eliminar (son los "roles del sistema").</p>
+<p>Pero podés <strong>crear tus propios roles</strong> con permisos a medida. Por ejemplo, un rol "Cajero de turno mañana" o un rol "Solo lectura de reportes".</p>
+<h3 id="como-crear-un-rol-personalizado">Cómo crear un rol personalizado</h3>
+<p><img alt="Formulario de rol" src="images/18b-role-form.png" loading="lazy" /></p>
+<ol>
+<li>Hacé clic en <strong>"+ Nuevo rol"</strong>.</li>
+<li>Indicá:</li>
+</ol>
+<p>   - <strong>Nombre</strong>: cómo se va a llamar (ej.: "Vendedor de mostrador").    - <strong>Descripción</strong>: para qué se usa.    - <strong>Color</strong>: identificador visual.    - <strong>Permisos</strong>: tildá las casillas de las acciones que el rol puede hacer. Por ejemplo:      - ✅ Crear ventas      - ✅ Ver reportes      - ❌ Eliminar productos      - ❌ Administrar usuarios</p>
+<ol>
+<li>Hacé clic en <strong>"Guardar rol"</strong>.</li>
+</ol>
+<h3 id="eliminar-un-rol-personalizado">Eliminar un rol personalizado</h3>
+<ol>
+<li>Hacé clic en el menú de tres puntos (⋮) → <strong>"Eliminar"</strong>.</li>
+<li>La app te va a pedir que primero <strong>reasignes los usuarios</strong> que tengan ese rol a otro rol.</li>
+<li>Confirmá la eliminación.</li>
+</ol>
+<blockquote>
+<p>⚠️ Los roles del sistema (Administrador, Vendedor, Compras, Supervisor) <strong>no se pueden eliminar</strong>, solo desactivar.</p>
+</blockquote>
+<p><hr/></p>
+<h2 id="22-permisos">22. Permisos</h2>
+<blockquote>
+<p>🔐 <strong>El detalle fino de qué puede hacer cada rol</strong>: cada acción de la app se puede habilitar o deshabilitar por separado.</p>
+</blockquote>
+<p><img alt="Matriz de permisos" src="images/19-permissions.png" loading="lazy" /></p>
+<p>La pantalla de Permisos muestra, para cada rol, qué acciones puede hacer y cuáles no. Es como una <strong>matriz de roles × acciones</strong>.</p>
+<h3 id="que-tipo-de-acciones-se-controlan">¿Qué tipo de acciones se controlan?</h3>
+<p>A grandes rasgos:</p>
+<ul>
+<li><strong>Productos</strong>: ver, crear, editar, eliminar, ver precios.</li>
+<li><strong>Clientes</strong>: ver, crear, editar, eliminar.</li>
+<li><strong>Proveedores</strong>: ver, crear, editar, eliminar.</li>
+<li><strong>Ventas</strong>: ver, crear, editar, cancelar, ver de otros usuarios.</li>
+<li><strong>Compras</strong>: ver, crear, editar, cancelar.</li>
+<li><strong>Caja</strong>: abrir, cerrar, ver, hacer retiros.</li>
+<li><strong>Créditos</strong>: ver, registrar pagos.</li>
+<li><strong>Reportes</strong>: ver, exportar.</li>
+<li><strong>Usuarios y roles</strong>: administrar.</li>
+<li><strong>Sincronización</strong>: forzar.</li>
+</ul>
+<h3 id="como-se-modifican-los-permisos">¿Cómo se modifican los permisos?</h3>
+<ol>
+<li>Elegí el rol que querés modificar.</li>
+<li>La pantalla te muestra la lista de permisos con checks verdes (permitido) o rojos (denegado).</li>
+<li>Tildá o destildá lo que quieras cambiar.</li>
+<li>Hacé clic en <strong>"Guardar cambios"</strong>.</li>
+</ol>
+<blockquote>
+<p>⚠️ <strong>Cuidado</strong>: si le quitás permisos al rol Administrador, podrías quedarte sin nadie que pueda hacer tareas críticas. Te recomendamos crear un nuevo rol personalizado antes que modificar el de Administrador.</p>
+</blockquote>
+<h3 id="por-que-es-importante-configurar-bien-los-permisos">¿Por qué es importante configurar bien los permisos?</h3>
+<ul>
+<li>🔒 <strong>Seguridad</strong>: el vendedor no necesita ver cuánto ganás. El cajero no necesita poder eliminar productos. Cada uno ve solo lo que necesita.</li>
+<li>🚫 <strong>Evitar errores</strong>: si alguien sin experiencia tiene permiso de eliminar ventas, puede borrar ventas reales por accidente.</li>
+<li>📋 <strong>Auditoría</strong>: si cada usuario tiene sus permisos claros, cuando hay un error sabés exactamente quién pudo haber sido.</li>
+</ul>
+<h3 id="buenas-practicas">Buenas prácticas</h3>
+<ul>
+<li>👤 <strong>Asigná el rol más restrictivo que sirva</strong>. Si el vendedor no necesita ver reportes, no le des ese permiso.</li>
+<li>📝 <strong>Documentá los permisos</strong> que tiene cada rol. Anotalo en una hoja para tu referencia.</li>
+<li>🔄 <strong>Revisá los permisos periódicamente</strong>. Si cambia la estructura del equipo, actualizá los roles.</li>
+</ul>
+<p><hr/></p>
+<h2 id="23-mi-perfil">23. Mi perfil</h2>
+<blockquote>
+<p>👤 <strong>Tus datos personales y configuración de la cuenta</strong>.</p>
+</blockquote>
+<p><img alt="Pantalla de perfil" src="images/21-profile.png" loading="lazy" /></p>
+<p>En esta pantalla podés:</p>
+<h3 id="ver-y-editar-tus-datos-personales">Ver y editar tus datos personales</h3>
+<ul>
+<li><strong>Nombre, apellido, teléfono, dirección</strong>: son los datos que ven los demás usuarios cuando hacés una venta, compra, etc.</li>
+<li><strong>Foto de perfil</strong>: hacé clic en el ícono de cámara para subir una foto tuya.</li>
+</ul>
+<h3 id="cambiar-tu-contrasena">Cambiar tu contraseña</h3>
+<ol>
+<li>Hacé clic en <strong>"Cambiar contraseña"</strong>.</li>
+<li>Escribí tu <strong>contraseña actual</strong> (por seguridad).</li>
+<li>Escribí la <strong>nueva contraseña</strong> dos veces.</li>
+<li>Hacé clic en <strong>"Guardar"</strong>.</li>
+</ol>
+<blockquote>
+<p>🔒 <strong>Importante</strong>: tu nueva contraseña tiene que tener al menos 8 caracteres y conviene que combine letras, números y símbolos. No uses tu nombre ni tu fecha de nacimiento.</p>
+</blockquote>
+<h3 id="cerrar-sesion">Cerrar sesión</h3>
+<ol>
+<li>Hacé clic en tu <strong>nombre de usuario</strong> (esquina superior derecha).</li>
+<li>Hacé clic en <strong>"Cerrar sesión"</strong>.</li>
+</ol>
+<p>O desde la pantalla de perfil, abajo, hay un botón <strong>"Cerrar sesión"</strong>.</p>
+<p>Cuando cerrás sesión, la próxima vez que abras la app te va a pedir usuario y contraseña de nuevo. Útil si compartís la computadora con otras personas.</p>
+<blockquote>
+<p>💡 <strong>Tip</strong>: si dejás la app abierta y te vas, cualquiera que se siente en tu computadora puede entrar. Cerrá sesión cuando termines, especialmente si la máquina es compartida.</p>
+</blockquote>
+<p><hr/></p>
+<h2 id="24-backups-y-actualizaciones">24. Backups y actualizaciones</h2>
+<p>Este capítulo es para quien administra el sistema (rol <strong>Administrador</strong>). Explica cómo guardar y recuperar una copia de los datos y qué pasa con ellos cuando la app se actualiza.</p>
+<h3 id="donde-se-hace-un-backup">¿Dónde se hace un backup?</h3>
+<p>Andá a <strong>Configuración → Backup y Restauración</strong>. Ahí encontrás dos bloques: <strong>Generar backup</strong> y <strong>Restaurar desde backup</strong>.</p>
+<h3 id="los-dos-formatos-de-backup">Los dos formatos de backup</h3>
+<p>Hay dos formatos y los dos se pueden restaurar tanto en la web como en la app de escritorio.</p>
+<table><thead><tr><th>Formato</th><th>Cómo se genera</th><th>Dónde se restaura</th><th>Qué es</th></tr></thead><tbody>
+<tr><td><strong>JSON</strong> (recomendado)</td><td>En <strong>web y escritorio</strong>. Botón <strong>Backup JSON</strong>.</td><td>En <strong>web y escritorio</strong>.</td><td>Archivo de texto legible con todos los registros del sistema (clientes, ventas, productos, compras, caja, etc.). Es el formato portable.</td></tr>
+<tr><td><strong>Copia SQLite (.db)</strong></td><td>Sólo en <strong>escritorio</strong>. Botón <strong>Copia SQLite (.db)</strong>.</td><td>En <strong>escritorio</strong> y en <strong>web</strong>.</td><td>Imagen completa de la base local. En los dos entornos se convierte automáticamente al mismo formato interno antes de restaurar.</td></tr>
+</tbody></table>
+<blockquote>
+<p>💡 <strong>Tip</strong>: si trabajás en escritorio y querés migrar los datos a la web (o al revés), usá el <strong>JSON</strong>. Funciona igual en los dos entornos.</p>
+</blockquote>
+<h3 id="como-generar-un-backup">Cómo generar un backup</h3>
+<ol>
+<li>Entrá a <strong>Configuración → Backup y Restauración</strong>.</li>
+<li>Hacé clic en <strong>Backup JSON</strong>.<ul>
+<li>En la <strong>web</strong> el archivo se descarga a tu carpeta de descargas con un nombre tipo <code>renault-backup-web-2026-11-11T10-30-00-000Z.json</code>.</li>
+<li>En <strong>escritorio</strong> se abre el diálogo de Windows para elegir dónde guardarlo.</li>
+</ul>
+</li>
+<li>Guardalo en un lugar seguro (pendrive, carpeta de red, nube).</li>
+</ol>
+<p>En escritorio, además, podés usar <strong>Copia SQLite (.db)</strong>: guarda una foto completa de la base local, útil para volver atrás rápido si algo sale mal.</p>
+<h3 id="como-restaurar-un-backup">Cómo restaurar un backup</h3>
+<ol>
+<li>Entrá a <strong>Configuración → Backup y Restauración</strong>.</li>
+<li>En <strong>Restaurar desde backup</strong> elegí la opción que corresponda:<ul>
+<li><strong>Escritorio</strong>: <strong>Restaurar backup JSON</strong> (selector de archivos) o <strong>Restaurar copia SQLite (.db)</strong>.</li>
+<li><strong>Web</strong>: <strong>Seleccionar archivo .json o .db</strong> y después <strong>Restaurar base de datos</strong>.</li>
+</ul>
+</li>
+<li>Confirmá en el cartel de advertencia.</li>
+</ol>
+<blockquote>
+<p>⚠️ <strong>Atención</strong>: restaurar <strong>reemplaza todos los datos actuales</strong> por los del archivo. La acción no se puede deshacer. Antes de restaurar, generá un backup de lo que tenés ahora.</p>
+</blockquote>
+<p>La restauración funciona <strong>igual en web y en escritorio</strong>: la copia <code>.db</code> se convierte al formato interno y se aplica de una sola vez. Si algo falla a mitad de camino, se cancela completa y tus datos quedan como estaban. No hace falta reiniciar la aplicación.</p>
+<h3 id="detalles-que-conviene-saber">Detalles que conviene saber</h3>
+<ul>
+<li><strong>Permisos</strong>: sólo los usuarios con permiso de <strong>Sincronización</strong> o <strong>Reportes (total)</strong> pueden restaurar un backup.</li>
+<li><strong>Tamaño</strong>: en la <strong>web</strong> el archivo no puede superar los <strong>25 MB</strong>; en <strong>escritorio</strong> el límite es <strong>256 MB</strong>, porque la copia se lee del disco de la misma computadora y no viaja por internet. En ambos casos el backup admite como máximo <strong>50.000 registros</strong> por tipo de dato. Si tu negocio es muy grande, dividí el respaldo o archivá datos viejos.</li>
+<li><strong>Quién hizo la restauración</strong>: queda registrado en el log del sistema.</li>
+<li><strong>Si el archivo está dañado</strong>, la app no toca nada: la restauración se cancela completa y tus datos quedan como estaban.</li>
+</ul>
+<h3 id="que-pasa-con-los-datos-cuando-se-actualiza-la-app">Qué pasa con los datos cuando se actualiza la app (escritorio)</h3>
+<ul>
+<li><strong>Tus datos no se borran al actualizar.</strong> Clientes, ventas, productos, compras, caja y usuarios se conservan.</li>
+<li>La base limpia se crea <strong>sólo la primera vez</strong> que se abre el perfil en esa computadora (instalación nueva).</li>
+<li>Si el esquema de la base cambia entre versiones, la app aplica <strong>migraciones automáticas</strong> al arrancar. Antes de migrar guarda una copia del archivo (<code>renault.db.pre-migration-backup-…db</code>) en la carpeta de datos de la app.</li>
+</ul>
+<h3 id="la-cuenta-admin-y-las-actualizaciones">La cuenta <code>admin@gmail.com</code> y las actualizaciones</h3>
+<ul>
+<li>En <strong>cada actualización o reinstalación</strong> la app garantiza que exista el usuario <strong><code>admin@gmail.com</code></strong> con la contraseña <strong><code>admin123</code></strong>. Si alguien le había cambiado la contraseña, <strong>vuelve a <code>admin123</code></strong> después de actualizar. Los demás usuarios y sus contraseñas no se tocan.</li>
+<li>En un arranque normal (misma versión, sin actualizar) <strong>no se modifica ninguna contraseña</strong>.</li>
+<li>Por eso: si querés una cuenta de administrador con contraseña propia y estable, creá otro usuario con rol <strong>Administrador</strong> y usá ese para el día a día. La cuenta <code>admin@gmail.com</code> queda como acceso de emergencia.</li>
+</ul>
+<blockquote>
+<p>🔐 <strong>Recomendación</strong>: después de instalar una versión nueva, entrá con <code>admin@gmail.com</code> / <code>admin123</code>, cambiá la contraseña desde <strong>Mi perfil</strong> y avisale al equipo. Tené en cuenta que la próxima actualización la va a volver a dejar en <code>admin123</code>.</p>
+</blockquote>
+<p><hr/></p>
+<h2 id="25-preguntas-frecuentes-faq">25. Preguntas frecuentes (FAQ)</h2>
+<h3 id="olvide-mi-contrasena-que-hago">¿Olvidé mi contraseña. Qué hago?</h3>
+<p>En la pantalla de login, hacé clic en <strong>"¿Olvidaste la clave?"</strong>. Te va a pedir tu email y la app te manda un correo con instrucciones. Si no te llega, revisá la carpeta de spam. Si sigue sin llegar, contactá al administrador del sistema para que te resetee la contraseña manualmente.</p>
+<h3 id="por-que-no-me-deja-registrar-una-venta">¿Por qué no me deja registrar una venta?</h3>
+<p>Lo más probable es que la <strong>caja del día esté cerrada</strong>. La app no te deja registrar ventas en efectivo (ni gastos) sin caja abierta. Andá a <strong>Caja Diaria</strong> y abrila primero.</p>
+<h3 id="por-que-un-producto-no-aparece-cuando-lo-busco">¿Por qué un producto no aparece cuando lo busco?</h3>
+<p>Puede ser porque está <strong>desactivado</strong> (su dueño lo dio de baja). Pedile al administrador que revise el estado del producto. También puede ser que lo estés buscando con un nombre distinto al que tiene cargado: probá con el código o parte del nombre.</p>
+<h3 id="puedo-modificar-una-venta-ya-hecha">¿Puedo modificar una venta ya hecha?</h3>
+<p>Depende del estado:</p>
+<ul>
+<li><strong>Pendiente</strong>: sí, la podés editar.</li>
+<li><strong>Completada</strong>: solo el administrador la puede modificar.</li>
+<li><strong>Cancelada</strong>: no se puede modificar.</li>
+</ul>
+<p>Si necesités cambiar algo de una venta completada, la mejor opción es <strong>cancelarla</strong> y crear una nueva con los datos correctos.</p>
+<h3 id="como-elimino-un-producto-que-ya-no-vendo">¿Cómo elimino un producto que ya no vendo?</h3>
+<p>Antes que eliminarlo, considerá <strong>desactivarlo</strong>. Si el producto tiene ventas o compras asociadas, no se puede eliminar (la app te avisa). Desactivarlo hace que no aparezca en ventas nuevas pero quede en el historial.</p>
+<h3 id="por-que-la-caja-me-da-una-diferencia-al-cerrar">¿Por qué la caja me da una diferencia al cerrar?</h3>
+<p>Porque el efectivo físico no coincide con lo que dice el sistema. Las causas más comunes:</p>
+<ul>
+<li>Un <strong>gasto chico</strong> que no se registró.</li>
+<li>Un <strong>error de vuelto</strong> al cobrar una venta.</li>
+<li>Una <strong>venta no registrada</strong> (se cobró pero no se cargó al sistema).</li>
+</ul>
+<p>Anotá la diferencia en el campo de notas al cerrar la caja. Si pasa seguido, es una señal de que algo no está bien y hay que revisar.</p>
+<h3 id="que-pasa-si-pierdo-conexion-a-internet">¿Qué pasa si pierdo conexión a internet?</h3>
+<p>Si estás usando la <strong>versión escritorio</strong>, la app sigue funcionando normalmente. Los datos se guardan en tu máquina. Cuando vuelva la conexión, sincronizá manualmente desde la pantalla de Sync.</p>
+<p>Si estás usando la <strong>versión web</strong>, no vas a poder trabajar hasta que vuelva la conexión (la app te avisa).</p>
+<h3 id="puedo-usar-la-app-desde-el-celular">¿Puedo usar la app desde el celular?</h3>
+<p>Sí, la versión web se puede abrir desde el navegador del celular. La pantalla se adapta automáticamente. La versión de escritorio es solo para Windows por ahora.</p>
+<h3 id="como-cambio-de-tema-claro-a-oscuro">¿Cómo cambio de tema claro a oscuro?</h3>
+<p>Arriba a la derecha, hacé clic en el botón con forma de <strong>sol</strong> 🌞 (estás en tema oscuro) o <strong>luna</strong> 🌙 (estás en tema claro). La app cambia al toque y se acuerda para la próxima vez.</p>
+<h3 id="por-que-no-me-deja-hacer-algo-mensaje-de-no-tiene-permisos">¿Por qué no me deja hacer algo? (mensaje de "no tiene permisos")</h3>
+<p>Porque tu usuario tiene un rol con permisos limitados. Por ejemplo, el rol Vendedor no puede eliminar productos. Si necesitás hacer algo que no podés, pedile al administrador que revise tu rol o que lo haga él mismo.</p>
+<h3 id="se-puede-imprimir-una-factura">¿Se puede imprimir una factura?</h3>
+<p>Sí. En la lista de ventas, hacé clic en el menú de acciones (⋮) → <strong>"Imprimir"</strong> o <strong>"Exportar PDF"</strong>. La factura sale con los datos de la venta, tu empresa, el cliente y el detalle de los productos. La podés imprimir directamente o guardar como PDF para mandar por WhatsApp al cliente.</p>
+<h3 id="como-hago-un-backup-de-los-datos">¿Cómo hago un backup de los datos?</h3>
+<p>Andá a <strong>Configuración → Backup y Restauración</strong> y usá <strong>Backup JSON</strong>: sirve tanto en la web como en la app de escritorio. Si estás en escritorio también podés generar una <strong>Copia SQLite (.db)</strong>. Cualquiera de los dos formatos se puede restaurar después, en web o en escritorio. El paso a paso está en el capítulo <a href="#24-backups-y-actualizaciones">Backups y actualizaciones</a>.</p>
+<h3 id="no-encuentro-una-opcion-donde-esta">No encuentro una opción. ¿Dónde está?</h3>
+<p>Si el menú lateral no muestra una sección, es porque tu rol no tiene permiso para acceder. Por ejemplo, "Usuarios" solo lo ven los Administradores. Si creés que deberías tener acceso, pedile al administrador del sistema que revise tus permisos.</p>
+<p><hr/></p>
+<h2 id="26-glosario-de-terminos">26. Glosario de términos</h2>
+<p>Términos usados en esta app y en este manual, ordenados alfabéticamente.</p>
+<table><thead><tr><th>Término</th><th>Significado</th></tr></thead><tbody>
+<tr><td><strong>Administrador</strong></td><td>Rol con permisos totales sobre la app. Por lo general lo tiene el dueño o gerente.</td></tr>
+<tr><td><strong>Al contado</strong></td><td>Venta que se cobra en el momento (no a crédito).</td></tr>
+<tr><td><strong>A crédito</strong></td><td>Venta en la que el cliente paga después, con fecha de vencimiento.</td></tr>
+<tr><td><strong>Backup</strong></td><td>Copia de seguridad de los datos. Puede ser un archivo JSON portable o una copia <code>.db</code>.</td></tr>
+<tr><td><strong>Categoría</strong></td><td>Agrupación lógica de productos (Motor, Frenos...) o de gastos (Alquiler, Servicios...).</td></tr>
+<tr><td><strong>Categoría de gasto</strong></td><td>Tipo de gasto: Servicios, Alquiler, Salarios, Marketing, Transporte, Mantenimiento.</td></tr>
+<tr><td><strong>Categoría de producto</strong></td><td>Tipo de repuesto: Motor, Frenos, Suspensión, Transmisión, etc.</td></tr>
+<tr><td><strong>Cierre de caja</strong></td><td>Operación de fin de día: contar el efectivo físico y registrar el saldo.</td></tr>
+<tr><td><strong>Cobro</strong></td><td>Pago que te hace un cliente para cancelar una deuda.</td></tr>
+<tr><td><strong>Código de producto</strong></td><td>Identificador único de un producto (ej.: "FILT-001").</td></tr>
+<tr><td><strong>Comisión</strong></td><td>Porcentaje del vendedor sobre cada venta que concreta.</td></tr>
+<tr><td><strong>Compra</strong></td><td>Operación en la que vos le comprás mercadería a un proveedor.</td></tr>
+<tr><td><strong>Contraseña</strong></td><td>Clave secreta que usás para iniciar sesión.</td></tr>
+<tr><td><strong>Cuentas por cobrar</strong></td><td>Lo que te deben los clientes (sinónimos: créditos a clientes).</td></tr>
+<tr><td><strong>Cuentas por pagar</strong></td><td>Lo que vos le debés a los proveedores (sinónimos: créditos a proveedores).</td></tr>
+<tr><td><strong>Cotización</strong></td><td>Presupuesto que se le entrega a un cliente. No descuenta stock. Sinónimo: presupuesto.</td></tr>
+<tr><td><strong>Crédito (a cliente)</strong></td><td>Venta que el cliente paga después. Aparece en la sección "Créditos".</td></tr>
+<tr><td><strong>Crédito (a proveedor)</strong></td><td>Deuda con un proveedor. Aparece en "Créditos de compras".</td></tr>
+<tr><td><strong>Dashboard</strong></td><td>Pantalla principal con métricas y resumen del negocio.</td></tr>
+<tr><td><strong>Descuento</strong></td><td>Reducción del precio, expresada en monto o porcentaje.</td></tr>
+<tr><td><strong>Detalle de venta</strong></td><td>Ventana con toda la información de una venta: productos, pagos, notas.</td></tr>
+<tr><td><strong>Devolución</strong></td><td>Cuando un cliente te devuelve un producto. Se registra como un movimiento de stock (entrada).</td></tr>
+<tr><td><strong>Efectivo</strong></td><td>Plata en mano.</td></tr>
+<tr><td><strong>Estado de caja</strong></td><td>Abierta, cerrada o cerrada (histórico).</td></tr>
+<tr><td><strong>Estado de compra</strong></td><td>Pendiente, recibida o cancelada.</td></tr>
+<tr><td><strong>Estado de cotización</strong></td><td>Activa, vencida o convertida.</td></tr>
+<tr><td><strong>Estado de crédito</strong></td><td>Pendiente, pagado o vencido.</td></tr>
+<tr><td><strong>Estado de venta</strong></td><td>Completada, pendiente o cancelada.</td></tr>
+<tr><td><strong>Fecha de vencimiento</strong></td><td>Fecha límite para pagar un crédito. Pasada esa fecha, el crédito se marca como "vencido".</td></tr>
+<tr><td><strong>Gasto</strong></td><td>Salida de dinero que no es compra de mercadería. Ej.: alquiler, servicios, sueldos.</td></tr>
+<tr><td><strong>Historial</strong></td><td>Lista de operaciones pasadas de un cliente, producto, etc.</td></tr>
+<tr><td><strong>Inventario</strong></td><td>Conjunto de productos en tu depósito, con su stock actual.</td></tr>
+<tr><td><strong>IVA / Impuestos</strong></td><td>Porcentaje que se suma al subtotal (en Argentina, usualmente 21%).</td></tr>
+<tr><td><strong>KPI</strong> (Indicador clave)</td><td>Métrica importante para tomar decisiones (ej.: ventas del mes, ticket promedio).</td></tr>
+<tr><td><strong>Login</strong></td><td>Inicio de sesión.</td></tr>
+<tr><td><strong>Método de pago</strong></td><td>Cómo se paga: efectivo, transferencia, QR, crédito, mixto.</td></tr>
+<tr><td><strong>Mixto (pago)</strong></td><td>Venta cobrada con más de un método. Ej.: mitad efectivo, mitad transferencia.</td></tr>
+<tr><td><strong>NIT / CUIT / DNI</strong></td><td>Identificación tributaria o personal del cliente o proveedor.</td></tr>
+<tr><td><strong>Offline</strong></td><td>Sin conexión a internet. La versión escritorio puede trabajar offline.</td></tr>
+<tr><td><strong>Pago a cuenta</strong></td><td>Pago parcial de un crédito.</td></tr>
+<tr><td><strong>Pendiente (venta)</strong></td><td>Venta registrada pero no cobrada.</td></tr>
+<tr><td><strong>Permisos</strong></td><td>Configuración que define qué acciones puede hacer cada rol.</td></tr>
+<tr><td><strong>Producto</strong></td><td>Cada repuesto individual que vendés.</td></tr>
+<tr><td><strong>Proveedor</strong></td><td>Empresa o persona a la que le comprás mercadería.</td></tr>
+<tr><td><strong>QR</strong></td><td>Código QR para pagos (MercadoPago, etc.).</td></tr>
+<tr><td><strong>Recibir (compra)</strong></td><td>Marcar una compra como "Recibida" para que se sume al stock.</td></tr>
+<tr><td><strong>Reporte</strong></td><td>Vista analítica de los datos: ventas, gastos, productos, etc.</td></tr>
+<tr><td><strong>Rol</strong></td><td>Agrupación de permisos que se le asigna a un usuario.</td></tr>
+<tr><td><strong>Setup</strong></td><td>Configuración inicial de la app, la primera vez que se instala.</td></tr>
+<tr><td><strong>SKU</strong></td><td>Sinónimo de "código de producto".</td></tr>
+<tr><td><strong>Stock</strong></td><td>Cantidad de unidades de un producto disponibles para la venta.</td></tr>
+<tr><td><strong>Stock bajo</strong></td><td>Producto que está por debajo del stock mínimo configurado.</td></tr>
+<tr><td><strong>Stock mínimo</strong></td><td>Cantidad a partir de la cual el producto dispara una alerta.</td></tr>
+<tr><td><strong>Sync / Sincronización</strong></td><td>Proceso de subir/bajar datos entre la base local y la nube.</td></tr>
+<tr><td><strong>Tema claro/oscuro</strong></td><td>Apariencia visual de la app. Se cambia con el botón sol/luna.</td></tr>
+<tr><td><strong>Timeline de pagos</strong></td><td>Línea de tiempo que muestra cada pago hecho sobre un crédito.</td></tr>
+<tr><td><strong>Transferencia</strong></td><td>Pago electrónico entre cuentas bancarias.</td></tr>
+<tr><td><strong>Unidad</strong></td><td>Cómo se mide un producto: unidad, litro, kilogramo, metro, etc.</td></tr>
+<tr><td><strong>Usuario</strong></td><td>Cada persona que usa la app, con su cuenta propia.</td></tr>
+<tr><td><strong>Vendedor</strong></td><td>Rol del usuario que registra ventas.</td></tr>
+<tr><td><strong>Venta</strong></td><td>Operación en la que vos le vendés un producto a un cliente.</td></tr>
+<tr><td><strong>Venta al contado</strong></td><td>Venta cobrada en el momento.</td></tr>
+<tr><td><strong>Venta a crédito</strong></td><td>Venta cobrada después.</td></tr>
+<tr><td><strong>Vencimiento (de cotización)</strong></td><td>Fecha hasta la que la cotización es válida.</td></tr>
+<tr><td><strong>Vencido</strong></td><td>Crédito o cotización que pasó la fecha de vencimiento sin ser pagado/convertido.</td></tr>
+</tbody></table>
+<p><hr/></p>
+<p><strong>Versión del manual: 1.1</strong> · Última actualización: noviembre 2026 <strong>Software: Renault Reluz ERP</strong> · Para consultas, contactá a tu administrador del sistema.</p>
+  </div>
+</body>
+</html>

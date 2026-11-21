@@ -1,0 +1,88 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+/coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+/dist
+/all-objects.txt
+
+# misc
+.DS_Store
+*.pem
+.ai/
+.freebuff/
+.idea/
+scripts/debug*.cjs
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+next-error.txt
+next-output.txt
+
+# local env files
+.env*.local
+.env
+/dev.db
+/prisma/*.backup-*
+/prisma/*.pre-build-backup-*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# PWA files
+**/public/sw.js
+**/public/workbox-*.js
+**/public/worker-*.js
+**/public/sw.js.map
+**/public/workbox-*.js.map
+**/public/worker-*.js.map
+
+
+# Base de datos SQLite local (no se versiona)
+prisma/dev.db
+prisma/dev.db-journal
+prisma/*.db
+prisma/*.db-journal
+prisma/*.db-wal
+prisma/*.db-shm
+prisma/*.db.bak
+prisma/*.db.pre-build-backup-*
+prisma/renault.db
+prisma/renault.db-*
+
+
+/prisma/template-db-config.json
+cookies.txt
+
+# Electron build outputs (large binaries, exceed GitHub 100MB limit)
+/dist-out/
+/dist-build/
+
+# Agent scratchpads (not part of the project)
+.agents/tasks/
+
+# Tooling state (not part of the project)
+.codebase-memory/
+.kiro/

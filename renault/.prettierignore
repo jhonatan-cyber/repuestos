@@ -1,0 +1,13 @@
+.next/
+node_modules/
+dist/
+playwright-report/
+test-results/
+prisma/generated/
+*.db
+bun.lock
+
+# Agent scratchpads and tooling state
+.agents/tasks/
+.codebase-memory/
+.kiro/

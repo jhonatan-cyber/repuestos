@@ -1,0 +1,211 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #fafafa;
+  --foreground: #242424;
+  --card: #ffffff;
+  --card-foreground: #242424;
+  --popover: #ffffff;
+  --popover-foreground: #242424;
+  --primary: #eab308;
+  /* Renault Solar Yellow */
+  --primary-foreground: #111111;
+  --secondary: #e9e9e9;
+  --secondary-foreground: #303030;
+  --muted: #f3f4f6;
+  --muted-foreground: #737373;
+  --accent: rgba(234, 179, 8, 0.1);
+  --accent-foreground: #242424;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #eab308;
+  --radius: 1rem;
+}
+
+.dark {
+  --background: #1f1f1f;
+  --foreground: #f8f8f8;
+  --card: #262626;
+  --card-foreground: #f8f8f8;
+  --popover: #262626;
+  --popover-foreground: #f8f8f8;
+  --primary: #eab308;
+  /* Renault Solar Yellow */
+  --primary-foreground: #111111;
+  --secondary: #2f2f2f;
+  --secondary-foreground: #f8f8f8;
+  --muted: #292929;
+  --muted-foreground: #a3a3a3;
+  --accent: rgba(234, 179, 8, 0.15);
+  --accent-foreground: #f8f8f8;
+  --border: #2f2f2f;
+  --input: #2f2f2f;
+  --ring: #eab308;
+}
+
+@theme inline {
+  --font-sans:
+    "Geist", "Geist Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
+  --font-mono:
+    "Geist Mono", "Geist Mono Fallback", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Global and Custom Scrollbar Styles */
+*::-webkit-scrollbar,
+.scrollbar-custom::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+*::-webkit-scrollbar-track,
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb,
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.1);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover,
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.3);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(150, 150, 150, 0.1) transparent;
+}
+
+/* Dark mode adjustments */
+.dark *::-webkit-scrollbar-thumb,
+.dark .scrollbar-custom::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dark *::-webkit-scrollbar-thumb:hover,
+.dark .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@layer utilities {
+  /* Shared visual language for every module list. */
+  .module-filters {
+    @apply rounded-xl border border-border/70 bg-card p-4 shadow-sm;
+  }
+
+  .module-filters [data-slot="input"],
+  .module-filters [data-slot="select-trigger"] {
+    @apply rounded-full;
+  }
+
+  .module-table {
+    @apply overflow-hidden rounded-xl border border-border/70 bg-card shadow-sm;
+  }
+
+  .module-table:has(.module-empty) {
+    @apply overflow-visible border-0 bg-transparent shadow-none;
+  }
+
+  .module-table [data-slot="table-header"] {
+    @apply bg-muted/40;
+  }
+
+  .module-table [data-slot="table-row"] {
+    @apply transition-colors;
+  }
+
+  .module-pagination {
+    @apply rounded-xl border border-border/70 bg-card px-4 shadow-sm;
+  }
+
+  .module-empty {
+    @apply min-h-44 rounded-xl border border-dashed border-border/70 bg-card/60 px-6 py-10 text-center text-sm text-muted-foreground;
+  }
+
+  /* Glassmorphism */
+  .glass {
+    @apply bg-background/60 backdrop-blur-md border-border/50;
+  }
+
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-xl border-white/10;
+  }
+
+  /* Animations */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-[0_0_20px_#eab3084d] hover:border-primary/50;
+  }
+
+  .animate-slow-fade {
+    animation: fade-in 1s ease-out;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}
