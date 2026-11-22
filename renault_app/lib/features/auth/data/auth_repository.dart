@@ -55,4 +55,17 @@ class AuthRepository {
           .toList(),
     );
   }
+
+  Future<String> forgotPassword(String email) async {
+    final response = await _client.dio.post(
+      '/auth/forgot-password',
+      data: {'email': email},
+    );
+    final data = response.data as Map<String, dynamic>;
+    final tempPassword = data['tempPassword'] as String?;
+    if (tempPassword == null) {
+      throw Exception('No se recibió contraseña temporal');
+    }
+    return tempPassword;
+  }
 }

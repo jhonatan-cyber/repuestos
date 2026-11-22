@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/products_provider.dart';
+import 'product_detail_screen.dart';
+import 'product_form_screen.dart';
 
 class ProductsScreen extends ConsumerStatefulWidget {
   const ProductsScreen({super.key});
@@ -18,6 +20,18 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
   void dispose() {
     _searchCtrl.dispose();
     super.dispose();
+  }
+
+  Future<void> _createProduct() async {
+    final result = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => const ProductFormScreen(),
+      ),
+    );
+    if (result == true && mounted) {
+      ref.invalidate(productsProvider(''));
+    }
   }
 
   @override
@@ -52,19 +66,50 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
                   itemBuilder: (context, i) {
                     final p = products[i];
                     return ListTile(
-                      title: Text(p.name),
+                      leading: CircleAvatar(
+                        backgroundColor: p.isLowStock
+                            ? Colors.red.withValues(alpha: 0.1)
+                            : Theme.of(context).colorScheme.primaryContainer,
+                        child: Text(
+                          p.code.isEmpty ? p.name[0].toUpperCase() : p.code[0],
+                          style: TextStyle(
+                            color: p.isLowStock ? Colors.red : null,
+                          ),
+                        ),
+                      ),
+                      title: Text(p.name, maxLines: 1),
                       subtitle: Text('${p.code} • ${p.category}'),
                       trailing: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text('Stock: ${p.stock}'),
-                          Text('\$${p.salePrice}'),
+                          Text(
+                            'Stock: ${p.stock}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: p.isLowStock ? Colors.red : null,
+                            ),
+                          ),
+                          Text(
+                            '\$${p.salePrice}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
                         ],
                       ),
                       tileColor: p.isLowStock
                           ? Colors.red.withValues(alpha: 0.08)
                           : null,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (ctx) => ProductDetailScreen(product: p),
+                          ),
+                        );
+                      },
                     );
                   },
                 );
@@ -72,6 +117,11 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _createProduct,
+        icon: const Icon(Icons.add),
+        label: const Text('Nuevo'),
       ),
     );
   }

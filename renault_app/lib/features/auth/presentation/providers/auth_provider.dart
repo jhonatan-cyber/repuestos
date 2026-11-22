@@ -57,9 +57,22 @@ class AuthNotifier extends StateNotifier<AuthState> {
     state = const AuthState();
   }
 
+  Future<String?> forgotPassword(String email) async {
+    state = state.copyWith(isLoading: true, error: null);
+    try {
+      final tempPassword = await _repo.forgotPassword(email);
+      state = state.copyWith(isLoading: false);
+      return tempPassword;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: _message(e));
+      return null;
+    }
+  }
+
   String _message(Object e) {
     final s = e.toString();
     if (s.contains('401')) return 'Credenciales inválidas';
+    if (s.contains('404')) return 'No se encontró un usuario con ese correo';
     if (s.contains('429')) return 'Demasiados intentos, intentá más tarde';
     return 'Error de autenticación';
   }
