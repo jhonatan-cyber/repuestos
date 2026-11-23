@@ -18,6 +18,14 @@ class DioClient {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
+          // Skip adding auth header for public endpoints
+          if (options.path.contains('/auth/login') ||
+              options.path.contains('/auth/forgot-password') ||
+              options.path.contains('/auth/refresh') ||
+              options.path.contains('/auth/setup')) {
+            handler.next(options);
+            return;
+          }
           final token = await _storage.getAccessToken();
           if (token != null && token.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $token';

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/credits_model.dart';
 import '../providers/credits_provider.dart';
 import 'credit_detail_screen.dart';
+import 'purchase_credit_detail_screen.dart';
 
 class CreditsScreen extends ConsumerStatefulWidget {
   const CreditsScreen({super.key});
@@ -352,6 +353,14 @@ class _PurchaseCreditsTab extends ConsumerWidget {
                       ),
                     ),
                     title: Text(c.supplierName),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (ctx) => PurchaseCreditDetailScreen(creditId: c.id),
+                        ),
+                      );
+                    },
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

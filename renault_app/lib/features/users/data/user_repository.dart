@@ -34,7 +34,18 @@ class UserRepository {
   }
 
   Future<void> toggleStatus(String id) async {
-    await _client.dio.patch('/users/$id/toggle-status');
+    final user = await _getUser(id);
+    final newStatus = user.status == 'active' ? 'inactive' : 'active';
+    await _client.dio.patch('/users/$id', data: {'status': newStatus});
+  }
+
+  Future<UserModel> _getUser(String id) async {
+    final users = await list();
+    final user = users.firstWhere(
+      (u) => u.id == id,
+      orElse: () => throw Exception('Usuario no encontrado'),
+    );
+    return user;
   }
 
   Future<void> delete(String id) async {

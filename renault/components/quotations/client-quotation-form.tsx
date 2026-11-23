@@ -91,7 +91,6 @@ export function ClientQuotationForm({
   onItemAdd,
 }: ClientQuotationFormProps) {
   const selectedClient = clients.find((client) => String(client.id) === clientId)
-  const unregisteredClientName = customClientName.trim() || clientSearch.trim()
 
   return (
     <div className="grid gap-5 xl:grid-cols-[minmax(0,1.75fr)_minmax(320px,0.9fr)]">
@@ -183,11 +182,11 @@ export function ClientQuotationForm({
                   </Command>
                 </PopoverContent>
               </Popover>
-              {!clientId && unregisteredClientName.length > 0 && (
+              {!clientId && customClientName.trim().length > 0 && (
                 <div className="space-y-2 rounded-xl border border-dashed bg-muted/40 px-3 py-2">
                   <p className="text-xs text-muted-foreground">
                     Se usará como cliente no registrado:{" "}
-                    <span className="font-medium text-foreground">{unregisteredClientName}</span>
+                    <span className="font-medium text-foreground">{customClientName.trim()}</span>
                   </p>
                   <div className="space-y-1.5">
                     <Label htmlFor="custom-client-phone" className="text-xs">
@@ -208,7 +207,7 @@ export function ClientQuotationForm({
                   </p>
                 </div>
               )}
-              {!clientId && unregisteredClientName.length === 0 && (
+              {!clientId && !customClientName.trim().length && (
                 <p className="rounded-xl border border-dashed bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
                   Si no seleccionás ni escribís un cliente, se guardará como{" "}
                   <span className="font-medium text-foreground">Sin cliente registrado</span>.

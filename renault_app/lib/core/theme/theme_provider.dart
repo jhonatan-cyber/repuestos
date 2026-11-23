@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_theme.dart';
 
@@ -11,10 +11,16 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
     _load();
   }
 
-  final _storage = const FlutterSecureStorage();
+  SharedPreferences? _prefs;
+
+  Future<SharedPreferences> _getPrefs() async {
+    _prefs ??= await SharedPreferences.getInstance();
+    return _prefs!;
+  }
 
   Future<void> _load() async {
-    final saved = await _storage.read(key: _kThemeMode);
+    final prefs = await _getPrefs();
+    final saved = prefs.getString(_kThemeMode);
     if (saved != null) {
       state = _fromString(saved);
     }
@@ -22,7 +28,8 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
 
   Future<void> setTheme(ThemeMode mode) async {
     state = mode;
-    await _storage.write(key: _kThemeMode, value: _toString(mode));
+    final prefs = await _getPrefs();
+    await prefs.setString(_kThemeMode, _toString(mode));
   }
 
   static ThemeMode _fromString(String s) {

@@ -136,11 +136,7 @@ export const QuotationItemSchema = z.object({
 export const QuotationSchema = z.object({
   date: z.string().or(z.date()),
   clientId: z
-    .union([
-      z.number().int().positive("Debe seleccionar un cliente"),
-      z.string().min(1),
-      z.literal(""),
-    ])
+    .union([z.number().int().positive("Debe seleccionar un cliente"), z.string().min(1)])
     .nullable()
     .optional(),
   sellerUserId: z.union([
@@ -157,19 +153,6 @@ export const QuotationSchema = z.object({
 })
 
 export type QuotationInput = z.infer<typeof QuotationSchema>
-
-// La solicitud a proveedores se guarda sin precios (se definen con las ofertas),
-// por eso sus ítems y el total admiten cero.
-export const SupplierQuotationSchema = QuotationSchema.extend({
-  items: z
-    .array(
-      QuotationItemSchema.extend({
-        price: z.number().min(0, "El precio no puede ser negativo"),
-      }),
-    )
-    .min(1, "Debe agregar al menos un producto"),
-  total: z.number().min(0, "El total no puede ser negativo"),
-})
 
 export const ExpenseSchema = z.object({
   name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),

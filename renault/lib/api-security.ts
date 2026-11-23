@@ -8,16 +8,7 @@ export interface ApiActor {
 }
 
 export async function getApiActor(request: NextRequest): Promise<ApiActor | null> {
-  // Web/desktop clients use the httpOnly `access_token` cookie. Mobile clients
-  // (React Native / Expo) cannot rely on cookies, so they send
-  // `Authorization: Bearer <access_token>` instead. Support both.
-  let accessToken = request.cookies?.get?.("access_token")?.value
-  if (!accessToken) {
-    const authHeader = request.headers?.get?.("authorization") ?? request.headers?.get?.("Authorization")
-    if (authHeader && /^Bearer\s+/i.test(authHeader)) {
-      accessToken = authHeader.replace(/^Bearer\s+/i, "").trim()
-    }
-  }
+  const accessToken = request.cookies.get("access_token")?.value
   if (!accessToken) return null
 
   const payload = await verifyAccessToken(accessToken)

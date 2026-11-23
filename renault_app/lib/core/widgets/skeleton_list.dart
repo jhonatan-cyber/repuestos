@@ -21,8 +21,8 @@ class SkeletonList extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: count,
-      separatorBuilder: (_, __) => const SizedBox(height: 8),
-      itemBuilder: (_, __) => SkeletonCard(
+      separatorBuilder: (_, index) => const SizedBox(height: 8),
+      itemBuilder: (_, index) => SkeletonCard(
         lines: lines,
         leading: leading,
         trailing: trailing,

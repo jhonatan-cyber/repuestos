@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../features/products/presentation/screens/products_screen.dart';
 import '../providers/categories_provider.dart';
 import 'category_form_screen.dart';
 
@@ -73,8 +74,17 @@ class CategoriesScreen extends ConsumerWidget {
                   onSelected: (value) {
                     if (value == 'edit') _editCategory(context, ref, c);
                     if (value == 'toggle') _toggleStatus(ref, context, c.id);
+                    if (value == 'products') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (ctx) => ProductsScreen(category: c.name),
+                        ),
+                      );
+                    }
                   },
                   itemBuilder: (context) => [
+                    const PopupMenuItem(value: 'products', child: Text('Ver productos')),
                     const PopupMenuItem(value: 'edit', child: Text('Editar')),
                     PopupMenuItem(
                       value: 'toggle',

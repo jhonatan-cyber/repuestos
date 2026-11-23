@@ -1,15 +1,11 @@
 
-import '../../../../core/database/isar_db.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/sync/connection_monitor.dart';
-import '../../../../core/sync/mutation_queue.dart';
 import 'supplier_request_model.dart';
 
 class SupplierRequestRepository {
-  SupplierRequestRepository(this._client, this._db, this._queue, this._monitor);
+  SupplierRequestRepository(this._client, this._monitor);
   final DioClient _client;
-  final IsarDB _db;
-  final MutationQueue _queue;
   final ConnectionMonitor _monitor;
 
   Future<List<SupplierRequest>> list({String? startDate, String? endDate}) async {

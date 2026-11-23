@@ -13,7 +13,6 @@ export default [
       "playwright-report/**",
       "test-results/**",
       "lib/generated/**",
-      "mobile/**",
     ],
   },
   {

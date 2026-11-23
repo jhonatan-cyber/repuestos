@@ -29,3 +29,32 @@ final creditDetailProvider = FutureProvider.autoDispose
     .family<Credit, String>((ref, id) async {
   return ref.watch(creditsRepositoryProvider).getCredit(id);
 });
+
+final purchaseCreditDetailProvider = FutureProvider.autoDispose
+    .family<PurchaseCredit, String>((ref, id) async {
+  return ref.watch(creditsRepositoryProvider).getPurchaseCredit(id);
+});
+
+final overdueCreditsProvider = FutureProvider.autoDispose<List<Credit>>((ref) async {
+  final credits = await ref.watch(creditsRepositoryProvider).listCredits();
+  return credits.where((c) => c.isActive && c.isOverdue()).toList();
+});
+
+final upcomingCreditsProvider = FutureProvider.autoDispose<List<Credit>>((ref) async {
+  final credits = await ref.watch(creditsRepositoryProvider).listCredits();
+  return credits
+      .where((c) => c.isActive && !c.isOverdue() && c.daysUntilDue() <= 7)
+      .toList();
+});
+
+final overduePurchaseCreditsProvider = FutureProvider.autoDispose<List<PurchaseCredit>>((ref) async {
+  final credits = await ref.watch(creditsRepositoryProvider).listPurchaseCredits();
+  return credits.where((c) => c.isActive && c.isOverdue()).toList();
+});
+
+final upcomingPurchaseCreditsProvider = FutureProvider.autoDispose<List<PurchaseCredit>>((ref) async {
+  final credits = await ref.watch(creditsRepositoryProvider).listPurchaseCredits();
+  return credits
+      .where((c) => c.isActive && !c.isOverdue() && c.daysUntilDue() <= 7)
+      .toList();
+});

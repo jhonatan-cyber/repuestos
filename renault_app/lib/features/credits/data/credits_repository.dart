@@ -70,15 +70,30 @@ class CreditsRepository {
   }
 
   Future<List<PurchaseCredit>> listPurchaseCredits({String search = ''}) async {
-    final response = await _client.dio.get(
-      '/purchase-credits',
-      queryParameters: {'search': search},
+    final isOnline = await _monitor.hasConnection();
+    if (isOnline) {
+      try {
+        final response = await _client.dio.get(
+          '/purchase-credits',
+          queryParameters: {'search': search},
+        );
+        final data = response.data as Map<String, dynamic>;
+        final items = (data['data'] as List<dynamic>? ?? []);
+        return items
+            .map((e) => PurchaseCredit.fromJson(e as Map<String, dynamic>))
+            .toList();
+      } catch (_) {}
+    }
+    return [];
+  }
+
+  Future<PurchaseCredit> getPurchaseCredit(String id) async {
+    final credits = await listPurchaseCredits();
+    final credit = credits.firstWhere(
+      (c) => c.id == id,
+      orElse: () => throw Exception('Crédito no encontrado'),
     );
-    final data = response.data as Map<String, dynamic>;
-    final items = (data['data'] as List<dynamic>? ?? []);
-    return items
-        .map((e) => PurchaseCredit.fromJson(e as Map<String, dynamic>))
-        .toList();
+    return credit;
   }
 
   Future<void> payPurchaseCredit(String id, CreditPayment payment) async {

@@ -1,15 +1,11 @@
 
-import '../../../../core/database/isar_db.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/sync/connection_monitor.dart';
-import '../../../../core/sync/mutation_queue.dart';
 import 'reports_model.dart';
 
 class ReportsRepository {
-  ReportsRepository(this._client, this._db, this._queue, this._monitor);
+  ReportsRepository(this._client, this._monitor);
   final DioClient _client;
-  final IsarDB _db;
-  final MutationQueue _queue;
   final ConnectionMonitor _monitor;
 
   Future<ReportData> getDashboard() async {

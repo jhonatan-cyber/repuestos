@@ -13,7 +13,6 @@ export const metadata: Metadata = {
     icon: "/api/settings/logo",
     apple: "/api/settings/logo",
   },
-  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

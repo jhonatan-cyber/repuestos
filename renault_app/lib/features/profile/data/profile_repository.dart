@@ -1,14 +1,12 @@
 
-import '../../../../core/database/isar_db.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/sync/connection_monitor.dart';
 import '../../../../core/sync/mutation_queue.dart';
 import 'profile_model.dart';
 
 class ProfileRepository {
-  ProfileRepository(this._client, this._db, this._queue, this._monitor);
+  ProfileRepository(this._client, this._queue, this._monitor);
   final DioClient _client;
-  final IsarDB _db;
   final MutationQueue _queue;
   final ConnectionMonitor _monitor;
 
@@ -44,7 +42,7 @@ class ProfileRepository {
     final isOnline = await _monitor.hasConnection();
     if (isOnline) {
       try {
-        await _client.dio.put(
+        await _client.dio.post(
           '/auth/change-password',
           data: {'currentPassword': currentPassword, 'newPassword': newPassword},
         );
@@ -52,7 +50,7 @@ class ProfileRepository {
       } catch (_) {}
     }
     await _queue.enqueue(
-      operation: 'PUT',
+      operation: 'POST',
       endpoint: '/auth/change-password',
       payload: {'currentPassword': currentPassword, 'newPassword': newPassword},
     );

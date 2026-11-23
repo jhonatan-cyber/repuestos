@@ -62,17 +62,6 @@ export function PrintPurchase({ purchase }: PrintPurchaseProps) {
             >
               Renault Reluz
             </h1>
-            <p
-              style={{
-                margin: "4px 0 0",
-                fontSize: "14px",
-                fontWeight: 700,
-                textAlign: "center",
-                letterSpacing: "0.14em",
-              }}
-            >
-              JHOSEP
-            </p>
             <p style={{ margin: "4px 0 0", fontSize: "13px", fontWeight: 600 }}>
               Repuestos automotrices
             </p>

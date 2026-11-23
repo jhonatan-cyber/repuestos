@@ -7,7 +7,7 @@ import {
   getPaginationParams,
   buildPaginatedResponse,
 } from "@/lib/api-utils"
-import { QuotationSchema, SupplierQuotationSchema } from "@/lib/validations"
+import { QuotationSchema } from "@/lib/validations"
 import { QUOTATION_MESSAGES } from "@/lib/constants/messages"
 import { normalizeQuotationStatus } from "@/lib/quotation-status"
 import { getApiActor, hasAnyPermission } from "@/lib/api-security"
@@ -113,19 +113,10 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    // El formulario manda "" cuando el cliente es no registrado; se normaliza
-    // antes de validar porque el esquema sólo acepta null/omitido.
-    const normalizedClientId =
-      body.clientId === "" || body.clientId === undefined ? null : body.clientId
-    const normalizedStatus = normalizeQuotationStatus(body.status)
-    const schema =
-      normalizedStatus === "solicitado" ? SupplierQuotationSchema : QuotationSchema
-    const parsed = schema.safeParse({
+    const parsed = QuotationSchema.safeParse({
       ...body,
-      clientId: normalizedClientId,
       sellerUserId: body.sellerUserId,
       validUntil: body.validUntil,
-      status: normalizedStatus,
     })
     if (!parsed.success) {
       return createErrorResponse(

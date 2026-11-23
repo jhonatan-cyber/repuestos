@@ -197,11 +197,10 @@ export function QuotationFormDialog({
   }
 
   const handleSubmitClientQuotation = async () => {
-    const unregisteredClientName = customClientName.trim() || clientSearch.trim()
     const payload = {
       date: quotation?.date || new Date().toISOString(),
       clientId,
-      customClientName: clientId ? undefined : unregisteredClientName || undefined,
+      customClientName: clientId ? undefined : customClientName.trim(),
       customClientPhone: clientId ? undefined : customClientPhone.trim() || undefined,
       sellerUserId,
       items: itemDetails.map((row) => ({

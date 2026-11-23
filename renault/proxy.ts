@@ -87,14 +87,7 @@ function withAuthHeaders(request: NextRequest, user: Pick<SessionUser, "id" | "e
 }
 
 async function getSessionFromRequest(request: NextRequest) {
-  // Web/desktop: httpOnly cookie. Mobile: Bearer token in Authorization header.
-  let accessToken = request.cookies.get("access_token")?.value
-  if (!accessToken) {
-    const authHeader = request.headers.get("authorization")
-    if (authHeader && /^Bearer\s+/i.test(authHeader)) {
-      accessToken = authHeader.replace(/^Bearer\s+/i, "").trim()
-    }
-  }
+  const accessToken = request.cookies.get("access_token")?.value
 
   if (accessToken) {
     const payload = await verifyAccessToken(accessToken)

@@ -13,7 +13,6 @@ final inventoryRepositoryProvider = Provider<InventoryRepository>((ref) {
   return InventoryRepository(
     ref.watch(dioClientProvider),
     ref.watch(isarDbProvider),
-    ref.watch(mutationQueueProvider),
     ref.watch(connectionMonitorProvider.notifier),
   );
 });

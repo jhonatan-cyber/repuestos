@@ -19,22 +19,8 @@ export async function POST(request: NextRequest) {
     if (!rl.allowed) {
       return createErrorResponse("Demasiadas solicitudes, intentá más tarde", 429)
     }
-    // Mobile clients send the refresh token in the body or as Bearer; web uses cookie.
-    let refreshToken = request.cookies.get("refresh_token")?.value
-    if (!refreshToken) {
-      try {
-        const body = await request.json().catch(() => ({}))
-        refreshToken = body?.refreshToken
-      } catch {
-        // ignore
-      }
-    }
-    if (!refreshToken) {
-      const authHeader = request.headers.get("authorization")
-      if (authHeader && /^Bearer\s+/i.test(authHeader)) {
-        refreshToken = authHeader.replace(/^Bearer\s+/i, "").trim()
-      }
-    }
+    // Get refresh token from cookie
+    const refreshToken = request.cookies.get("refresh_token")?.value
 
     if (!refreshToken) {
       return createErrorResponse("Refresh token requerido", 401)
@@ -46,11 +32,7 @@ export async function POST(request: NextRequest) {
       return createErrorResponse("Token de refresco inválido o expirado", 401)
     }
 
-    const response = createSuccessResponse({
-      ...session.user,
-      accessToken: session.accessToken,
-      refreshToken: session.refreshToken,
-    })
+    const response = createSuccessResponse(session.user)
     applySessionCookies(response, session.accessToken, session.refreshToken, session.rememberMe)
 
     return response

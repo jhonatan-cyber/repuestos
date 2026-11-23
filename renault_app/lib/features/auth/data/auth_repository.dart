@@ -15,25 +15,30 @@ class AuthRepository {
     required String password,
     bool rememberMe = false,
   }) async {
-    final response = await _client.dio.post(
-      '/auth/login',
-      data: {
-        'email': email,
-        'password': password,
-        'rememberMe': rememberMe,
-      },
-    );
-    final data = response.data as Map<String, dynamic>;
-    final accessToken = data['accessToken'] as String?;
-    final refreshToken = data['refreshToken'] as String?;
-    if (accessToken == null || refreshToken == null) {
-      throw Exception('Respuesta de login inválida');
+    try {
+      final response = await _client.dio.post(
+        '/auth/login',
+        data: {
+          'email': email,
+          'password': password,
+          'rememberMe': rememberMe,
+        },
+      );
+      final data = response.data as Map<String, dynamic>;
+      final accessToken = data['accessToken'] as String?;
+      final refreshToken = data['refreshToken'] as String?;
+      if (accessToken == null || refreshToken == null) {
+        throw Exception('Respuesta de login inválida: faltan tokens');
+      }
+      await _storage.saveTokens(
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      );
+      return AuthUser.fromJson(data);
+    } catch (e) {
+      // Re-throw with full details for debugging
+      rethrow;
     }
-    await _storage.saveTokens(
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-    );
-    return AuthUser.fromJson(data);
   }
 
   Future<void> logout() async {

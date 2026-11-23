@@ -268,15 +268,6 @@ describe("QuotationSchema", () => {
     expect(QuotationSchema.safeParse(valid).success).toBe(true)
   })
 
-  it("accepts quotation without clientId", () => {
-    expect(QuotationSchema.safeParse(valid).success).toBe(true)
-    expect(QuotationSchema.safeParse({ ...valid, clientId: null }).success).toBe(true)
-  })
-
-  it("accepts clientId as empty string", () => {
-    expect(QuotationSchema.safeParse({ ...valid, clientId: "" }).success).toBe(true)
-  })
-
   it("defaults status to pendiente", () => {
     const res = QuotationSchema.safeParse(valid)
     if (res.success) expect(res.data.status).toBe("pendiente")

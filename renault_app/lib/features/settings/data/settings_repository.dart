@@ -1,14 +1,12 @@
 
-import '../../../../core/database/isar_db.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/sync/connection_monitor.dart';
 import '../../../../core/sync/mutation_queue.dart';
 import 'settings_model.dart';
 
 class SettingsRepository {
-  SettingsRepository(this._client, this._db, this._queue, this._monitor);
+  SettingsRepository(this._client, this._queue, this._monitor);
   final DioClient _client;
-  final IsarDB _db;
   final MutationQueue _queue;
   final ConnectionMonitor _monitor;
 

@@ -9,7 +9,6 @@ import '../../data/settings_repository.dart';
 final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   return SettingsRepository(
     ref.watch(dioClientProvider),
-    ref.watch(isarDbProvider),
     ref.watch(mutationQueueProvider),
     ref.watch(connectionMonitorProvider.notifier),
   );

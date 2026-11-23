@@ -138,6 +138,26 @@ class Credit {
   num get progress => total > 0 ? (remaining / total) * 100 : 0;
   String get clientPhone => client?.phone ?? '';
 
+  bool isOverdue() {
+    if (dueDate == null || dueDate!.isEmpty) return false;
+    try {
+      final due = DateTime.parse(dueDate!);
+      return DateTime.now().isAfter(due);
+    } catch (_) {
+      return false;
+    }
+  }
+
+  int daysUntilDue() {
+    if (dueDate == null || dueDate!.isEmpty) return 0;
+    try {
+      final due = DateTime.parse(dueDate!);
+      return due.difference(DateTime.now()).inDays;
+    } catch (_) {
+      return 0;
+    }
+  }
+
   factory Credit.fromJson(Map<String, dynamic> json) => Credit(
         id: json['id']?.toString() ?? '',
         clientName: json['clientName']?.toString() ??
@@ -189,6 +209,48 @@ class CreditPayment {
       };
 }
 
+class PurchaseCreditPayment {
+  PurchaseCreditPayment({
+    required this.id,
+    required this.amount,
+    required this.date,
+    this.notes,
+    this.userName,
+  });
+
+  final String id;
+  final num amount;
+  final String date;
+  final String? notes;
+  final String? userName;
+
+  factory PurchaseCreditPayment.fromJson(Map<String, dynamic> json) => PurchaseCreditPayment(
+        id: json['id']?.toString() ?? '',
+        amount: (json['amount'] as num?) ?? 0,
+        date: json['date']?.toString() ?? '',
+        notes: json['notes']?.toString(),
+        userName: json['userName']?.toString(),
+      );
+}
+
+class PurchaseCreditSupplier {
+  PurchaseCreditSupplier({
+    required this.id,
+    required this.name,
+    this.phone,
+  });
+
+  final String id;
+  final String name;
+  final String? phone;
+
+  factory PurchaseCreditSupplier.fromJson(Map<String, dynamic> json) => PurchaseCreditSupplier(
+        id: json['id']?.toString() ?? '',
+        name: json['name']?.toString() ?? '',
+        phone: json['phone']?.toString(),
+      );
+}
+
 class PurchaseCredit {
   PurchaseCredit({
     required this.id,
@@ -197,6 +259,9 @@ class PurchaseCredit {
     required this.remaining,
     required this.status,
     this.payments = 0,
+    this.dueDate,
+    this.supplier,
+    this.paymentRecords = const [],
   });
 
   final String id;
@@ -205,15 +270,51 @@ class PurchaseCredit {
   final num remaining;
   final String status;
   final int payments;
+  final String? dueDate;
+  final PurchaseCreditSupplier? supplier;
+  final List<PurchaseCreditPayment> paymentRecords;
 
   bool get isActive => status == 'active' || status == 'pending';
+  num get progress => total > 0 ? (remaining / total) * 100 : 0;
+  String get supplierPhone => supplier?.phone ?? '';
+
+  bool isOverdue() {
+    if (dueDate == null || dueDate!.isEmpty) return false;
+    try {
+      final due = DateTime.parse(dueDate!);
+      return DateTime.now().isAfter(due);
+    } catch (_) {
+      return false;
+    }
+  }
+
+  int daysUntilDue() {
+    if (dueDate == null || dueDate!.isEmpty) return 0;
+    try {
+      final due = DateTime.parse(dueDate!);
+      return due.difference(DateTime.now()).inDays;
+    } catch (_) {
+      return 0;
+    }
+  }
 
   factory PurchaseCredit.fromJson(Map<String, dynamic> json) => PurchaseCredit(
         id: json['id']?.toString() ?? '',
-        supplierName: json['supplierName']?.toString() ?? '',
+        supplierName: json['supplierName']?.toString() ??
+            (json['supplier'] as Map<String, dynamic>?)?['name']?.toString() ??
+            '',
         total: (json['total'] as num?) ?? 0,
         remaining: (json['remaining'] as num?) ?? 0,
         status: json['status']?.toString() ?? 'active',
-        payments: (json['payments'] as int?) ?? 0,
+        dueDate: json['dueDate']?.toString(),
+        payments: json['payments'] is List ? 0 : (json['payments'] as int?) ?? 0,
+        supplier: json['supplier'] != null
+            ? PurchaseCreditSupplier.fromJson(json['supplier'] as Map<String, dynamic>)
+            : null,
+        paymentRecords: (json['payments'] is List)
+            ? (json['payments'] as List<dynamic>)
+                .map((e) => PurchaseCreditPayment.fromJson(e as Map<String, dynamic>))
+                .toList()
+            : [],
       );
 }

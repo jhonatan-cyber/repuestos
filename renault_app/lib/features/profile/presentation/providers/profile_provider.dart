@@ -9,7 +9,6 @@ import '../../data/profile_repository.dart';
 final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
   return ProfileRepository(
     ref.watch(dioClientProvider),
-    ref.watch(isarDbProvider),
     ref.watch(mutationQueueProvider),
     ref.watch(connectionMonitorProvider.notifier),
   );

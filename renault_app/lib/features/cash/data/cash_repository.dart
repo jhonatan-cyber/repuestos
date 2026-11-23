@@ -50,7 +50,7 @@ class CashRepository {
     final isOnline = await _monitor.hasConnection();
     if (isOnline) {
       try {
-        await _client.dio.post('/cash-records/$id/close');
+        await _client.dio.patch('/cash-records/$id/close');
         return;
       } catch (_) {}
     }
@@ -65,7 +65,7 @@ class CashRepository {
         await isar.writeTxn(() => isar.isarCashRecords.put(existing));
       }
     }
-    await _queue.enqueue(operation: 'POST', endpoint: '/cash-records/$id/close', payload: {'id': id});
+    await _queue.enqueue(operation: 'PATCH', endpoint: '/cash-records/$id/close', payload: {'id': id});
   }
 
   Future<void> withdraw(String id, num amount, String reason) async {

@@ -120,11 +120,10 @@ export async function POST(request: NextRequest) {
       rememberMe,
     )
 
-    const sessionUser = buildSessionUser(user, permissions)
-    // Expose tokens in the body so non-browser clients (mobile apps) that cannot
-    // read httpOnly cookies can authenticate with `Authorization: Bearer`.
+    // Include tokens in JSON body for mobile app compatibility (Bearer tokens)
+    // Cookies are also set for web/desktop app compatibility
     const response = NextResponse.json({
-      ...sessionUser,
+      ...buildSessionUser(user, permissions),
       accessToken,
       refreshToken,
     })

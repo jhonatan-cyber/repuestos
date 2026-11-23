@@ -14,6 +14,7 @@ import '../../features/suppliers/presentation/screens/suppliers_screen.dart';
 import '../../features/purchases/presentation/screens/purchases_screen.dart';
 import '../../features/quotations/presentation/screens/quotations_screen.dart';
 import '../../features/credits/presentation/screens/credits_screen.dart';
+import '../../features/credits/presentation/screens/credit_reminders_screen.dart';
 import '../../features/cash/presentation/screens/cash_screen.dart';
 import '../../features/expenses/presentation/screens/expenses_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
@@ -97,6 +98,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/credits',
             builder: (context, state) => const CreditsScreen(),
+          ),
+          GoRoute(
+            path: '/credit-reminders',
+            builder: (context, state) => const CreditRemindersScreen(),
           ),
           GoRoute(
             path: '/cash',
@@ -251,6 +256,7 @@ class _HomeShellState extends ConsumerState<_HomeShell> {
                 _DrawerItem(icon: Icons.account_balance_wallet, label: 'Caja', route: '/cash'),
                 _DrawerItem(icon: Icons.receipt_long, label: 'Gastos', route: '/expenses'),
                 _DrawerItem(icon: Icons.credit_card, label: 'Créditos', route: '/credits'),
+                _DrawerItem(icon: Icons.notifications_active, label: 'Recordatorios', route: '/credit-reminders'),
               ]),
               _DrawerSection(title: 'Catálogo', items: [
                 _DrawerItem(icon: Icons.inventory_2, label: 'Productos', route: '/products'),

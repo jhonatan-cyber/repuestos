@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app.dart';
 import 'core/database/isar_db.dart';
+import 'core/notifications/local_notifications_service.dart';
 import 'core/sync/connection_monitor.dart';
 
 void main() async {
@@ -14,6 +15,9 @@ void main() async {
   // Initialize connection monitor
   final monitor = ConnectionMonitor();
   await monitor.initialize();
+
+  // Initialize local notifications (replaces Firebase FCM)
+  await LocalNotificationsService().initialize();
 
   runApp(
     ProviderScope(

@@ -105,10 +105,6 @@ export async function exportPurchasePaymentReceiptPdf({
   pdf.setFont("helvetica", "bold")
   pdf.setFontSize(18)
   pdf.text(COMPANY_INFO.name, margin + 40, y + 10)
-  const companyNameWidth = pdf.getTextWidth(COMPANY_INFO.name)
-
-  pdf.setFontSize(10)
-  pdf.text("JHOSEP", margin + 40 + companyNameWidth / 2, y + 15.5, { align: "center" })
 
   pdf.setFont("helvetica", "normal")
   pdf.setFontSize(10)
@@ -120,7 +116,7 @@ export async function exportPurchasePaymentReceiptPdf({
       `Tel: ${COMPANY_INFO.phone} | NIT: ${COMPANY_INFO.nit}`,
     ],
     margin + 40,
-    y + 21,
+    y + 16,
   )
 
   pdf.setFont("helvetica", "bold")
@@ -291,7 +287,6 @@ export function buildPurchasePaymentReceiptHtml(params: {
           <img src="${window.location.origin}/api/settings/logo" alt="Logo" class="logo" />
           <div class="company-info">
             <h1>${COMPANY_INFO.name}</h1>
-            <p class="owner">JHOSEP</p>
             <p>${COMPANY_INFO.slogan}</p>
             <p>${COMPANY_INFO.address}</p>
             <p>${COMPANY_INFO.city}</p>

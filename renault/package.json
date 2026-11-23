@@ -1,6 +1,6 @@
 {
   "name": "renault-erp",
-  "version": "0.10.2",
+  "version": "0.10.0",
   "private": true,
   "main": "main.js",
   "scripts": {

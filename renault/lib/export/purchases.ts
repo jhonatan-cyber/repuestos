@@ -42,7 +42,6 @@ export async function exportPurchaseReceiptPDF(purchase: Purchase): Promise<void
         .logo { width: 250px; height: 250px; object-fit: contain; }
         .company-info h1 { font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
         .company-info p { font-size: 13px; color: #444; }
-        .company-info p.owner { font-size: 15px; font-weight: 700; text-align: center; letter-spacing: 0.14em; color: #111; margin-top: 2px; }
         .receipt-info { text-align: right; }
         .receipt-info .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: #555; }
         .receipt-info .code { font-size: 18px; font-weight: 700; }
@@ -67,7 +66,6 @@ export async function exportPurchaseReceiptPDF(purchase: Purchase): Promise<void
           <img src="${window.location.origin}/api/settings/logo" alt="Logo" class="logo" />
           <div class="company-info">
             <h1>${COMPANY_INFO.name}</h1>
-            <p class="owner">JHOSEP</p>
             <p>${COMPANY_INFO.slogan}</p>
             <p>${COMPANY_INFO.address}</p>
             <p>${COMPANY_INFO.city}</p>

@@ -3,17 +3,15 @@ import '../../../core/database/isar_db.dart';
 import '../../../core/database/isar_schemas.dart';
 import '../../../core/network/dio_client.dart';
 import '../../../core/sync/connection_monitor.dart';
-import '../../../core/sync/mutation_queue.dart';
 import '../../../../features/categories/data/category_model.dart';
 import '../../../../features/products/data/product_model.dart';
 import '../../../../features/suppliers/data/supplier_model.dart';
 import 'inventory_model.dart';
 
 class InventoryRepository {
-  InventoryRepository(this._client, this._db, this._queue, this._monitor);
+  InventoryRepository(this._client, this._db, this._monitor);
   final DioClient _client;
   final IsarDB _db;
-  final MutationQueue _queue;
   final ConnectionMonitor _monitor;
 
   Future<List<Product>> getProducts() async {

@@ -76,10 +76,6 @@ prisma/renault.db-*
 /prisma/template-db-config.json
 cookies.txt
 
-# Electron build outputs (large binaries, exceed GitHub 100MB limit)
-/dist-out/
-/dist-build/
-
 # Agent scratchpads (not part of the project)
 .agents/tasks/
 

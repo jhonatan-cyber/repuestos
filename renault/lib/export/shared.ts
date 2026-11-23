@@ -18,7 +18,6 @@ body { font-family: Arial, sans-serif; font-size: 13px; color: #111; padding: 12
 .logo { width: 250px; height: 250px; object-fit: contain; }
 .company-info h1 { font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
 .company-info p { font-size: 13px; color: #444; }
-.company-info p.owner { font-size: 15px; font-weight: 700; text-align: center; letter-spacing: 0.14em; color: #111; margin-top: 2px; }
 .receipt-info { text-align: right; }
 .receipt-info .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: #555; }
 .receipt-info .code { font-size: 18px; font-weight: 700; }

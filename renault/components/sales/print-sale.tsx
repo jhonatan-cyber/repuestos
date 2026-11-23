@@ -76,17 +76,6 @@ function SaleReceipt({ sale, compact }: { sale: Sale; compact: boolean }) {
             >
               Renault Reluz
             </h1>
-            <p
-              style={{
-                margin: "2px 0 0",
-                fontSize: compact ? "10px" : "16px",
-                fontWeight: 700,
-                textAlign: "center",
-                letterSpacing: "0.14em",
-              }}
-            >
-              JHOSEP
-            </p>
             <p style={{ margin: "2px 0 0", fontSize: compact ? "9px" : "14px", fontWeight: 600 }}>
               Repuestos automotrices
             </p>

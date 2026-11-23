@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
@@ -17,6 +19,12 @@ class IsarDB {
 
     final dir = await getApplicationDocumentsDirectory();
     final isarPath = p.join(dir.path, 'renault');
+
+    // Ensure directory exists
+    final directory = Directory(isarPath);
+    if (!await directory.exists()) {
+      await directory.create(recursive: true);
+    }
 
     _isar = await Isar.open(
       [
