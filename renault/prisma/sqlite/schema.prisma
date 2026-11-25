@@ -62,6 +62,8 @@ model Client {
   id             String   @id @default(uuid())
   name           String
   phone          String
+  email          String?
+  nit            String?
   address        String?
   status         String   @default("active") // "active" | "inactive"
   totalPurchases Float    @default(0)
