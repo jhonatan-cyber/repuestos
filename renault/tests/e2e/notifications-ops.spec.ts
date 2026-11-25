@@ -1,4 +1,5 @@
 ﻿import { test, expect } from "@playwright/test"
+import { getE2EAdminPassword } from "../helpers/auth"
 
 const ADMIN_EMAILS = [
   process.env.E2E_ADMIN_EMAIL,
@@ -6,12 +7,12 @@ const ADMIN_EMAILS = [
   "admin@repuestos.com",
   "admin@renault.com",
 ].filter(Boolean) as string[]
-const ADMIN_PASSWORD = process.env.E2E_ADMIN_PASSWORD || "admin123"
 
 async function loginApi(request: any) {
+  const password = getE2EAdminPassword()
   for (const email of ADMIN_EMAILS) {
     const res = await request.post("/api/auth/login", {
-      data: { email, password: ADMIN_PASSWORD, rememberMe: false },
+      data: { email, password, rememberMe: false },
     })
     if (res.ok()) return email
   }

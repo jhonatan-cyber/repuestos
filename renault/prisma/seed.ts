@@ -99,6 +99,13 @@ function daysFromNow(days: number, hour = 10, minute = 0) {
 }
 
 async function main(prisma: any, dbName: string) {
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD
+  if (!adminPassword || adminPassword.length < 8) {
+    throw new Error(
+      "Define SEED_ADMIN_PASSWORD con al menos 8 caracteres antes de ejecutar el seed",
+    )
+  }
+
   await prisma.cashWithdrawal.deleteMany()
   await prisma.commission.deleteMany()
   await prisma.cashRecord.deleteMany()
@@ -125,7 +132,7 @@ async function main(prisma: any, dbName: string) {
     })),
   })
 
-  const hashedAdmin = await bcrypt.hash("admin123", 10)
+  const hashedAdmin = await bcrypt.hash(adminPassword, 10)
   const hashedVendedor = await bcrypt.hash("vendedor123", 10)
   const hashedCompras = await bcrypt.hash("compras123", 10)
   const hashedSupervisor = await bcrypt.hash("supervisor123", 10)

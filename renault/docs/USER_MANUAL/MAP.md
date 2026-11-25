@@ -16,7 +16,7 @@
 | **Tema**                                | Claro y oscuro (se cambia con un botón).                                                                                                                                                                                |
 | **Conexión**                            | La versión escritorio funciona sin internet (usa una base local). Cuando hay internet, sincroniza con la nube.                                                                                                          |
 | **Usuarios y permisos**                 | Hay 4 roles: Administrador, Vendedor, Compras, Supervisor. Cada uno ve y hace cosas distintas.                                                                                                                          |
-| **Credenciales seed (datos de prueba)** | Admin: `admin@gmail.com` / `admin123`. Vendedor: `carlos.rodriguez@repuestos.com` / `vendedor123`. Compras: `luis.castro@repuestos.com` / `compras123`. Supervisor: `patricia.morales@repuestos.com` / `supervisor123`. |
+| **Credenciales**                       | En una instalación nueva, la primera cuenta administradora se crea en la pantalla de configuración con una contraseña elegida por el usuario. Las cuentas de prueba de desarrollo no son credenciales de instalación. |
 
 ## 3. Mapa de pantallas
 

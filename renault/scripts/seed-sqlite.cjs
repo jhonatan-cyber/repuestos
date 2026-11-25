@@ -1,5 +1,5 @@
 // scripts/seed-sqlite.cjs
-// Run: node --experimental-sqlite scripts/seed-sqlite.cjs
+// Requires SEED_ADMIN_PASSWORD (at least 8 characters) in the environment.
 
 const { DatabaseSync } = require('node:sqlite')
 const path = require('path')
@@ -8,6 +8,13 @@ require('dotenv').config({ override: true })
 const { resolveSqliteDatabasePath } = require('../lib/shared/database-config')
 
 const DB = path.resolve(__dirname, '../prisma/renault.db')
+const ADMIN_PASSWORD = process.env.SEED_ADMIN_PASSWORD
+if (!ADMIN_PASSWORD || ADMIN_PASSWORD.length < 8) {
+  console.error(
+    'Define SEED_ADMIN_PASSWORD con al menos 8 caracteres antes de ejecutar el seed.',
+  )
+  process.exit(1)
+}
 
 function hash(pw) { return crypto.createHash('sha256').update('renault-salt-' + pw).digest('hex') }
 
@@ -38,7 +45,7 @@ ins('roles',
 ins('users',
   ['id','ci','firstName','lastName','address','phone','email','password','role','status','createdAt','updatedAt','isDeleted','lastSyncedAt'],
   [
-    ['u-admin','0000001','Admin','Sistema','Av. Principal','70000001','admin@gmail.com',hash('admin123'),'administrador','active',NOW,NOW,0,null],
+    ['u-admin','0000001','Admin','Sistema','Av. Principal','70000001','admin@gmail.com',hash(ADMIN_PASSWORD),'administrador','active',NOW,NOW,0,null],
     ['u-seller','0000002','Carlos','Rodriguez','Calle 2','70000002','carlos.rodriguez@repuestos.com',hash('vendedor123'),'vendedor','active',NOW,NOW,0,null],
     ['u-buyer','0000003','Luis','Castro','Av. 3','70000003','luis.castro@repuestos.com',hash('compras123'),'comprador','active',NOW,NOW,0,null],
     ['u-sup','0000004','Patricia','Morales','Calle 4','70000004','patricia.morales@repuestos.com',hash('supervisor123'),'supervisor','active',NOW,NOW,0,null],
@@ -100,7 +107,7 @@ ins('cash_records',
 console.log(`\n✨ SQLite seeded successfully!`)
 console.log(`\n📂 ${DB}`)
 console.log(`\n🔐 Credentials:`)
-console.log(`   admin@repuestos.com / admin123`)
+console.log(`   admin@gmail.com / contraseña definida en SEED_ADMIN_PASSWORD`)
 console.log(`   carlos.rodriguez@repuestos.com / vendedor123`)
 console.log(`   luis.castro@repuestos.com / compras123`)
 console.log(`   patricia.morales@repuestos.com / supervisor123`)

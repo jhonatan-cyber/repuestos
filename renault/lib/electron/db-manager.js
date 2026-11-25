@@ -2,27 +2,11 @@ const { createClient } = require("@libsql/client")
 const fs = require("fs")
 const path = require("path")
 const { app } = require("electron")
-const bcrypt = require("bcryptjs")
 const { randomUUID } = require("crypto")
 const { migrateDesktopDatabase } = require("./sqlite-migrations")
 
 function toFileUrl(filePath) {
   return `file:${filePath.replace(/\\/g, "/").replace(/ /g, "%20")}`
-}
-
-/**
- * Credenciales del usuario administrador que se crea al instalar la app.
- * El usuario puede cambiarlas después desde el perfil.
- */
-const DEFAULT_ADMIN = {
-  email: "admin@gmail.com",
-  password: "admin123",
-  ci: "10000001",
-  firstName: "Admin",
-  lastName: "Sistema",
-  address: "N/A",
-  phone: "70000000",
-  role: "Administrador",
 }
 
 const MAX_INSTALL_BACKUPS = 3
@@ -121,94 +105,7 @@ async function applySchemaMigrations(databasePath) {
   return result
 }
 
-/**
- * Garantiza que exista el rol Administrador y el usuario admin por defecto.
- *
- * @param {object} client Cliente libsql ya abierto.
- * @param {object} options
- * @param {boolean} options.forcePassword Fuerza la contraseña por defecto
- *        (se usa tras reinicializar la base de datos en una instalación nueva).
- * @returns {Promise<{created: boolean, passwordReset: boolean, email: string}>}
- */
-async function ensureAdminUserWithClient(client, options = {}) {
-  const { forcePassword = false } = options
-  const email = options.email || DEFAULT_ADMIN.email
-  const password = options.password || DEFAULT_ADMIN.password
-  const now = new Date().toISOString()
-
-  const roleResult = await client.execute("SELECT id FROM roles WHERE name = ?", [
-    DEFAULT_ADMIN.role,
-  ])
-  if (!roleResult.rows || roleResult.rows.length === 0) {
-    await client.execute({
-      sql: `
-        INSERT OR IGNORE INTO roles (
-          id, name, description, permissions, color, status, isSystem, createdAt, updatedAt, isDeleted
-        ) VALUES (?, ?, 'Acceso total al sistema', ?, '#EF4444', 'active', 1, ?, ?, 0)
-      `,
-      args: [randomUUID(), DEFAULT_ADMIN.role, JSON.stringify(["*"]), now, now],
-    })
-  }
-
-  const userResult = await client.execute("SELECT id FROM users WHERE email = ?", [email])
-  const existingUser = userResult.rows && userResult.rows[0]
-
-  if (!existingUser) {
-    const passwordHash = await bcrypt.hash(password, 10)
-    await client.execute({
-      sql: `
-        INSERT INTO users (
-          id, ci, firstName, lastName, address, phone, email, password, image, role, status, createdAt, updatedAt, isDeleted
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULL, ?, 'active', ?, ?, 0)
-      `,
-      args: [
-        randomUUID(),
-        DEFAULT_ADMIN.ci,
-        DEFAULT_ADMIN.firstName,
-        DEFAULT_ADMIN.lastName,
-        DEFAULT_ADMIN.address,
-        DEFAULT_ADMIN.phone,
-        email,
-        passwordHash,
-        DEFAULT_ADMIN.role,
-        now,
-        now,
-      ],
-    })
-    console.log(`[ensureSecurity] Default admin created: ${email} / ${password}`)
-    return { created: true, passwordReset: false, email }
-  }
-
-  if (forcePassword) {
-    const passwordHash = await bcrypt.hash(password, 10)
-    await client.execute({
-      sql: `
-        UPDATE users
-        SET password = ?, role = ?, status = 'active', isDeleted = 0, updatedAt = ?
-        WHERE id = ?
-      `,
-      args: [passwordHash, DEFAULT_ADMIN.role, now, existingUser.id],
-    })
-    console.log(`[ensureSecurity] Admin password reset to default: ${email}`)
-    return { created: false, passwordReset: true, email }
-  }
-
-  return { created: false, passwordReset: false, email }
-}
-
-/** Igual que ensureAdminUserWithClient pero abre su propio cliente. */
-async function ensureAdminUser(databasePath, options = {}) {
-  const client = createClient({ url: toFileUrl(databasePath) })
-
-  try {
-    return await ensureAdminUserWithClient(client, options)
-  } finally {
-    await client.close()
-  }
-}
-
-async function ensureMinimumSecurityData(databasePath, options = {}) {
-  const { forcePassword = false } = options
+async function ensureMinimumSecurityData(databasePath) {
   const client = createClient({ url: toFileUrl(databasePath) })
 
   try {
@@ -258,7 +155,6 @@ async function ensureMinimumSecurityData(databasePath, options = {}) {
       })
     }
 
-    await ensureAdminUserWithClient(client, { forcePassword })
   } finally {
     await client.close()
   }
@@ -271,11 +167,10 @@ async function ensureMinimumSecurityData(databasePath, options = {}) {
  * @param {string} templateDbPath Ruta del template limpio (prisma/renault.db).
  * @param {object} options
  * @param {boolean} options.resetDatabase  Limpia la DB (instalación nueva).
- * @param {boolean} options.forceAdminPassword Fuerza admin/admin123.
  * @returns {Promise<{wiped: boolean, backupPath: string|null}>}
  */
 async function ensureDesktopDatabase(dbPath, templateDbPath, options = {}) {
-  const { resetDatabase = false, forceAdminPassword = false } = options
+  const { resetDatabase = false } = options
   const templateAvailable = Boolean(templateDbPath && fs.existsSync(templateDbPath))
   let wiped = false
   let backupPath = null
@@ -310,7 +205,7 @@ async function ensureDesktopDatabase(dbPath, templateDbPath, options = {}) {
 
     if (fs.existsSync(dbPath)) {
       await applySchemaMigrations(dbPath)
-      await ensureMinimumSecurityData(dbPath, { forcePassword: forceAdminPassword || wiped })
+      await ensureMinimumSecurityData(dbPath)
     }
   } catch (error) {
     throw error
@@ -320,9 +215,7 @@ async function ensureDesktopDatabase(dbPath, templateDbPath, options = {}) {
 }
 
 module.exports = {
-  DEFAULT_ADMIN,
   applySchemaMigrations,
-  ensureAdminUser,
   ensureDesktopDatabase,
   removeDatabaseFiles,
   removeDatabaseSidecarFiles,

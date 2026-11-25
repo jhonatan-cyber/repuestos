@@ -3,7 +3,7 @@ import { login } from "../helpers/auth"
 
 test.describe("Modulo Dashboard", () => {
   test.beforeEach(async ({ page }) => {
-    await login(page, "admin@gmail.com", "admin123")
+    await login(page, "admin@gmail.com")
   })
 
   test("carga la pagina del dashboard", async ({ page }) => {

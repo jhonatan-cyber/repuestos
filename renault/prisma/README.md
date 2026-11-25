@@ -58,7 +58,7 @@ El seed crea:
 
 **Credenciales de prueba:**
 
-- Admin: `admin@erp.com` / `admin123`
+- Admin: el correo de prueba `admin@gmail.com` usa una clave definida por ti en `SEED_ADMIN_PASSWORD`.
 - Vendedor: `juan@erp.com` / `pass123`
 - Compras: `maria@erp.com` / `pass123`
 - Supervisor: `supervisor@erp.com` / `pass123`
@@ -91,6 +91,7 @@ Asegúrate de tener configurado el archivo `.env` con:
 
 ```env
 DATABASE_URL=postgresql://usuario:contraseña@localhost:5432/nombre_base_datos
+# Define SEED_ADMIN_PASSWORD con tu propia clave (mínimo 8 caracteres) antes de ejecutar db:seed.
 ```
 
 ### Primer Uso

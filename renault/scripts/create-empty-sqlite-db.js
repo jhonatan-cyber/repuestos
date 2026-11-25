@@ -399,10 +399,7 @@ async function main() {
     await client.execute(sql)
   }
 
-  // ── SEMILLA MÍNIMA: 1 rol + 1 usuario ──
-  // Usar bcryptjs para hash (mismo que usa el login)
-  const bcrypt = require("bcryptjs")
-  const hashedPassword = bcrypt.hashSync("admin123", 10)
+  // ── SEMILLA MÍNIMA: rol administrador ──
   const now = new Date().toISOString()
 
   console.log("\n🌱 Insertando datos iniciales...")
@@ -456,29 +453,7 @@ async function main() {
     ],
   })
 
-  // 2. Usuario Administrador (UUID fijo)
-  await client.execute({
-    sql: `INSERT INTO users (id, ci, "firstName", "lastName", address, phone, email, password, role, status, "createdAt", "updatedAt", "isDeleted")
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    args: [
-      "b92ad810-b72e-4897-8d86-9bdeaadba5c8",
-      "0000001",
-      "Admin",
-      "Sistema",
-      "Av. Principal",
-      "70000001",
-      "admin@gmail.com",
-      hashedPassword,
-      "administrador",
-      "active",
-      now,
-      now,
-      false, // isDeleted
-    ],
-  })
-
   console.log("  ✅ Rol: Administrador (16 permisos)")
-  console.log("  ✅ Usuario: admin@gmail.com / admin123")
 
   // Verify
   const tables = await client.execute(

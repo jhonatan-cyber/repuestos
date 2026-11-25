@@ -5,7 +5,7 @@
 ;  La app lo guarda como diagnóstico y como señal de actualización. NO reinicia
 ;  la base local: el instalador corre en cada actualización y eso borraría los
 ;  datos de la empresa. La base sólo se crea limpia en la primera ejecución;
-;  en cada actualización se refuerza admin@gmail.com / admin123.
+;  las actualizaciones conservan datos y credenciales.
 ; ============================================================================
 
 !macro customInstall

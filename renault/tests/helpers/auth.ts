@@ -8,7 +8,17 @@ const DEFAULT_EMAILS = [
   "admin@erp.com",
 ].filter(Boolean) as string[]
 
-export async function login(page: Page, email?: string, password = "admin123") {
+export function getE2EAdminPassword() {
+  const password = process.env.E2E_ADMIN_PASSWORD || process.env.SEED_ADMIN_PASSWORD
+  if (!password || password.length < 8) {
+    throw new Error(
+      "Define E2E_ADMIN_PASSWORD o SEED_ADMIN_PASSWORD con al menos 8 caracteres",
+    )
+  }
+  return password
+}
+
+export async function login(page: Page, email?: string, password = getE2EAdminPassword()) {
   const candidates = email ? [email] : DEFAULT_EMAILS
 
   const setupStatus = await page.request.get("/api/auth/setup/check")

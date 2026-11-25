@@ -141,8 +141,8 @@ app.on("ready", async () => {
 
   // 1. Inicializar DB
   //    Sólo en la primera ejecución del perfil se crea la base limpia con el
-  //    usuario admin por defecto (admin@gmail.com / admin123). Las
-  //    actualizaciones conservan datos y credenciales.
+  //    esquema base. La cuenta administradora se crea en la configuración inicial.
+  //    Las actualizaciones conservan datos y credenciales.
   const install = detectDesktopInstall()
   let wiped = false
   let backupPath = null
@@ -150,7 +150,6 @@ app.on("ready", async () => {
   try {
     const result = await ensureDesktopDatabase(dbPath, getTemplateDatabasePath(), {
       resetDatabase: install.reset,
-      forceAdminPassword: install.resetAdminPassword,
     })
     wiped = result.wiped
     backupPath = result.backupPath
@@ -179,9 +178,6 @@ app.on("ready", async () => {
     if (wiped) {
       logDesktop(`[main] backup previo de la DB: ${backupPath || "no generado"}`)
     }
-  }
-  if (install.resetAdminPassword) {
-    logDesktop(`[main] usuario admin asegurado (${install.reason}): admin@gmail.com / admin123`)
   }
   logDesktop(`[main] database ready at ${dbPath}`)
 

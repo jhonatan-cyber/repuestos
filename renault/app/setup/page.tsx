@@ -33,6 +33,11 @@ const setupSchema = z.object({
   firstName: z.string().min(2, "El nombre es muy corto"),
   lastName: z.string().min(2, "El apellido es muy corto"),
   email: z.string().email("Correo electrónico inválido"),
+  password: z.string().min(8, "La contraseña debe tener al menos 8 caracteres"),
+  confirmPassword: z.string().min(8, "La contraseña debe tener al menos 8 caracteres"),
+}).refine((values) => values.password === values.confirmPassword, {
+  message: "Las contraseñas no coinciden",
+  path: ["confirmPassword"],
 })
 
 type SetupValues = z.infer<typeof setupSchema>
@@ -67,6 +72,8 @@ export default function SetupPage() {
       firstName: "",
       lastName: "",
       email: "",
+      password: "",
+      confirmPassword: "",
     },
   })
 
@@ -77,7 +84,13 @@ export default function SetupPage() {
       const response = await fetch("/api/auth/setup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          ci: values.ci,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+          password: values.password,
+        }),
       })
 
       const data = await response.json()
@@ -87,7 +100,7 @@ export default function SetupPage() {
       }
 
       toast.success("¡Sistema configurado con éxito!")
-      toast.info("Usa tu CI como contraseña inicial")
+      toast.info("Inicia sesión con el correo y la contraseña que elegiste")
 
       // Pequeña espera para que el toast sea visible
       setTimeout(() => {
@@ -202,9 +215,6 @@ export default function SetupPage() {
                           <Input placeholder="Número de documento" className="pl-10" {...field} />
                         </div>
                       </FormControl>
-                      <CardDescription className="text-[10px] mt-1 italic">
-                        * Tu CI será también tu contraseña de acceso inicial.
-                      </CardDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -221,6 +231,39 @@ export default function SetupPage() {
                           <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                           <Input placeholder="admin@renault.com" className="pl-10" {...field} />
                         </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Contraseña</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          autoComplete="new-password"
+                          placeholder="Mínimo 8 caracteres"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Confirmar contraseña</FormLabel>
+                      <FormControl>
+                        <Input type="password" autoComplete="new-password" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

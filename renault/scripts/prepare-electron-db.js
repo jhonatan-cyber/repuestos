@@ -68,18 +68,4 @@ const sizeKB = (stats.size / 1024).toFixed(1)
 console.log(`✅ Template database ready: ${sizeKB} KB`)
 console.log(`📄 Location: ${dbPath}`)
 
-// 4. Seed default admin into the template
-//    El template se usa en la primera ejecución del perfil (y si falta la base),
-//    por lo que debe traer el admin con la contraseña por defecto. Las
-//    actualizaciones conservan la base y las credenciales existentes.
-try {
-  execSync("node scripts/seed-default-admin.js sqlite", {
-    stdio: "inherit",
-    env: { ...process.env, SEED_ADMIN_PASSWORD: "admin123" },
-  })
-  console.log("\n✅ Template includes default admin: admin@gmail.com / admin123")
-} catch (err) {
-  console.warn("⚠️  Could not seed admin into template:", err.message)
-}
-
 console.log("\n🎉 Electron template DB is clean and ready for packaging.\n")

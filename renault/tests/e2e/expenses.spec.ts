@@ -3,7 +3,7 @@ import { login, logout } from "../helpers/auth"
 
 test.describe("Modulo Gastos", () => {
   test.beforeEach(async ({ page }) => {
-    await login(page, "admin@gmail.com", "admin123")
+    await login(page, "admin@gmail.com")
   })
 
   test.afterEach(async ({ page }) => {

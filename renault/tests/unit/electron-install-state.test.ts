@@ -21,10 +21,10 @@ describe("Estado de instalación (Electron)", () => {
       previousState: { version: "0.8.0", installId: "install-0" },
     })
 
-    expect(action).toEqual({ reset: false, resetAdminPassword: false, reason: "dev" })
+    expect(action).toEqual({ reset: false, reason: "dev" })
   })
 
-  it("reinicia la base y asegura el admin en la primera instalación", () => {
+  it("reinicia la base en la primera instalación", () => {
     const action = resolveInstallAction({
       isDev: false,
       currentVersion: "0.9.0",
@@ -32,12 +32,12 @@ describe("Estado de instalación (Electron)", () => {
       previousState: null,
     })
 
-    expect(action).toEqual({ reset: true, resetAdminPassword: true, reason: "first-install" })
+    expect(action).toEqual({ reset: true, reason: "first-install" })
   })
 
-  it("conserva la base y restablece el admin cuando el instalador escribe un id nuevo (actualización)", () => {
-    // El instalador NSIS reescribe el id en cada actualización: se usa para
-    // reforzar el admin, no para borrar la base de la empresa.
+  it("conserva la base y las credenciales cuando el instalador escribe un id nuevo (actualización)", () => {
+    // El instalador NSIS reescribe el id en cada actualización, pero no debe
+    // alterar las credenciales guardadas.
     const action = resolveInstallAction({
       isDev: false,
       currentVersion: "0.9.0",
@@ -45,10 +45,10 @@ describe("Estado de instalación (Electron)", () => {
       previousState: { version: "0.9.0", installId: "install-1" },
     })
 
-    expect(action).toEqual({ reset: false, resetAdminPassword: true, reason: "updated" })
+    expect(action).toEqual({ reset: false, reason: "updated" })
   })
 
-  it("conserva la base y restablece el admin cuando cambia la versión de la app", () => {
+  it("conserva la base y las credenciales cuando cambia la versión de la app", () => {
     const action = resolveInstallAction({
       isDev: false,
       currentVersion: "0.10.0",
@@ -56,7 +56,7 @@ describe("Estado de instalación (Electron)", () => {
       previousState: { version: "0.9.0", installId: "install-1" },
     })
 
-    expect(action).toEqual({ reset: false, resetAdminPassword: true, reason: "updated" })
+    expect(action).toEqual({ reset: false, reason: "updated" })
   })
 
   it("conserva datos y contraseña cuando la instalación no cambió", () => {
@@ -67,7 +67,7 @@ describe("Estado de instalación (Electron)", () => {
       previousState: { version: "0.9.0", installId: "install-1" },
     })
 
-    expect(action).toEqual({ reset: false, resetAdminPassword: false, reason: "existing-install" })
+    expect(action).toEqual({ reset: false, reason: "existing-install" })
   })
 
   it("guarda y lee el estado de instalación", () => {

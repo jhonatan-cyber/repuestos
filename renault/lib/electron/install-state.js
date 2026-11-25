@@ -61,9 +61,8 @@ function writeInstallState(statePath, state) {
  *
  * - `reset`: reinicia la base (sólo primera ejecución del perfil, no hay datos
  *   que perder). Las actualizaciones conservan los datos.
- * - `resetAdminPassword`: garantiza el usuario admin@gmail.com con la contraseña
- *   por defecto. Se aplica en la primera instalación y en cada actualización o
- *   reinstalación (si el admin cambió su contraseña, vuelve a admin123).
+ * - Las credenciales se crean en la configuración inicial de la app; el estado
+ *   de instalación nunca modifica usuarios ni contraseñas.
  *
  * Para detectar una actualización se usan dos señales: el id que reescribe el
  * instalador NSIS en cada instalación y el cambio de versión de la app
@@ -74,7 +73,7 @@ function writeInstallState(statePath, state) {
  * @param {string|null} params.currentVersion Versión actual de la app.
  * @param {string|null} params.installerInstallId Id escrito por el instalador.
  * @param {object|null} params.previousState  Estado leído de userData.
- * @returns {{reset: boolean, resetAdminPassword: boolean, reason: string}}
+ * @returns {{reset: boolean, reason: string}}
  */
 function resolveInstallAction({
   isDev = false,
@@ -83,12 +82,12 @@ function resolveInstallAction({
   previousState = null,
 } = {}) {
   if (isDev) {
-    return { reset: false, resetAdminPassword: false, reason: "dev" }
+    return { reset: false, reason: "dev" }
   }
 
   // Nunca se corrió la app en este perfil: instalación limpia.
   if (!previousState || !previousState.version) {
-    return { reset: true, resetAdminPassword: true, reason: "first-install" }
+    return { reset: true, reason: "first-install" }
   }
 
   // El instalador reescribió su id o cambió la versión → actualización.
@@ -97,11 +96,11 @@ function resolveInstallAction({
   const versionChanged = Boolean(currentVersion) && previousState.version !== currentVersion
 
   if (installerChanged || versionChanged) {
-    return { reset: false, resetAdminPassword: true, reason: "updated" }
+    return { reset: false, reason: "updated" }
   }
 
   // Misma instalación: se conservan datos y credenciales.
-  return { reset: false, resetAdminPassword: false, reason: "existing-install" }
+  return { reset: false, reason: "existing-install" }
 }
 
 module.exports = {

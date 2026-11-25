@@ -23,9 +23,9 @@ resultados distintos en pantalla, caja y stock (detalle en
 2. El respaldo JSON es portable y funciona igual en web y escritorio; la copia `.db` se
    genera en escritorio y se restaura en **ambos** entornos por el mismo endpoint, que
    la convierte al mismo payload antes de aplicar.
-3. La base SQLite local ya **no se reinicia en cada actualización** (sólo se crea limpia
-   en la primera ejecución del perfil), pero cada actualización **garantiza el usuario
-   `admin@gmail.com` con contraseña `admin123`**, aunque se la haya cambiado.
+3. La base SQLite local sólo se crea limpia en la primera ejecución del perfil. La cuenta
+   administradora se crea en `/setup` con una contraseña elegida por el usuario; las
+   actualizaciones conservan las cuentas y credenciales existentes.
 
 ## Backend único
 
@@ -115,25 +115,19 @@ canal IPC `restore-database` (copia del archivo sobre la base activa) fue elimin
 Antes, `resolveInstallAction` (`lib/electron/install-state.js`) reiniciaba la base ante
 tres señales: primera instalación, cambio de id del instalador y cambio de versión. Como
 el instalador NSIS reescribe su id en **cada** actualización (y `electron-updater` cambia
-la versión), toda actualización borraba los datos de la empresa y reseteaba la contraseña
-del admin a `admin123` (guardando un `.pre-install-backup-*.db` no visible desde la UI).
+la versión), toda actualización borraba los datos de la empresa y restablecía las
+credenciales del administrador (guardando un `.pre-install-backup-*.db` no visible desde la UI).
 
 Ahora:
 
-- **Primera ejecución del perfil** (sin estado previo): se crea la base desde el template
-  y el admin por defecto. Es el único caso que reinicia.
+- **Primera ejecución del perfil** (sin estado previo): se crea la base desde un template
+  sin usuarios. El usuario crea la primera cuenta administradora en `/setup` y define su
+  contraseña; ésta se guarda como hash. Es el único caso que reinicia.
 - **Actualización o reinstalación** (cambia el id del instalador o la versión): los datos
-  se conservan, el esquema se pone al día con las migraciones versionadas y se ejecuta
-  `ensureMinimumSecurityData(forcePassword: true)`, que crea `admin@gmail.com` si falta y
-  **restablece su contraseña a `admin123`**. El resto de usuarios y sus contraseñas no se
-  tocan.
+  y credenciales se conservan; el esquema se pone al día con las migraciones versionadas.
 - **Misma instalación y misma versión**: no se modifican datos ni credenciales.
 - El id del instalador se sigue guardando como diagnóstico y, junto con la versión, es
   la señal de "actualización" (nunca de reinicio de la base).
-
-Consecuencia a tener en cuenta: si el administrador cambia la contraseña del usuario
-`admin@gmail.com`, la próxima actualización la vuelve a `admin123`. Para auditoría, el
-log de escritorio registra cuando se asegura el admin (`usuario admin asegurado`).
 
 ## Migraciones de esquema en escritorio
 

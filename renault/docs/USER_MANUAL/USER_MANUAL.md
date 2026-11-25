@@ -1359,13 +1359,13 @@ La restauración funciona **igual en web y en escritorio**: la copia `.db` se co
 - La base limpia se crea **sólo la primera vez** que se abre el perfil en esa computadora (instalación nueva).
 - Si el esquema de la base cambia entre versiones, la app aplica **migraciones automáticas** al arrancar. Antes de migrar guarda una copia del archivo (`renault.db.pre-migration-backup-…db`) en la carpeta de datos de la app.
 
-### La cuenta `admin@gmail.com` y las actualizaciones
+### Cuenta administradora y primer inicio
 
-- En **cada actualización o reinstalación** la app garantiza que exista el usuario **`admin@gmail.com`** con la contraseña **`admin123`**. Si alguien le había cambiado la contraseña, **vuelve a `admin123`** después de actualizar. Los demás usuarios y sus contraseñas no se tocan.
-- En un arranque normal (misma versión, sin actualizar) **no se modifica ninguna contraseña**.
-- Por eso: si querés una cuenta de administrador con contraseña propia y estable, creá otro usuario con rol **Administrador** y usá ese para el día a día. La cuenta `admin@gmail.com` queda como acceso de emergencia.
+- En una instalación nueva, la app abre la configuración inicial para crear la primera cuenta administradora. Elegí el correo y una contraseña propia de al menos 8 caracteres; el CI ya no se usa como contraseña.
+- Las actualizaciones conservan las cuentas y contraseñas existentes.
+- Si ya usabas una instalación anterior, inicia sesión con la contraseña actual y cámbiala desde **Mi perfil** si todavía usas una contraseña compartida o fácil de adivinar.
 
-> 🔐 **Recomendación**: después de instalar una versión nueva, entrá con `admin@gmail.com` / `admin123`, cambiá la contraseña desde **Mi perfil** y avisale al equipo. Tené en cuenta que la próxima actualización la va a volver a dejar en `admin123`.
+> 🔐 **Recomendación**: usa una contraseña única para el sistema y no la compartas entre los usuarios.
 
 ---
 
