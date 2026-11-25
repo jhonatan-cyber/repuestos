@@ -19,8 +19,14 @@ export async function POST(request: NextRequest) {
     if (!rl.allowed) {
       return createErrorResponse("Demasiadas solicitudes, intentá más tarde", 429)
     }
-    // Get refresh token from cookie
-    const refreshToken = request.cookies.get("refresh_token")?.value
+    const refreshCookie = request.cookies.get("refresh_token")?.value
+    const body = refreshCookie ? null : await request.json().catch(() => null)
+    const bodyRefreshToken =
+      body && typeof body === "object" && "refreshToken" in body
+        ? (body as { refreshToken?: unknown }).refreshToken
+        : undefined
+    const refreshToken =
+      refreshCookie ?? (typeof bodyRefreshToken === "string" ? bodyRefreshToken : undefined)
 
     if (!refreshToken) {
       return createErrorResponse("Refresh token requerido", 401)
@@ -32,7 +38,11 @@ export async function POST(request: NextRequest) {
       return createErrorResponse("Token de refresco inválido o expirado", 401)
     }
 
-    const response = createSuccessResponse(session.user)
+    const response = createSuccessResponse({
+      ...session.user,
+      accessToken: session.accessToken,
+      refreshToken: session.refreshToken,
+    })
     applySessionCookies(response, session.accessToken, session.refreshToken, session.rememberMe)
 
     return response

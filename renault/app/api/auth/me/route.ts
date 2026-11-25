@@ -5,13 +5,13 @@
 import { logger } from "@/lib/logger"
 import { type NextRequest, NextResponse } from "next/server"
 import { verifyAccessToken } from "@/lib/auth/tokens"
+import { getAccessTokenFromRequest } from "@/lib/auth/request-token"
 import { prisma } from "@/lib/prisma"
 import { createErrorResponse, createSuccessResponse, handleApiError } from "@/lib/api-utils"
 
 export async function GET(request: NextRequest) {
   try {
-    // Get access token from cookie
-    const accessToken = request.cookies.get("access_token")?.value
+    const accessToken = getAccessTokenFromRequest(request)
 
     if (!accessToken) {
       return createErrorResponse("No autenticado", 401)

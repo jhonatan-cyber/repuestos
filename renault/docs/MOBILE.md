@@ -1,38 +1,30 @@
-# App móvil — Recomendaciones
+# Autenticación móvil
 
-## Recomendación
+La aplicación Flutter consume la API REST del ERP bajo `/api` mediante Dio.
+El contrato de sesión admite tanto cookies HTTP (web) como tokens Bearer (app
+nativa), sin exigir que Flutter gestione cookies.
 
-Para este proyecto (React/Next.js/TypeScript, API REST con JWT) la opción más
-natural y de menor fricción es **React Native con Expo**:
+## Flujo de sesión
 
-- Reutiliza el lenguaje (TypeScript) y el conocimiento del equipo.
-- Consume la misma API REST (`/api/*`), sin duplicar backend.
-- Acceso a capacidades nativas (cámara para escaneo de códigos de barra,
-  impresión, notificaciones push) que un ERP de campo necesita.
+1. `POST /api/auth/login` devuelve `accessToken` y `refreshToken` en JSON y
+   también configura cookies para los clientes web.
+2. Flutter guarda ambos tokens con `flutter_secure_storage` y envía el access
+   token como `Authorization: Bearer <token>` en las rutas protegidas.
+3. Si una ruta protegida responde `401`, Dio envía el refresh token en el cuerpo
+   de `POST /api/auth/refresh`. La API devuelve los tokens renovados en JSON y
+   actualiza las cookies web.
+4. `POST /api/auth/logout` limpia las cookies; Flutter elimina siempre los
+   tokens locales, incluso si no hay conexión.
 
-Alternativas consideradas:
+Al actualizar desde una versión que guardaba tokens en `SharedPreferences`, la
+app los migra al almacenamiento seguro y elimina las copias anteriores.
 
-| Opción | Pros | Contras |
-|---|---|---|
-| PWA (web instalable) | Cero código nuevo, offline ya soportado | Sin app stores, capacidades nativas limitadas |
-| Capacitor (envolver web) | Reutiliza 100% del código web | UX de web, rendimiento inferior |
-| Flutter | Excelente rendimiento | Dart, duplica lógica, curva de aprendizaje |
-| React Native / Expo | Nativo, reutiliza TS, ecosistema grande | Requiere desarrollo de pantallas |
+## Seguridad y alcance
 
-Plan sugerido (por fases):
-
-1. **Fase 0 (hecho)**: backend acepta `Authorization: Bearer` además de cookie,
-   y login/refresh devuelven tokens en el body. La web sigue usando cookies.
-2. **Fase 1**: PWA instalable (manifest ya agregado) para acceso inmediato.
-3. **Fase 2**: App Expo con login + catálogo + clientes (starter en `/mobile`).
-4. **Fase 3**: Flujos de campo prioritarios: venta (POS), consulta de stock,
-   cobro de créditos, notificaciones. Escaneo de códigos con `expo-camera`.
-5. **Fase 4**: Offline-first con cola de sincronización (reutilizar la lógica
-   de `lib/offline-storage` adaptada a AsyncStorage).
-
-## Seguridad
-
-- Los tokens se almacenan hoy en AsyncStorage (starter). Para producción usar
-  `expo-secure-store`.
-- En producción definir `ALLOWED_ORIGIN` en el backend para el origen de la app.
-- Rate limiting y permisos (`modulo.accion`) aplican igual que en web.
+- Las solicitudes móviles usan el mismo rate limiting y permisos (`modulo.accion`)
+  que las solicitudes web.
+- Los clientes web que envíen solicitudes de otro origen deben configurar
+  `ALLOWED_ORIGIN`; la app nativa usa el contrato Bearer y no depende de CORS ni
+  de cookies.
+- Cerrar sesión en el dispositivo elimina sus tokens, pero los JWT ya emitidos
+  no se revocan en el servidor y siguen sujetos a su expiración.

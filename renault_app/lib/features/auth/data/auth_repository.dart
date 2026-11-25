@@ -1,4 +1,3 @@
-
 import '../../../core/network/dio_client.dart';
 import '../../../core/storage/secure_storage.dart';
 import '../../../core/utils/jwt.dart';
@@ -18,11 +17,7 @@ class AuthRepository {
     try {
       final response = await _client.dio.post(
         '/auth/login',
-        data: {
-          'email': email,
-          'password': password,
-          'rememberMe': rememberMe,
-        },
+        data: {'email': email, 'password': password, 'rememberMe': rememberMe},
       );
       final data = response.data as Map<String, dynamic>;
       final accessToken = data['accessToken'] as String?;
@@ -42,7 +37,13 @@ class AuthRepository {
   }
 
   Future<void> logout() async {
-    await _storage.clear();
+    try {
+      await _client.dio.post('/auth/logout');
+    } catch (_) {
+      // La sesión local también debe cerrarse cuando no hay conexión.
+    } finally {
+      await _storage.clear();
+    }
   }
 
   Future<AuthUser?> restoreSession() async {

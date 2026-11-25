@@ -68,6 +68,27 @@ describe("getApiActor", () => {
     })
   })
 
+  it("returns actor when access token is sent as a Bearer header", async () => {
+    vi.spyOn(tokens, "verifyAccessToken").mockResolvedValueOnce({
+      sub: "mobile-user",
+      role: "vendedor",
+      permissions: ["sales.read"],
+    } as any)
+    const request = {
+      cookies: { get: () => undefined },
+      headers: new Headers({ authorization: "Bearer mobile-access-token" }),
+    } as any
+
+    const actor = await getApiActor(request)
+
+    expect(tokens.verifyAccessToken).toHaveBeenCalledWith("mobile-access-token")
+    expect(actor).toEqual({
+      userId: "mobile-user",
+      role: "vendedor",
+      permissions: ["sales.read"],
+    })
+  })
+
   it("defaults role to empty string when missing", async () => {
     vi.spyOn(tokens, "verifyAccessToken").mockResolvedValueOnce({
       sub: "user-456",

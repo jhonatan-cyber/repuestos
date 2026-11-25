@@ -13,6 +13,7 @@ import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 import { verifyAccessToken } from "@/lib/auth/tokens"
 import type { SessionUser } from "@/lib/auth/session"
+import { getAccessTokenFromRequest } from "@/lib/auth/request-token"
 
 const ADMIN_ROLES = new Set(["admin", "administrador", "Administrador"])
 
@@ -21,6 +22,7 @@ const PUBLIC_ROUTES = [
   "/login",
   "/setup",
   "/api/auth/login",
+  "/api/auth/logout",
   "/api/auth/refresh",
   "/api/auth/setup",
   "/api/auth/forgot-password",
@@ -86,8 +88,10 @@ function withAuthHeaders(request: NextRequest, user: Pick<SessionUser, "id" | "e
   return requestHeaders
 }
 
-async function getSessionFromRequest(request: NextRequest) {
-  const accessToken = request.cookies.get("access_token")?.value
+async function getSessionFromRequest(request: NextRequest, allowBearer = false) {
+  const accessToken = allowBearer
+    ? getAccessTokenFromRequest(request)
+    : request.cookies.get("access_token")?.value
 
   if (accessToken) {
     const payload = await verifyAccessToken(accessToken)
@@ -129,7 +133,7 @@ export default async function middleware(request: NextRequest) {
   const isProtectedApiRoute = PROTECTED_API_ROUTES.some((route) => pathname.startsWith(route))
 
   if (isProtectedApiRoute) {
-    const session = await getSessionFromRequest(request)
+    const session = await getSessionFromRequest(request, true)
     if (!session) {
       const res = NextResponse.json({ error: "Authentication required" }, { status: 401 })
       return applyCorsHeaders(res, origin)

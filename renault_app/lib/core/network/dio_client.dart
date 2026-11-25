@@ -5,7 +5,7 @@ import '../storage/secure_storage.dart';
 
 /// Cliente HTTP con interceptor de autenticación (Bearer) y refresh automático.
 class DioClient {
-  DioClient(this._storage) {
+  DioClient(this._storage, {HttpClientAdapter? adapter}) {
     _dio = Dio(
       BaseOptions(
         baseUrl: Env.apiBase,
@@ -14,12 +14,14 @@ class DioClient {
         headers: {'Content-Type': 'application/json'},
       ),
     );
+    if (adapter != null) _dio.httpClientAdapter = adapter;
 
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           // Skip adding auth header for public endpoints
           if (options.path.contains('/auth/login') ||
+              options.path.contains('/auth/logout') ||
               options.path.contains('/auth/forgot-password') ||
               options.path.contains('/auth/refresh') ||
               options.path.contains('/auth/setup')) {
@@ -34,9 +36,14 @@ class DioClient {
         },
         onError: (error, handler) async {
           final status = error.response?.statusCode;
-          final isRefreshCall =
-              error.requestOptions.path.endsWith('/auth/refresh');
-          if (status == 401 && !isRefreshCall) {
+          final path = error.requestOptions.path;
+          final isAuthFlowCall =
+              path.endsWith('/auth/login') ||
+              path.endsWith('/auth/logout') ||
+              path.endsWith('/auth/forgot-password') ||
+              path.endsWith('/auth/refresh') ||
+              path.endsWith('/auth/setup');
+          if (status == 401 && !isAuthFlowCall) {
             final refreshed = await _tryRefresh();
             if (refreshed) {
               final newToken = await _storage.getAccessToken();
@@ -59,7 +66,10 @@ class DioClient {
 
   Future<bool> _tryRefresh() async {
     final refreshToken = await _storage.getRefreshToken();
-    if (refreshToken == null || refreshToken.isEmpty) return false;
+    if (refreshToken == null || refreshToken.isEmpty) {
+      await _storage.clear();
+      return false;
+    }
     try {
       final response = await _dio.post(
         '/auth/refresh',

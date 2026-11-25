@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server"
 import { verifyAccessToken } from "@/lib/auth/tokens"
+import { getAccessTokenFromRequest } from "@/lib/auth/request-token"
 
 export interface ApiActor {
   userId: string
@@ -8,7 +9,7 @@ export interface ApiActor {
 }
 
 export async function getApiActor(request: NextRequest): Promise<ApiActor | null> {
-  const accessToken = request.cookies.get("access_token")?.value
+  const accessToken = getAccessTokenFromRequest(request)
   if (!accessToken) return null
 
   const payload = await verifyAccessToken(accessToken)

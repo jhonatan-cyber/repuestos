@@ -1,6 +1,7 @@
 import { logger } from "@/lib/logger"
 import { type NextRequest, NextResponse } from "next/server"
 import { verifyAccessToken } from "@/lib/auth/tokens"
+import { getAccessTokenFromRequest } from "@/lib/auth/request-token"
 import { prisma } from "@/lib/prisma"
 import { resolveSqliteDatabasePath } from "@/lib/runtime-env"
 import { writeFile, unlink, mkdir, readFile } from "fs/promises"
@@ -73,7 +74,7 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
-    const accessToken = request.cookies.get("access_token")?.value
+    const accessToken = getAccessTokenFromRequest(request)
     if (!accessToken) {
       return NextResponse.json({ error: "No autenticado" }, { status: 401 })
     }
@@ -148,7 +149,7 @@ export async function POST(request: NextRequest) {
  */
 export async function DELETE(request: NextRequest) {
   try {
-    const accessToken = request.cookies.get("access_token")?.value
+    const accessToken = getAccessTokenFromRequest(request)
     if (!accessToken) {
       return NextResponse.json({ error: "No autenticado" }, { status: 401 })
     }
